@@ -15,7 +15,6 @@ var wall2 = new Wall(430,240, 0);
 var wall3 = new Wall(430,283, 2);
 
 function init(){
-    console.log(listKeys);
 	var canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
 	
@@ -37,12 +36,12 @@ function init(){
     board.addObstacle(wall2);
     board.addObstacle(wall3);
 	
-	window.onkeydown = function(evt){keyboard.keyDown(evt);};
+    // init event handlers
+    window.onkeydown = function(evt){keyboard.keyDown(evt);};
 	window.onkeyup = function(evt){keyboard.keyUp(evt);};
-	window.onmousemove = function(evt){mouse.mouseMoved(evt);};
-    window.onmouseup = function(evt){mouse.mouseUp(evt);};
-    window.onmousedown = function(evt){mouse.mouseDown(evt);};
-    window.oncontextmenu=function(evt){return false;}; // Disable right-click context menu
+    mouse.init();
+    mouse.UpAbles.push(clickedTarget);
+    // loop game
 	setInterval(gameLoop,16);
 };
 
@@ -58,14 +57,11 @@ function updateLogic(){
     
     // Update logic
     board.updateLogic();
-	
-	// Clicked test to target
-	if (mouse.leftClicked == true){ // If we've clicked we move the scout to da target
-		scout.target = {x:mouse.targetX + camera.transformX,y:(mouse.targetY+camera.transformY)};
-		
-		mouse.leftClicked = false;
-	}
-	
+};
+
+// Función de loopback de prueba para eventos del ratón
+var clickedTarget = function(){
+    scout.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
 };
 
 
