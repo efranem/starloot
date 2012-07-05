@@ -87,6 +87,22 @@ function Board(){
                 this.movable[i].update();
         }
 	};
+	
+	this.paintMap = function(){
+		var tileWidth = 256;
+		var tileHeight = 128;
+		// Get current X and Y of map
+		var currX = camera.transformX;
+		var currY = camera.transformY;
+		// Let's see where we have to paint...
+		var startTileX = Math.floor(camera.transformX / tileWidth) * tileWidth;// + (tileWidth * (camera.transformX % tileWidth));
+		var startTileY = Math.floor(camera.transformY / tileHeight) * tileHeight;// (tileHeight * (camera.transformY % tileHeight));
+		for (var i = startTileX; i < startTileX + 2480; i += tileWidth){
+            for (var j = startTileY; j < startTileY + 1280; j += tileHeight){
+                ctx.drawImage(img, i, j, 256, 128);
+            }
+        }
+	};
     
     this.paint = function(ctx){
 //        ctx.save();
@@ -97,11 +113,7 @@ function Board(){
         //ctx.fillRect(0,0,c.width,c.height);
         
         // Paint tiles
-        for (var i = 0; i < 2480; i += 256){
-            for (var j = 0; j < 1280; j += 128){
-                ctx.drawImage(img, i, j, 256, 128);
-            }
-        }
+        this.paintMap();
 
 //        ctx.restore(); // Restore non-isometric view
         // Paint every movable component
@@ -117,12 +129,11 @@ function Board(){
                 this.obstacles[i].paint(ctx);
         }
 
-	PaintTile(5,5);
-	PaintTile(6,5);
-	PaintTile(5,6);
-	PaintTile(5,4);
-	
-    };
+		PaintTile(5,5);
+		PaintTile(6,5);
+		PaintTile(5,6);
+		PaintTile(5,4);
+	};
 }
 
 board = new Board;
