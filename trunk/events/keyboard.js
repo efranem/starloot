@@ -127,6 +127,15 @@ function Keyboard(){
             list = [ callback ];
         this.keyCallbacks[ key ] = list;
     };
+	
+	this.removeEventListener = function(key, callback){
+		var list = this.keyCallbacks[ key ];
+		var idx = list.indexOf( callback );
+		if (idx != -1)
+			this.keyCallbacks[ key ].splice(idx, 1);
+		else
+			console.warn("Keyboard::removeEventListener: Trying to remove key " + key + " event with " + callback);
+	};
     
     this.keyBoardLoop = function(){
         for (var keys in keyboard.keysPressed){

@@ -48,9 +48,16 @@ function init(){
     keyboard.addEventListener(Keys.S, pressedKey);
     keyboard.addEventListener(Keys.A, pressedKey);
     keyboard.addEventListener(Keys.D, pressedKey);
-    mouse.init();
+	//keyboard.addEventListener(Keys.Z, pressedKey); // Test addEvent
+	//keyboard.removeEventListener(Keys.Z, gameLoop); // Test removeEvent no exist
+	//keyboard.removeEventListener(Keys.Z, pressedKey); // Test removeEvent OK
+	mouse.init();
     mouse.addEventListener(MouseEvents.CLICK, clickedTarget);
     mouse.addEventListener(MouseEvents.MOUSE_UP, clickedTarget2);
+	//mouse.addEventListener(MouseEvents.MOUSE_DOWN, updateLogic); // Test addEvent
+	//mouse.removeEventListener(MouseEvents.MOUSE_DOWN, clickedTarget2); // Test removeEvent no exist
+	//mouse.removeEventListener(MouseEvents.WHEEL, updateLogic); // Test removeEvent no exist
+	//mouse.removeEventListener(MouseEvents.MOUSE_DOWN, updateLogic); // Test removeEvent OK
     // loop game
 	setInterval(gameLoop,16);
 };
