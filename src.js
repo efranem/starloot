@@ -15,6 +15,7 @@ var wall2 = new Wall(430,240, 0);
 var wall3 = new Wall(430,283, 2);
 
 function init(){
+    console.log(listKeys);
 	var canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
 	
