@@ -39,23 +39,23 @@ function Mouse(){
     };
     
     this.mouseOver = function(evt){
-        console.log("MouseOver");
+        //console.log("MouseOver");
     };
     
     this.mouseOut = function(){
-        console.log("MouseOut");
+        //console.log("MouseOut");
     };
     
     this.mouseDown = function(evt){
         this.button = evt.button;
         evt.preventDefault();
         evt.stopPropagation();
-        console.log("MouseDown " + this.button);
+        //console.log("MouseDown " + this.button);
     };
     
     this.mouseUp = function(evt){
         this.button = evt.button;
-        console.log("MouseUp " + this.button);
+        //console.log("MouseUp " + this.button);
         this.button = 'none';
         for(var i in this.UpAbles)
         {
@@ -66,21 +66,21 @@ function Mouse(){
     };
     
     this.mouseClick = function(evt){
-        console.log("MouseClick");
+        //console.log("MouseClick");
     };
     
     this.mouseDoubleClick = function(evt){
-        console.log("MouseDoubleClick");
+        //console.log("MouseDoubleClick");
     };
     
     this.mouseMoved = function(evt){
-        console.log("MouseMoved");
+        //console.log("MouseMoved");
         this.x = evt.clientX;
 		this.y = evt.clientY;
     };
     
     this.mouseWheel = function(evt){
-        console.log("MouseWheel " + (evt.wheelDelta / 120)); 
+        //console.log("MouseWheel " + (evt.wheelDelta / 120)); 
         evt.preventDefault();
         evt.stopPropagation();        
     };    
