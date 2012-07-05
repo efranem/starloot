@@ -50,6 +50,7 @@ function init(){
     keyboard.addEventListener(Keys.D, pressedKey);
     mouse.init();
     mouse.addEventListener(MouseEvents.CLICK, clickedTarget);
+    mouse.addEventListener(MouseEvents.MOUSE_UP, clickedTarget2);
     // loop game
 	setInterval(gameLoop,16);
 };
@@ -66,9 +67,14 @@ function updateLogic(){
     board.updateLogic();
 };
 
-// Mouse callback function TEST
+// Mouse callbacks functions TEST
 var clickedTarget = function(){
+    console.log("Button clicked in mouse");
     scout.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
+};
+
+var clickedTarget2 = function(){
+    console.log("Button released in mouse");
 };
 
 // Keyboard callback function TEST

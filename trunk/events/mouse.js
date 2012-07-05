@@ -11,7 +11,8 @@ var MouseEvents = {
     MOUSE_UP : 3,
     CLICK : 4,
     DOUBLE_CLICK : 5,
-    MOUSE_MOVE : 6
+    MOUSE_MOVE : 6,
+    WHEEL:  7
 };
 
 function Mouse(){
@@ -25,6 +26,7 @@ function Mouse(){
     this.upAbles = [];
     this.clickAbles = [];
     this.doubleclickAbles = [];
+    this.wheelAbles = [];
     
     this.init = function(){
         window.onmouseover      = function(evt){mouse.mouseOver(evt);};
@@ -39,52 +41,69 @@ function Mouse(){
     };
     
     this.mouseOver = function(evt){
-        console.log("MouseOver");
+        for(var i in this.overAbles)
+        {
+            this.overAbles[i]();
+        }
     };
     
     this.mouseOut = function(){
-        console.log("MouseOut");
+        for(var i in this.outAbles)
+        {
+            this.outAbles[i]();
+        }
     };
     
     this.mouseDown = function(evt){
         this.button = evt.button;
+        for(var i in this.downAbles)
+        {
+            this.downAbles[i]( this.button );
+        }
         evt.preventDefault();
         evt.stopPropagation();
-        console.log("MouseDown " + this.button);
     };
     
     this.mouseUp = function(evt){
         this.button = evt.button;
-        console.log("MouseUp " + this.button);
-        this.button = 'none';
         for(var i in this.upAbles)
         {
-            this.upAbles[i]();
-        }        
+            this.upAbles[i]( this.button );
+        }
+        this.button = 'none';
         evt.preventDefault();
         evt.stopPropagation();        
     };
     
     this.mouseClick = function(evt){
-        console.log("MouseClick");
+        this.button = evt.button;
         for(var i in this.clickAbles)
         {
-            this.clickAbles[i]();
+            this.clickAbles[i]( this.button );
         } 
     };
     
     this.mouseDoubleClick = function(evt){
+        this.button = evt.button;
+        for(var i in this.doubleclickAbles)
+        {
+            this.doubleclickAbles[i]( this.button );
+        }
         console.log("MouseDoubleClick");
     };
     
     this.mouseMoved = function(evt){
-        console.log("MouseMoved");
+        //console.log("MouseMoved");
         this.x = evt.clientX;
 		this.y = evt.clientY;
     };
     
     this.mouseWheel = function(evt){
-        console.log("MouseWheel " + (evt.wheelDelta / 120)); 
+        //console.log("MouseWheel " + (evt.wheelDelta / 120)); 
+        for(var i in this.wheelAbles)
+        {
+            this.wheelAbles[i]( evt.wheelDelta );
+        }
         evt.preventDefault();
         evt.stopPropagation();        
     };   
@@ -98,6 +117,7 @@ function Mouse(){
             case MouseEvents.CLICK:         this.clickAbles.push(callback);      break;
             case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.push(callback);break;
             case MouseEvents.MOUSE_MOVE:    break;
+            case MouseEvents.WHEEL:         this.wheelAbles.push(callback);      break;
             default:    return false;
         };
     };    
