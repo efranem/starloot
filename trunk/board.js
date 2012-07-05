@@ -28,6 +28,16 @@ function Movable(obj){
 	}
 }
 
+function PaintTile(row, col) {
+	// Now paint something on a specific tile
+	var tile = new Image;
+	tile.src = 'sprites/ui/tile_green.png';
+	var row_px = row*128;
+	var col_px = col*32;
+	if (col%2==0) {row_px+=64;}
+        ctx.drawImage(tile, 0, 0, 128, 64, row_px, col_px, 128, 64);
+}
+
 function Board(){
     this.obstacles = new Array;
     this.movable = new Array;
@@ -92,6 +102,7 @@ function Board(){
                 ctx.drawImage(img, i, j, 256, 128);
             }
         }
+
 //        ctx.restore(); // Restore non-isometric view
         // Paint every movable component
         for (var i = 0; i < this.movable.length; i++){
@@ -105,6 +116,12 @@ function Board(){
         for (var i = 0; i < this.obstacles.length; i++){
                 this.obstacles[i].paint(ctx);
         }
+
+	PaintTile(5,5);
+	PaintTile(6,5);
+	PaintTile(5,6);
+	PaintTile(5,4);
+	
     };
 }
 
