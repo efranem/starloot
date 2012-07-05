@@ -37,8 +37,8 @@ function init(){
     board.addObstacle(wall3);
 	
     // init event handlers
-    window.onkeydown = function(evt){keyboard.keyDown(evt);};
-	window.onkeyup = function(evt){keyboard.keyUp(evt);};
+    keyboard.init();
+    keyboard.addEventListener(Keys.UP_ARROW, pressedKey);
     mouse.init();
     mouse.UpAbles.push(clickedTarget);
     // loop game
@@ -53,15 +53,37 @@ function gameLoop(){
 
 function updateLogic(){
 	fps.updateFPS();
-	keyboard.treatKeys();
-    
     // Update logic
     board.updateLogic();
 };
 
-// Función de loopback de prueba para eventos del ratón
+// Mouse callback function TEST
 var clickedTarget = function(){
     scout.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
+};
+
+// Keyboard callback function TEST
+var pressedKey = function(key){
+    switch (key) {
+    case 87: /* W */
+    case 38: /* Up arrow was pressed */
+        camera.transformY -= camera.CAMERA_SPEED;
+        break;
+    case 83: /* S */
+    case 40: /* Down arrow was pressed */
+        camera.transformY += camera.CAMERA_SPEED;
+        break;
+    case 65: /* A */   
+    case 37: /* Left arrow was pressed */
+        camera.transformX -= camera.CAMERA_SPEED;
+        break;
+    case 68: /* D */   
+    case 39: /* Right arrow was pressed */
+        camera.transformX += camera.CAMERA_SPEED;
+        break;
+    case 107: scout.rotate(0.18);break;
+    case 109:scout.rotate(-0.18);break;
+    }
 };
 
 
