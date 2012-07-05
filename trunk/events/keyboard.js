@@ -91,7 +91,7 @@ var Keys = {
 
 function Keyboard(){
 	this.keysPressed = new Array;
-    this.keyAbles = [];
+    this.keyCallbacks = {};
     
     this.init = function(){
         window.onkeydown    = function(evt){keyboard.keyDown(evt);};
@@ -120,13 +120,18 @@ function Keyboard(){
 	};
     
     this.addEventListener = function (key, callback){
-        this.keyAbles.push(callback);
+        var list = this.keyCallbacks[ key ];
+        if (list != undefined)
+            list.push(callback);
+        else 
+            list = [ callback ];
+        this.keyCallbacks[ key ] = list;
     };
     
     this.keyBoardLoop = function(){
         for (var keys in keyboard.keysPressed){
-            for(var callbacks in keyboard.keyAbles){
-                keyboard.keyAbles[callbacks](keyboard.keysPressed[keys]);
+            for(var callbacks in keyboard.keyCallbacks[ keyboard.keysPressed[ keys ] ]){
+                keyboard.keyCallbacks[ keyboard.keysPressed[keys] ] [ callbacks ] ( keyboard.keysPressed[keys] );
             }
         }
     };

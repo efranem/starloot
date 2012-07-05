@@ -41,8 +41,15 @@ function init(){
     // init event handlers
     keyboard.init();
     keyboard.addEventListener(Keys.UP_ARROW, pressedKey);
+    keyboard.addEventListener(Keys.DOWN_ARROW, pressedKey);
+    keyboard.addEventListener(Keys.LEFT_ARROW, pressedKey);
+    keyboard.addEventListener(Keys.RIGHT_ARROW, pressedKey);
+    keyboard.addEventListener(Keys.W, pressedKey);
+    keyboard.addEventListener(Keys.S, pressedKey);
+    keyboard.addEventListener(Keys.A, pressedKey);
+    keyboard.addEventListener(Keys.D, pressedKey);
     mouse.init();
-    mouse.UpAbles.push(clickedTarget);
+    mouse.addEventListener(MouseEvents.CLICK, clickedTarget);
     // loop game
 	setInterval(gameLoop,16);
 };
