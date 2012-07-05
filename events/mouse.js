@@ -121,6 +121,38 @@ function Mouse(){
             default:    return false;
         };
     };    
+	
+	this.removeEventListener = function (event, callback){
+		var list;
+		switch (event){
+            case MouseEvents.MOUSE_OVER:    list = this.overAbles;	     break;
+            case MouseEvents.MOUSE_OUT:     list = this.outAbles;	     break;
+            case MouseEvents.MOUSE_DOWN:    list = this.downAbles;       break;
+            case MouseEvents.MOUSE_UP:      list = this.upAbles;         break;
+            case MouseEvents.CLICK:         list = this.clickAbles;      break;
+            case MouseEvents.DOUBLE_CLICK:  list = this.doubleclickAbles;break;
+            case MouseEvents.MOUSE_MOVE:    list = [];			  		 break;
+            case MouseEvents.WHEEL:         list = this.wheelAbles;      break;
+            default:    return false;
+        };
+		var idx = list.indexOf( callback );
+		if (idx != -1){
+			switch (event){
+				case MouseEvents.MOUSE_OVER:    this.overAbles.splice(idx, 1);;	      break;
+				case MouseEvents.MOUSE_OUT:     this.outAbles.splice(idx, 1);;	      break;
+				case MouseEvents.MOUSE_DOWN:    this.downAbles.splice(idx, 1);;       break;
+				case MouseEvents.MOUSE_UP:      this.upAbles.splice(idx, 1);;         break;
+				case MouseEvents.CLICK:         this.clickAbles.splice(idx, 1);;      break;
+				case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.splice(idx, 1); break;
+				case MouseEvents.MOUSE_MOVE:    			  		 			      break;
+				case MouseEvents.WHEEL:         this.wheelAbles.splice(idx, 1);;      break;
+				default: console.warn("Mouse::removeEventListener: callback " + callback + " not existing in " + event + " event"); break;			
+			};
+		}	
+		else{
+			console.warn("Mouse::removeEventListener: Trying to remove " + event + " event with " + callback);			
+		};
+	};
 };
 
 mouse = new Mouse;
