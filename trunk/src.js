@@ -6,13 +6,14 @@ var canvas = document.getElementById("canvas");
 var ctx,angle,angleCos,angleSin,halfWidth,halfHeight;
 var pos = 0;
 var scout = new Scout();
-var building1 = new Building(500, 520, 0);
+var building1 = new Building(500, 620, 0);
 var building2 = new Building(250, 400, 2);
 var building3 = new Building(100, 400, 1);
-var building4 = new Building(800, 600, 3);
+var building4 = new Building(800, 700, 3);
 var wall1 = new Wall(353.5,201.5, 0);
 var wall2 = new Wall(430,240, 0);
 var wall3 = new Wall(430,283, 2);
+var crater1 = new Crater(600,440);
 
 function init(){
 	var canvas = document.getElementById("canvas");
@@ -35,6 +36,7 @@ function init(){
     board.addObstacle(wall1);
     board.addObstacle(wall2);
     board.addObstacle(wall3);
+    board.addObstacle(crater1);
 	
     // init event handlers
     keyboard.init();
