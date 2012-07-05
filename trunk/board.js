@@ -79,20 +79,20 @@ function Board(){
 	};
     
     this.paint = function(ctx){
-        ctx.save();
-        camera.applyTransforms(ctx); // Apply isometric view
+//        ctx.save();
+//        camera.applyTransforms(ctx); // Apply isometric view
             
         //A partir de aqu?, todo torcido 45?
         //ctx.fillStyle="#00FF00";
         //ctx.fillRect(0,0,c.width,c.height);
         
         // Paint tiles
-        for (var i = 0; i < 2000; i += 50){
-            for (var j = 0; j < 800; j += 50){
-                ctx.drawImage(img, i, j, 51, 51);
+        for (var i = 0; i < 2480; i += 256){
+            for (var j = 0; j < 1280; j += 128){
+                ctx.drawImage(img, i, j, 256, 128);
             }
         }
-        ctx.restore(); // Restore non-isometric view
+//        ctx.restore(); // Restore non-isometric view
         // Paint every movable component
         for (var i = 0; i < this.movable.length; i++){
                 this.movable[i].paint(ctx);
