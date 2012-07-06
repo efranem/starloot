@@ -12,7 +12,8 @@ var MouseEvents = {
     CLICK : 4,
     DOUBLE_CLICK : 5,
     MOUSE_MOVE : 6,
-    WHEEL:  7
+    WHEEL:  7,
+	MOUSE_SLIDE: 8
 };
 
 function Mouse(){
@@ -21,6 +22,10 @@ function Mouse(){
     this.tile_x = 0;
     this.tile_y = 0;
     this.button = "none";
+	this.buttondown = false;
+	this.originDown_x = 0;
+	this.originDown_y = 0;
+	this.epsilonSlide = 10;
     
     this.overAbles = new Array;
     this.outAbles = new Array;
@@ -29,6 +34,7 @@ function Mouse(){
     this.clickAbles = new Array;
     this.doubleclickAbles = new Array;
     this.wheelAbles = new Array;
+	this.slideAbles = new Array;
     
     this.init = function(){
         window.onmouseover      = function(evt){mouse.mouseOver(evt);};
@@ -77,6 +83,9 @@ function Mouse(){
             else
                 callback(this.button);
         }
+		this.originDown_x = this.x;
+		this.originDown_y = this.y;
+		this.buttondown = true;
         evt.preventDefault();
         evt.stopPropagation();
     };
@@ -92,7 +101,8 @@ function Mouse(){
             else
                 callback(this.button);
         }
-        this.button = 'none';
+		this.button = 'none';
+		this.buttondown = false;
         evt.preventDefault();
         evt.stopPropagation();        
     };
@@ -144,9 +154,25 @@ function Mouse(){
 //		if (m_x > 64 && m_y < 32) { this.tile_x++; this.tile_y--; };
 //		if (m_x < 64 && m_y > 32) { this.tile_x--; this.tile_y++; };
 //		if (m_x > 64 && m_y > 32) { this.tile_x++; this.tile_y++; };
-		
-    };
-    
+		if (this.buttondown == true){
+			var slidedX = this.x - this.originDown_x;
+			var slidedY = this.y - this.originDown_y;
+			if (Math.abs(slidedX) > this.epsilonSlide ||  Math.abs(slidedY) > this.epsilonSlide){
+				for(var i in this.slideAbles)
+				{
+					var object = this.slideAbles[ i ][ 0 ];
+					var callback = this.slideAbles[ i ][ 1 ];
+					if (object != undefined)
+						object[callback](this.button, slidedX, slidedY);
+					else
+						callback(this.button, slidedX, slidedY);
+				};
+				this.originDown_x = this.x;
+				this.originDown_y = this.y;
+			};
+		};
+    };    
+	
     this.mouseWheel = function(evt){
         //console.log("MouseWheel " + (evt.wheelDelta / 120)); 
         for(var i in this.wheelAbles)
@@ -172,6 +198,7 @@ function Mouse(){
             case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.push([object, callback]);break;
             case MouseEvents.MOUSE_MOVE:    break;
             case MouseEvents.WHEEL:         this.wheelAbles.push([object, callback]);      break;
+			case MouseEvents.MOUSE_SLIDE:   this.slideAbles.push([object, callback]);      break;
             default:    return false;
         };
     };    
@@ -187,6 +214,7 @@ function Mouse(){
             case MouseEvents.DOUBLE_CLICK:  list = this.doubleclickAbles;break;
             case MouseEvents.MOUSE_MOVE:    list = [];			  		 break;
             case MouseEvents.WHEEL:         list = this.wheelAbles;      break;
+			case MouseEvents.MOUSE_SLIDE:   list = this.slideAbles;      break;
             default:    return false;
         };
 		var idx = indexPair( [object, callback], list);
@@ -200,6 +228,7 @@ function Mouse(){
 				case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.splice(idx, 1); break;
 				case MouseEvents.MOUSE_MOVE:    			  		 			      break;
 				case MouseEvents.WHEEL:         this.wheelAbles.splice(idx, 1);       break;
+				case MouseEvents.MOUSE_SLIDE:   this.slideAbles.splice(idx, 1);       break;
 				default: console.warn("Mouse::removeEventListener: callback " + callback + " not existing in " + object + "." + event); break;			
 			};
 		}	
