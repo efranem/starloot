@@ -40,48 +40,35 @@ function init(){
 	
     // init event handlers
     keyboard.init();
-    keyboard.addEventListener(Keys.UP_ARROW, pressedKey);
-    keyboard.addEventListener(Keys.DOWN_ARROW, pressedKey);
-    keyboard.addEventListener(Keys.LEFT_ARROW, pressedKey);
-    keyboard.addEventListener(Keys.RIGHT_ARROW, pressedKey);
-    keyboard.addEventListener(Keys.W, pressedKey);
-    keyboard.addEventListener(Keys.S, pressedKey);
-    keyboard.addEventListener(Keys.A, pressedKey);
-    keyboard.addEventListener(Keys.D, pressedKey);
-	//keyboard.addEventListener(Keys.Z, pressedKey); // Test addEvent
-	//keyboard.removeEventListener(Keys.Z, gameLoop); // Test removeEvent no exist
-	//keyboard.removeEventListener(Keys.Z, pressedKey); // Test removeEvent OK
+    keyboard.addEventListener(Keys.UP_ARROW, undefined, pressedKey);
+    keyboard.addEventListener(Keys.DOWN_ARROW, undefined, pressedKey);
+    keyboard.addEventListener(Keys.LEFT_ARROW, undefined, pressedKey);
+    keyboard.addEventListener(Keys.RIGHT_ARROW, undefined, pressedKey);
+    keyboard.addEventListener(Keys.W, undefined, pressedKey);
+    keyboard.addEventListener(Keys.S, undefined, pressedKey);
+    keyboard.addEventListener(Keys.A, undefined, pressedKey);
+    keyboard.addEventListener(Keys.D, undefined, pressedKey);
 	mouse.init();
-    mouse.addEventListener(MouseEvents.CLICK, clickedTarget);
-    mouse.addEventListener(MouseEvents.MOUSE_UP, clickedTarget2);
-	//mouse.addEventListener(MouseEvents.MOUSE_DOWN, updateLogic); // Test addEvent
-	//mouse.removeEventListener(MouseEvents.MOUSE_DOWN, clickedTarget2); // Test removeEvent no exist
-	//mouse.removeEventListener(MouseEvents.WHEEL, updateLogic); // Test removeEvent no exist
-	//mouse.removeEventListener(MouseEvents.MOUSE_DOWN, updateLogic); // Test removeEvent OK
+    mouse.addEventListener(MouseEvents.CLICK, undefined, clickedTarget);
+    mouse.addEventListener(MouseEvents.CLICK, scout, 'select');
     // loop game
 	setInterval(gameLoop,16);
 };
 
 function gameLoop(){
-    updateLogic();
+    logicTick();
     //physicsTick(); // Not physics at this moment
     renderFrame();
-};
-
-function updateLogic(){
-	fps.updateFPS();
-    // Update logic
-    board.updateLogic();
 };
 
 // Mouse callbacks functions TEST
 var clickedTarget = function(){
     console.log("Button clicked in mouse");
-    scout.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
-};
-
-var clickedTarget2 = function(){
-    console.log("Button released in mouse");
+    if (gameLogic.isSelected(scout)){
+        var coords = scout.middle();
+        if (Math.abs(coords[0] - mouse.x) > 10 || Math.abs(coords[1] - mouse.y) > 10)
+            scout.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
+    }
 };
 
 // Keyboard callback function TEST

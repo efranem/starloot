@@ -1,4 +1,4 @@
-function Movable(obj){
+/*function Movable(obj){
     this.id = 0;
     this.name = "none";
     this.leftX = 0.0;
@@ -26,7 +26,7 @@ function Movable(obj){
 	this.update = function(){
 		this.object.update();
 	}
-}
+}*/
 
 function PaintTile(row, col) {
 	// Now paint something on a specific tile
@@ -46,8 +46,8 @@ function Board(){
     img.src = 'sprites/background/gravel_red.jpg';
     
     this.addMovable = function(m){
-        obj = new Movable(m);
-        this.movable.push(obj);
+        //obj = new Movable(m);
+        this.movable.push(m);
     };
     
     this.addBuilding = function(m){

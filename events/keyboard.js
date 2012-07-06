@@ -91,7 +91,7 @@ var Keys = {
 
 function Keyboard(){
 	this.keysPressed = new Array;
-    this.keyCallbacks = {};
+    this.keyCallbacks = new Array;
     
     this.init = function(){
         window.onkeydown    = function(evt){keyboard.keyDown(evt);};
@@ -119,28 +119,36 @@ function Keyboard(){
         console.log("KeyUp: " + evt.keyCode + ',' + this.keysPressed);
 	};
     
-    this.addEventListener = function (key, callback){
+    this.addEventListener = function (key, object, callback){
         var list = this.keyCallbacks[ key ];
-        if (list != undefined)
-            list.push(callback);
+        if (list != undefined){
+            list.push([object, callback]);
+        }
         else 
-            list = [ callback ];
+            list = [ [object , callback] ];
         this.keyCallbacks[ key ] = list;
     };
 	
-	this.removeEventListener = function(key, callback){
-		var list = this.keyCallbacks[ key ];
-		var idx = list.indexOf( callback );
-		if (idx != -1)
+	this.removeEventListener = function(key, object, callback){
+        var list = this.keyCallbacks[ key ];
+		var idx = indexPair( [object, callback], list);
+		if (idx != -1){
 			this.keyCallbacks[ key ].splice(idx, 1);
-		else
-			console.warn("Keyboard::removeEventListener: Trying to remove key " + key + " event with " + callback);
+        }
+		else{
+			console.warn("Keyboard::removeEventListener: Trying to remove key " + key + " event with " + object + "." +callback);
+        }
 	};
     
     this.keyBoardLoop = function(){
         for (var keys in keyboard.keysPressed){
-            for(var callbacks in keyboard.keyCallbacks[ keyboard.keysPressed[ keys ] ]){
-                keyboard.keyCallbacks[ keyboard.keysPressed[keys] ] [ callbacks ] ( keyboard.keysPressed[keys] );
+            for(var pairs in keyboard.keyCallbacks[ keyboard.keysPressed[ keys ] ]){
+                var object = keyboard.keyCallbacks[ keyboard.keysPressed[keys] ] [ pairs ] [ 0 ];
+                var callback = keyboard.keyCallbacks[ keyboard.keysPressed[keys] ] [ pairs ] [ 1 ];
+                if (object != undefined)
+                    object[callback]( keyboard.keysPressed[keys] );
+                else
+                    callback( keyboard.keysPressed[keys] );
             }
         }
     };

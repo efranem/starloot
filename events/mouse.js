@@ -20,13 +20,13 @@ function Mouse(){
     this.y = 0; 
     this.button = "none";
     
-    this.overAbles = [];
-    this.outAbles = [];
-    this.downAbles = [];
-    this.upAbles = [];
-    this.clickAbles = [];
-    this.doubleclickAbles = [];
-    this.wheelAbles = [];
+    this.overAbles = new Array;
+    this.outAbles = new Array;
+    this.downAbles = new Array;
+    this.upAbles = new Array;
+    this.clickAbles = new Array;
+    this.doubleclickAbles = new Array;
+    this.wheelAbles = new Array;
     
     this.init = function(){
         window.onmouseover      = function(evt){mouse.mouseOver(evt);};
@@ -43,14 +43,24 @@ function Mouse(){
     this.mouseOver = function(evt){
         for(var i in this.overAbles)
         {
-            this.overAbles[i]();
+            var object = this.overAbles[ i ][ 0 ];
+            var callback = this.overAbles[ i ][ 1 ];
+            if (object != undefined)
+                object[callback]();
+            else
+                callback();
         }
     };
     
     this.mouseOut = function(){
         for(var i in this.outAbles)
         {
-            this.outAbles[i]();
+            var object = this.outAbles[ i ][ 0 ];
+            var callback = this.outAbles[ i ][ 1 ];
+            if (object != undefined)
+                object[callback]();
+            else
+                callback();
         }
     };
     
@@ -58,7 +68,12 @@ function Mouse(){
         this.button = evt.button;
         for(var i in this.downAbles)
         {
-            this.downAbles[i]( this.button );
+            var object = this.downAbles[ i ][ 0 ];
+            var callback = this.downAbles[ i ][ 1 ];
+            if (object != undefined)
+                object[callback](this.button);
+            else
+                callback(this.button);
         }
         evt.preventDefault();
         evt.stopPropagation();
@@ -68,7 +83,12 @@ function Mouse(){
         this.button = evt.button;
         for(var i in this.upAbles)
         {
-            this.upAbles[i]( this.button );
+            var object = this.upAbles[ i ][ 0 ];
+            var callback = this.upAbles[ i ][ 1 ];
+            if (object != undefined)
+                object[callback](this.button);
+            else
+                callback(this.button);
         }
         this.button = 'none';
         evt.preventDefault();
@@ -79,7 +99,15 @@ function Mouse(){
         this.button = evt.button;
         for(var i in this.clickAbles)
         {
-            this.clickAbles[i]( this.button );
+            var object = this.clickAbles[ i ][ 0 ];
+            var callback = this.clickAbles[ i ][ 1 ];
+            if (object != undefined){
+                if (object.x > this.x && this.x < object.x + object.sizeX &&
+                    object.y > this.y && this.y < object.y + object.sizeY)
+                    object[callback](this.button);
+            }
+            else
+                callback(this.button);
         } 
     };
     
@@ -87,7 +115,12 @@ function Mouse(){
         this.button = evt.button;
         for(var i in this.doubleclickAbles)
         {
-            this.doubleclickAbles[i]( this.button );
+            var object = this.doubleclickAbles[ i ][ 0 ];
+            var callback = this.doubleclickAbles[ i ][ 1 ];
+            if (object != undefined)
+                object[callback](this.button);
+            else
+                callback(this.button);
         }
         console.log("MouseDoubleClick");
     };
@@ -102,27 +135,32 @@ function Mouse(){
         //console.log("MouseWheel " + (evt.wheelDelta / 120)); 
         for(var i in this.wheelAbles)
         {
-            this.wheelAbles[i]( evt.wheelDelta );
+            var object = this.wheelAbles[ i ][ 0 ];
+            var callback = this.wheelAbles[ i ][ 1 ];
+            if (object != undefined)
+                object[callback](evt.wheelDelta);
+            else
+                callback(evt.wheelDelta);
         }
         evt.preventDefault();
         evt.stopPropagation();        
     };   
 
-    this.addEventListener = function (event, callback){
+    this.addEventListener = function (event, object, callback){
         switch (event){
-            case MouseEvents.MOUSE_OVER:    this.overAbles.push(callback);       break;
-            case MouseEvents.MOUSE_OUT:     this.outAbles.push(callback);        break;
-            case MouseEvents.MOUSE_DOWN:    this.downAbles.push(callback);       break;
-            case MouseEvents.MOUSE_UP:      this.upAbles.push(callback);         break;
-            case MouseEvents.CLICK:         this.clickAbles.push(callback);      break;
-            case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.push(callback);break;
+            case MouseEvents.MOUSE_OVER:    this.overAbles.push([object, callback]);       break;
+            case MouseEvents.MOUSE_OUT:     this.outAbles.push([object, callback]);        break;
+            case MouseEvents.MOUSE_DOWN:    this.downAbles.push([object, callback]);       break;
+            case MouseEvents.MOUSE_UP:      this.upAbles.push([object, callback]);         break;
+            case MouseEvents.CLICK:         this.clickAbles.push([object, callback]);      break;
+            case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.push([object, callback]);break;
             case MouseEvents.MOUSE_MOVE:    break;
-            case MouseEvents.WHEEL:         this.wheelAbles.push(callback);      break;
+            case MouseEvents.WHEEL:         this.wheelAbles.push([object, callback]);      break;
             default:    return false;
         };
     };    
 	
-	this.removeEventListener = function (event, callback){
+	this.removeEventListener = function (event, object, callback){
 		var list;
 		switch (event){
             case MouseEvents.MOUSE_OVER:    list = this.overAbles;	     break;
@@ -135,22 +173,22 @@ function Mouse(){
             case MouseEvents.WHEEL:         list = this.wheelAbles;      break;
             default:    return false;
         };
-		var idx = list.indexOf( callback );
+		var idx = indexPair( [object, callback], list);
 		if (idx != -1){
 			switch (event){
-				case MouseEvents.MOUSE_OVER:    this.overAbles.splice(idx, 1);;	      break;
-				case MouseEvents.MOUSE_OUT:     this.outAbles.splice(idx, 1);;	      break;
-				case MouseEvents.MOUSE_DOWN:    this.downAbles.splice(idx, 1);;       break;
-				case MouseEvents.MOUSE_UP:      this.upAbles.splice(idx, 1);;         break;
-				case MouseEvents.CLICK:         this.clickAbles.splice(idx, 1);;      break;
+				case MouseEvents.MOUSE_OVER:    this.overAbles.splice(idx, 1);	      break;
+				case MouseEvents.MOUSE_OUT:     this.outAbles.splice(idx, 1);	      break;
+				case MouseEvents.MOUSE_DOWN:    this.downAbles.splice(idx, 1);        break;
+				case MouseEvents.MOUSE_UP:      this.upAbles.splice(idx, 1);          break;
+				case MouseEvents.CLICK:         this.clickAbles.splice(idx, 1);       break;
 				case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.splice(idx, 1); break;
 				case MouseEvents.MOUSE_MOVE:    			  		 			      break;
-				case MouseEvents.WHEEL:         this.wheelAbles.splice(idx, 1);;      break;
-				default: console.warn("Mouse::removeEventListener: callback " + callback + " not existing in " + event + " event"); break;			
+				case MouseEvents.WHEEL:         this.wheelAbles.splice(idx, 1);       break;
+				default: console.warn("Mouse::removeEventListener: callback " + callback + " not existing in " + object + "." + event); break;			
 			};
 		}	
 		else{
-			console.warn("Mouse::removeEventListener: Trying to remove " + event + " event with " + callback);			
+			console.warn("Mouse::removeEventListener: Trying to remove " + event + " event with " + object + "." + callback);			
 		};
 	};
 };
