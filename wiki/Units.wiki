@@ -22,6 +22,7 @@
 
   * Recon
   Fast unit to recon unexplored area.
+
   http://starloot.googlecode.com/svn/trunk/sprites/units/recon_01.png
 
   * Worker
