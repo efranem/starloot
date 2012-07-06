@@ -45,6 +45,18 @@ function Board(){
     var img = new Image;
     img.src = 'sprites/background/gravel_red.jpg';
     
+	
+	this.addTerrainProps = function(a){
+		for(var k in a){
+			if (a[k] instanceof Building){
+				this.addBuilding(a[k]);
+			}
+			if (a[k] instanceof Wall || a[k] instanceof Crater){
+				this.addObstacle(a[k]);
+			}
+		}
+	}
+	
     this.addMovable = function(m){
         //obj = new Movable(m);
         this.movable.push(m);
