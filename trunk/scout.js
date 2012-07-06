@@ -1,6 +1,6 @@
-function Scout(){
-	this.x=230;
-	this.y=100;
+function Scout(x,y){
+	this.x=x;
+	this.y=y;
     this.sizeX = 128;
     this.sizeY = 128;
 	this.angle = 0 * Math.PI/180;
@@ -71,8 +71,10 @@ function Scout(){
     
     this.select = function(){
         this.isSelected = !this.isSelected;
-        if (this.isSelected)
+        if (this.isSelected){
+            gameLogic.clearSelection();
             gameLogic.addSelection(this);
+        }
         else
             gameLogic.removeSelection(this);
     }
