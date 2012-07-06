@@ -1,6 +1,8 @@
 function Scout(){
 	this.x=230;
 	this.y=100;
+    this.sizeX = 128;
+    this.sizeY = 128;
 	this.angle = 0 * Math.PI/180;
 	this.v = 2;
 	this.target = undefined;
@@ -17,8 +19,15 @@ function Scout(){
 		[128*0,128*1],
 	];
 	this.sprite;
-	
+    this.isSelected = false;
+    var selectedImg = new Image;
+    selectedImg.src = 'sprites/ui/selector.png';    
+
 	this.paint = function(ctx){
+        if (this.isSelected == true){ // Paint selector graph
+            ctx.drawImage(selectedImg, this.x, this.y+15);
+        }
+        
 		var sprite = Math.round(this.angle / (45 * (Math.PI/180)));
 		
 		sprite = sprite % 8;
@@ -32,8 +41,7 @@ function Scout(){
 			this.x,
 			this.y,
 			128,
-			128);
-		
+			128);		
 	}
 	
 	this.update = function(){
@@ -58,7 +66,19 @@ function Scout(){
 			this.angle = 2*Math.PI + newAngle;
 		}else{
 			this.angle = newAngle % (2*Math.PI);
-		}
-		
+		}		
 	}
+    
+    this.select = function(){
+        this.isSelected = !this.isSelected;
+        if (this.isSelected)
+            gameLogic.addSelection(this);
+        else
+            gameLogic.removeSelection(this);
+    }
+    
+    this.middle = function(){
+        var coords = [this.x + (this.sizeX / 2) - camera.transformX, this.y + (this.sizeY / 2) - camera.transformY];
+        return coords;
+    }
 }
