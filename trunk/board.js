@@ -35,7 +35,7 @@ function PaintTile(row, col) {
 	var row_px = row*128;
 	var col_px = col*32;
 	if (col%2==0) {row_px+=64;}
-        ctx.drawImage(tile, 0, 0, 128, 64, row_px, col_px, 128, 64);
+        ctx.drawImage(tile, 0, 0, 128, 64, row_px-64, col_px-32, 128, 64);
 }
 
 function Board(){

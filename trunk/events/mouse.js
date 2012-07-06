@@ -133,10 +133,17 @@ function Mouse(){
 		this.y = evt.clientY;
 		this.tile_y = Math.floor((evt.clientY + camera.transformY) / 32);
 		if (this.tile_y%2==0) {
-			this.tile_x = Math.floor((evt.clientX + camera.transformX) / 128 ) -1;
-		} else {
 			this.tile_x = Math.floor((evt.clientX + camera.transformX) / 128 );
+		} else {
+			this.tile_x = Math.floor((evt.clientX+64 + camera.transformX) / 128 );
 		}
+		m_x = (evt.clientX + camera.transformX)%128;
+		m_y = (evt.clientY + camera.transformY)%64;
+		if (m_x == 0 && m_y == 0) { this.tile_x=0; this.tile_y=0; };
+//		if (m_x < 64 && m_y < 32) { this.tile_x=0; this.tile_y=0; };
+//		if (m_x > 64 && m_y < 32) { this.tile_x++; this.tile_y--; };
+//		if (m_x < 64 && m_y > 32) { this.tile_x--; this.tile_y++; };
+//		if (m_x > 64 && m_y > 32) { this.tile_x++; this.tile_y++; };
 		
     };
     
