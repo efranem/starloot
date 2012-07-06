@@ -54,6 +54,7 @@ function init(){
     mouse.addEventListener(MouseEvents.CLICK, scout1, 'select');
     mouse.addEventListener(MouseEvents.CLICK, scout2, 'select');
     mouse.addEventListener(MouseEvents.CLICK, undefined, clickedTarget);
+	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, slideScreen);
     // loop game
 	setInterval(gameLoop,16);
 };
@@ -101,6 +102,14 @@ var pressedKey = function(key){
     case 107: scout1.rotate(0.18);break;
     case 109:scout1.rotate(-0.18);break;
     }
+};
+
+// Slide callback function TEST
+var slideScreen = function(button, x, y){
+	if (button == MouseButtons.LEFT){
+		camera.transformX -= x;
+		camera.transformY -= y;
+	};
 };
 
 
