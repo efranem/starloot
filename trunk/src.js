@@ -60,7 +60,7 @@ var clickedTarget = function(){
     console.log("Button clicked in mouse");
     if (gameLogic.isSelected(scout)){
         var coords = scout.middle();
-        if (Math.abs(coords[0] - mouse.x) > 10 || Math.abs(coords[1] - mouse.y) > 10)
+        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50)
             scout.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
     }
 };
