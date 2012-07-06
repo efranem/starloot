@@ -97,8 +97,8 @@ function Board(){
 		// Let's see where we have to paint...
 		var startTileX = Math.floor(camera.transformX / tileWidth) * tileWidth;// + (tileWidth * (camera.transformX % tileWidth));
 		var startTileY = Math.floor(camera.transformY / tileHeight) * tileHeight;// (tileHeight * (camera.transformY % tileHeight));
-		for (var i = startTileX; i < startTileX + 2480; i += tileWidth){
-            for (var j = startTileY; j < startTileY + 1280; j += tileHeight){
+		for (var i = startTileX; i < startTileX + canvas.width + tileWidth; i += tileWidth){
+            for (var j = startTileY; j < startTileY + canvas.height + tileHeight; j += tileHeight){
                 ctx.drawImage(img, i, j, 256, 128);
             }
         }
