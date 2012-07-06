@@ -17,7 +17,9 @@ var MouseEvents = {
 
 function Mouse(){
     this.x = 0;
-    this.y = 0; 
+    this.y = 0;
+    this.tile_x = 0;
+    this.tile_y = 0;
     this.button = "none";
     
     this.overAbles = new Array;
@@ -129,6 +131,13 @@ function Mouse(){
         //console.log("MouseMoved");
         this.x = evt.clientX;
 		this.y = evt.clientY;
+		this.tile_y = Math.floor((evt.clientY + camera.transformY) / 32);
+		if (this.tile_y%2==0) {
+			this.tile_x = Math.floor((evt.clientX + camera.transformX) / 128 ) -1;
+		} else {
+			this.tile_x = Math.floor((evt.clientX + camera.transformX) / 128 );
+		}
+		
     };
     
     this.mouseWheel = function(evt){

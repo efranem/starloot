@@ -9,6 +9,7 @@ function debugData(ctx){
     ctx.fillStyle="#FFFFFF";
 	ctx.font = "bold 14px sans-serif";
 	ctx.fillText("Mouse: ("+mouse.x + ","+mouse.y+")",10,20);
+	ctx.fillText("Tile: ("+mouse.tile_x + ","+mouse.tile_y+")",140,20);
     if (mouse.button != "none")
         ctx.fillText("MouseButton: "+mouse.button+" pressed", 10, 40);
     else

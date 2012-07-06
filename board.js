@@ -133,6 +133,7 @@ function Board(){
 		PaintTile(6,5);
 		PaintTile(5,6);
 		PaintTile(5,4);
+		PaintTile(mouse.tile_x,mouse.tile_y);
 	};
 }
 
