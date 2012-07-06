@@ -5,7 +5,8 @@ document.body.onload = function(){
 var canvas = document.getElementById("canvas");
 var ctx,angle,angleCos,angleSin,halfWidth,halfHeight;
 var pos = 0;
-var scout = new Scout();
+var scout1 = new Scout(230, 100);
+var scout2 = new Scout(300, 200);
 var terrainProps = new Array;
 terrainProps.push(new Building(500, 620, 0));
 terrainProps.push(new Building(250, 400, 2));
@@ -29,7 +30,8 @@ function init(){
 	camera.transformX = halfWidth;
 	camera.transformY = halfHeight;
     
-    board.addMovable(scout);
+    board.addMovable(scout1);
+    board.addMovable(scout2);
     board.addTerrainProps(terrainProps);
 	
     // init event handlers
@@ -43,8 +45,9 @@ function init(){
     keyboard.addEventListener(Keys.A, undefined, pressedKey);
     keyboard.addEventListener(Keys.D, undefined, pressedKey);
 	mouse.init();
+    mouse.addEventListener(MouseEvents.CLICK, scout1, 'select');
+    mouse.addEventListener(MouseEvents.CLICK, scout2, 'select');
     mouse.addEventListener(MouseEvents.CLICK, undefined, clickedTarget);
-    mouse.addEventListener(MouseEvents.CLICK, scout, 'select');
     // loop game
 	setInterval(gameLoop,16);
 };
@@ -58,10 +61,15 @@ function gameLoop(){
 // Mouse callbacks functions TEST
 var clickedTarget = function(){
     console.log("Button clicked in mouse");
-    if (gameLogic.isSelected(scout)){
-        var coords = scout.middle();
+    if (gameLogic.isSelected(scout1)){
+        var coords = scout1.middle();
         if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50)
-            scout.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
+            scout1.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
+    }
+    if (gameLogic.isSelected(scout2)){
+        var coords = scout2.middle();
+        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50)
+            scout2.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
     }
 };
 
@@ -84,8 +92,8 @@ var pressedKey = function(key){
     case 39: /* Right arrow was pressed */
         camera.transformX += camera.CAMERA_SPEED;
         break;
-    case 107: scout.rotate(0.18);break;
-    case 109:scout.rotate(-0.18);break;
+    case 107: scout1.rotate(0.18);break;
+    case 109:scout1.rotate(-0.18);break;
     }
 };
 
