@@ -17,6 +17,12 @@ terrainProps.push(new Wall(430,240, 0));
 terrainProps.push(new Wall(430,283, 2));
 terrainProps.push(new Crater(600,440));
 
+var distance = function(a, b){
+  return Math.pow(a.x - b.x, 2) +  Math.pow(a.y - b.y, 2);
+}
+
+var tree = new kdTree(terrainProps,distance,["x","y"]);
+
 function init(){
 	var canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
