@@ -26,6 +26,7 @@ function Scout(x,y){
 	this.paint = function(ctx){
         if (this.isSelected == true){ // Paint selector graph
             ctx.drawImage(selectedImg, this.x, this.y+15);
+			
         }
         
 		var sprite = Math.round(this.angle / (45 * (Math.PI/180)));
@@ -41,7 +42,25 @@ function Scout(x,y){
 			this.x,
 			this.y,
 			128,
-			128);		
+			128);
+		
+	}
+	
+	function collision(x,y){
+		var collisions = tree.nearest({'x':x,'y':y},10,5000);
+		if (collisions.length > 0){
+			for(var key in collisions){
+				var cx = collisions[key][0].x;
+				var cy = collisions[key][0].y;
+				var cdx = collisions[key][0].x+collisions[key][0].dim[0]*128;
+				var cdy = collisions[key][0].y+collisions[key][0].dim[1]*128;
+				if ((x >= cx && x <= cdx) || (y >= cy && y <= cdy)){
+					return true;
+				}
+				
+			}
+		}
+		return false;
 	}
 	
 	this.update = function(){
@@ -55,8 +74,12 @@ function Scout(x,y){
 			else alpha %= 2 * Math.PI;
 			//console.log("Alpha: "+(scout.angle/(Math.PI/180)).toFixed(2) +" degrees");
 			this.angle = (2 * Math.PI) - alpha;		
-			this.x += Math.cos(alpha)*2.0;
-			this.y += Math.sin(alpha)*2.0;
+			var x = this.x + Math.cos(alpha)*2.0;
+			var y = this.y + Math.sin(alpha)*2.0;
+			if (!collision(x+64,y+64)){
+				this.x = x;
+				this.y = y;
+			}
 		}
 	}
 	
