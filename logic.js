@@ -37,7 +37,7 @@ function GameLogic(){
 	this.paint = function(ctx){
 		if (this.squareSelection.length == 4){
 			ctx.strokeStyle="blue";
-			ctx.strokeRect(this.squareSelection[0],this.squareSelection[1],this.squareSelection[2],this.squareSelection[3]);
+			ctx.strokeRect(this.squareSelection[0]+camera.transformX,this.squareSelection[1]+camera.transformY,this.squareSelection[2],this.squareSelection[3]);
 		}
 	};
 }; 
