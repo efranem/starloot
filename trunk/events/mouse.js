@@ -144,19 +144,18 @@ function Mouse(){
         //console.log("MouseMoved");
         this.x = evt.clientX;
 		this.y = evt.clientY;
+		// Find corresponding grid tile
+		m_x = (evt.clientX + camera.transformX)%64;
+		m_y = (evt.clientY + camera.transformY)%32;
+		this.tile_x = Math.floor((evt.clientX + camera.transformX) / 64);
 		this.tile_y = Math.floor((evt.clientY + camera.transformY) / 32);
-		if (this.tile_y%2==0) {
-			this.tile_x = Math.floor((evt.clientX + camera.transformX) / 128 );
+		if (this.tile_x%2 == this.tile_y%2) {
+			if (m_x + (m_y*2)>64) {this.tile_x++; this.tile_y++;}
 		} else {
-			this.tile_x = Math.floor((evt.clientX+64 + camera.transformX) / 128 );
+			if (-m_x + (m_y*2)<0) {this.tile_x++;}
+			else {this.tile_y++;}
 		}
-		m_x = (evt.clientX + camera.transformX)%128;
-		m_y = (evt.clientY + camera.transformY)%64;
-		if (m_x == 0 && m_y == 0) { this.tile_x=0; this.tile_y=0; };
-//		if (m_x < 64 && m_y < 32) { this.tile_x=0; this.tile_y=0; };
-//		if (m_x > 64 && m_y < 32) { this.tile_x++; this.tile_y--; };
-//		if (m_x < 64 && m_y > 32) { this.tile_x--; this.tile_y++; };
-//		if (m_x > 64 && m_y > 32) { this.tile_x++; this.tile_y++; };
+		
 		if (this.buttondown == true){
 			var slidedX = this.x - this.originDown_x;
 			var slidedY = this.y - this.originDown_y;
@@ -175,7 +174,6 @@ function Mouse(){
 			};
 		};
     };    
-	
     this.mouseWheel = function(evt){
         //console.log("MouseWheel " + (evt.wheelDelta / 120)); 
         for(var i in this.wheelAbles)
