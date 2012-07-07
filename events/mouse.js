@@ -19,6 +19,8 @@ var MouseEvents = {
 function Mouse(){
     this.x = 0;
     this.y = 0;
+	this.lastX = 0;
+	this.lastY = 0;
     this.tile_x = 0;
     this.tile_y = 0;
     this.button = "none";
@@ -86,6 +88,8 @@ function Mouse(){
             else
                 callback(this.button);
         }
+		this.lastX = this.x;
+		this.lastY = this.y;
 		this.originDown_x = this.x;
 		this.originDown_y = this.y;
 		this.buttondown = true;
@@ -157,23 +161,26 @@ function Mouse(){
 		}
 		
 		if (this.buttondown == true){
-			var slidedX = this.x - this.originDown_x;
-			var slidedY = this.y - this.originDown_y;
-			if (Math.abs(slidedX) > this.epsilonSlide ||  Math.abs(slidedY) > this.epsilonSlide){
+			var localSlidedX = this.x - this.lastX;
+			var localSlidedY = this.y - this.lastY;
+			var globalSlideX = this.x - this.originDown_x;
+			var globalSlideY = this.y - this.originDown_y;
+			if (Math.abs(localSlidedX) > this.epsilonSlide ||  Math.abs(localSlidedY) > this.epsilonSlide){
 				for(var i in this.slideAbles)
 				{
 					var object = this.slideAbles[ i ][ 0 ];
 					var callback = this.slideAbles[ i ][ 1 ];
 					if (object != undefined)
-						object[callback](this.button, slidedX, slidedY);
+						object[callback](this.button, localSlidedX, localSlidedY, globalSlideX, globalSlideY);
 					else
-						callback(this.button, slidedX, slidedY);
+						callback(this.button, localSlidedX, localSlidedY, globalSlideX, globalSlideY);
 				};
-				this.originDown_x = this.x;
-				this.originDown_y = this.y;
+				this.lastX = this.x;
+				this.lastY = this.y;
 			};
 		};
     };    
+	
     this.mouseWheel = function(evt){
         //console.log("MouseWheel " + (evt.wheelDelta / 120)); 
         for(var i in this.wheelAbles)

@@ -31,6 +31,7 @@ function renderFrame(){
 	ctx.save()
     ctx.translate(-camera.transformX,-camera.transformY);
 	board.paint(ctx);
+	gameLogic.paint(ctx);
     ctx.restore();
 	debugData(ctx); // Print usefull data
 };
