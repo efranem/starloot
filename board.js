@@ -30,12 +30,14 @@
 
 function PaintTile(row, col) {
 	// Now paint something on a specific tile
-	var tile = new Image;
-	tile.src = 'sprites/ui/tile_green.png';
-	var row_px = row*128;
-	var col_px = col*32;
-	if (col%2==0) {row_px+=64;}
-        ctx.drawImage(tile, 0, 0, 128, 64, row_px-64, col_px-32, 128, 64);
+	if ((row+col) % 2 == 0) {
+		var tile = new Image;
+		tile.src = 'sprites/ui/tile_green.png';
+		var row_px = row*64;
+		var col_px = col*32;
+		ctx.drawImage(tile, row_px-64, col_px-32);
+	}
+
 }
 
 function Board(){
@@ -141,10 +143,14 @@ function Board(){
                 this.obstacles[i].paint(ctx);
         }
 
-		PaintTile(5,5);
-		PaintTile(6,5);
-		PaintTile(5,6);
-		PaintTile(5,4);
+		PaintTile(0,0);
+		PaintTile(1,0);
+		PaintTile(2,0);
+		PaintTile(3,0);
+		PaintTile(4,0);
+		PaintTile(5,0);
+		PaintTile(5,1);
+		//PaintTile(0,1);
 		PaintTile(mouse.tile_x,mouse.tile_y);
 	};
 }
