@@ -50,10 +50,11 @@ function Scout(x,y){
 		var collisions = tree.nearest({'x':x,'y':y},10,5000);
 		if (collisions.length > 0){
 			for(var key in collisions){
-				var cx = collisions[key][0].x;
-				var cy = collisions[key][0].y;
-				 var dimx = (collisions[key][0].dim[0]*128);
-				var dimy = (collisions[key][0].dim[1]*128);
+				
+				var dimx = (collisions[key][0].dim[0]*128)/2;
+				var dimy = (collisions[key][0].dim[1]*128)/2;
+				var cx = collisions[key][0].x-dimx;
+				var cy = collisions[key][0].y-dimy;
 				var cdx = collisions[key][0].x + dimx;
 				var cdy = collisions[key][0].y + dimy;
 				if ((x >= cx && x <= cdx) && (y >= cy && y <= cdy)){
