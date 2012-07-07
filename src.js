@@ -9,12 +9,12 @@ var scout1 = new Scout(100, 100);
 var scout2 = new Scout(200, 200);
 var terrainProps = new Array;
 terrainProps.push(new Building(500, 620, 0));
-terrainProps.push(new Building(250, 400, 2));
+/*terrainProps.push(new Building(250, 400, 2));
 terrainProps.push(new Building(100, 400, 1));
-terrainProps.push(new Building(800, 700, 3));
+terrainProps.push(new Building(800, 700, 3));*/
 terrainProps.push(new Wall(353.5,201.5, 0));
-terrainProps.push(new Wall(430,240, 0));
-terrainProps.push(new Wall(430,283, 2));
+/*terrainProps.push(new Wall(430,240, 0));
+terrainProps.push(new Wall(430,283, 2));*/
 terrainProps.push(new Crater(600,440));
 
 var distance = function(a, b){
