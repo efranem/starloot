@@ -3,7 +3,7 @@ document.body.onload = function(){
 }
 
 var canvas = document.getElementById("canvas");
-var ctx,angle,angleCos,angleSin,halfWidth,halfHeight;
+var ctx;
 var pos = 0;
 var scout1 = new Scout(230, 100);
 var scout2 = new Scout(300, 200);
@@ -18,7 +18,7 @@ terrainProps.push(new Wall(430,283, 2));
 terrainProps.push(new Crater(600,440));
 
 var distance = function(a, b){
-  return Math.pow(a.x - b.x, 2) +  Math.pow(a.y - b.y, 2);
+  return Math.sqrt(Math.pow(a.x - b.x, 2) +  Math.pow(a.y - b.y, 2));
 }
 
 var tree = new kdTree(terrainProps,distance,["x","y"]);
@@ -27,14 +27,9 @@ function init(){
 	var canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
 	
-	angle = 45*(Math.PI/180);
-	angleCos = Math.cos(angle);
-	angleSin = Math.sin(angle);
-	halfWidth=canvas.width/2;
-	halfHeight=canvas.height/2;
-	
-	camera.transformX = halfWidth;
-	camera.transformY = halfHeight;
+	 
+	camera.transformX = 0;
+	camera.transformY = 0;
     
     board.addMovable(scout1);
     board.addMovable(scout2);
