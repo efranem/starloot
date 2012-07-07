@@ -5,8 +5,8 @@ document.body.onload = function(){
 var canvas = document.getElementById("canvas");
 var ctx;
 var pos = 0;
-var scout1 = new Scout(230, 100);
-var scout2 = new Scout(300, 200);
+var scout1 = new Scout(100, 100);
+var scout2 = new Scout(200, 200);
 var terrainProps = new Array;
 terrainProps.push(new Building(500, 620, 0));
 terrainProps.push(new Building(250, 400, 2));
