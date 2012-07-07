@@ -52,9 +52,11 @@ function Scout(x,y){
 			for(var key in collisions){
 				var cx = collisions[key][0].x;
 				var cy = collisions[key][0].y;
-				var cdx = collisions[key][0].x+collisions[key][0].dim[0]*128;
-				var cdy = collisions[key][0].y+collisions[key][0].dim[1]*128;
-				if ((x >= cx && x <= cdx) || (y >= cy && y <= cdy)){
+				 var dimx = (collisions[key][0].dim[0]*128);
+				var dimy = (collisions[key][0].dim[1]*128);
+				var cdx = collisions[key][0].x + dimx;
+				var cdy = collisions[key][0].y + dimy;
+				if ((x >= cx && x <= cdx) && (y >= cy && y <= cdy)){
 					return true;
 				}
 				
