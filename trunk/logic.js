@@ -1,5 +1,6 @@
 function GameLogic(){
-    this.selection = []
+    this.selection = new Array;
+	this.squareSelection = new Array;
     
     this.addSelection = function(obj){
         this.selection.push(obj);
@@ -28,6 +29,17 @@ function GameLogic(){
         };
         return false;
     };
+	
+	this.setMouseSelection = function(a){
+		this.squareSelection = a;
+	};
+	
+	this.paint = function(ctx){
+		if (this.squareSelection.length == 4){
+			ctx.strokeStyle="blue";
+			ctx.strokeRect(this.squareSelection[0],this.squareSelection[1],this.squareSelection[2],this.squareSelection[3]);
+		}
+	};
 }; 
 
 function logicTick(){

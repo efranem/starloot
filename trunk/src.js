@@ -50,6 +50,8 @@ function init(){
     mouse.addEventListener(MouseEvents.CLICK, scout2, 'select');
     mouse.addEventListener(MouseEvents.CLICK, undefined, clickedTarget);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, slideScreen);
+	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
+	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection);
     // loop game
 	setInterval(gameLoop,16);
 };
@@ -100,10 +102,24 @@ var pressedKey = function(key){
 };
 
 // Slide callback function TEST
-var slideScreen = function(button, x, y){
+var slideScreen = function(button, lx, ly, gx, gy){
 	if (button == MouseButtons.LEFT){
-		camera.transformX -= x;
-		camera.transformY -= y;
+		camera.transformX -= lx;
+		camera.transformY -= ly;
+	};
+};
+
+// Slide callback function TEST
+var mouseSelection = function(button, lx, ly, gx, gy){
+	if (button == MouseButtons.RIGHT){
+		gameLogic.setMouseSelection([mouse.originDown_x, mouse.originDown_y, gx, gy]);
+	};
+};
+
+// Up callback function TEST
+var mouseEndSelection = function(button){
+	if (button == MouseButtons.RIGHT){
+		gameLogic.setMouseSelection([]);
 	};
 };
 
