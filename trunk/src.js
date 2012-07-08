@@ -58,6 +58,7 @@ function init(){
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, slideScreen);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
 	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection, MouseButtons.RIGHT);
+	mouse.addEventListener(MouseEvents.MOUSE_DOWN, selector, 'clearSelection', MouseButtons.RIGHT);
     // loop game
 	setInterval(gameLoop,16);
 };
