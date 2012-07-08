@@ -95,18 +95,23 @@ function Scout(x,y){
 		}		
 	}
     
-    this.select = function(){
-        this.isSelected = !this.isSelected;
+    this.updateSelect = function(){
         if (this.isSelected){
-            gameLogic.clearSelection();
-            gameLogic.addSelection(this);
+			selector.removeSelection(this);
+            selector.addSelection(this);
         }
         else
-            gameLogic.removeSelection(this);
+            selector.removeSelection(this);
     }
     
     this.middle = function(){
         var coords = [this.x + (this.sizeX / 2) - camera.transformX, this.y + (this.sizeY / 2) - camera.transformY];
         return coords;
     }
+	
+	this.onclick = function(){
+		this.isSelected = !this.isSelected;
+		selector.clearSelection();
+		this.updateSelect();
+	};
 }

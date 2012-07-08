@@ -5,8 +5,10 @@ document.body.onload = function(){
 var canvas = document.getElementById("canvas");
 var ctx;
 var pos = 0;
-var scout1 = new Scout(100, 100);
-var scout2 = new Scout(200, 200);
+var scout1 = new Scout(500, 50);
+var scout2 = new Scout(800, 60);
+var scout3 = new Scout(500, 230);
+var scout4 = new Scout(800, 350);
 var terrainProps = new Array;
 terrainProps.push(new Building(500, 620, 0));
 /*terrainProps.push(new Building(250, 400, 2));
@@ -33,6 +35,8 @@ function init(){
     
     board.addMovable(scout1);
     board.addMovable(scout2);
+	board.addMovable(scout3);
+	board.addMovable(scout4);
     board.addTerrainProps(terrainProps);
 	
     // init event handlers
@@ -46,8 +50,10 @@ function init(){
     keyboard.addEventListener(Keys.A, undefined, pressedKey);
     keyboard.addEventListener(Keys.D, undefined, pressedKey);
 	mouse.init();
-    mouse.addEventListener(MouseEvents.CLICK, scout1, 'select', MouseButtons.LEFT);
-    mouse.addEventListener(MouseEvents.CLICK, scout2, 'select', MouseButtons.LEFT);
+    mouse.addEventListener(MouseEvents.CLICK, scout1, 'onclick', MouseButtons.LEFT);
+    mouse.addEventListener(MouseEvents.CLICK, scout2, 'onclick', MouseButtons.LEFT);
+	mouse.addEventListener(MouseEvents.CLICK, scout3, 'onclick', MouseButtons.LEFT);
+	mouse.addEventListener(MouseEvents.CLICK, scout4, 'onclick', MouseButtons.LEFT);
     mouse.addEventListener(MouseEvents.CLICK, undefined, clickedTarget, MouseButtons.LEFT);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, slideScreen);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
@@ -65,15 +71,29 @@ function gameLoop(){
 // Mouse callbacks functions TEST
 var clickedTarget = function(){
     console.log("Button clicked in mouse");
-    if (gameLogic.isSelected(scout1)){
+    if (selector.isSelected(scout1)){
         var coords = scout1.middle();
-        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50)
-            scout1.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
+        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
+			scout1.target = selector.targetPoint(scout1.x, scout1.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
+		}
     }
-    if (gameLogic.isSelected(scout2)){
+    if (selector.isSelected(scout2)){
         var coords = scout2.middle();
-        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50)
-            scout2.target = {x:mouse.x + camera.transformX,y:(mouse.y+camera.transformY)};
+        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
+				scout2.target = selector.targetPoint(scout2.x, scout2.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
+		};
+    }
+	if (selector.isSelected(scout3)){
+        var coords = scout3.middle();
+        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
+				scout3.target = selector.targetPoint(scout3.x, scout3.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
+		};
+    }
+	if (selector.isSelected(scout4)){
+        var coords = scout4.middle();
+        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
+				scout4.target = selector.targetPoint(scout4.x, scout4.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
+		};
     }
 };
 
@@ -112,13 +132,13 @@ var slideScreen = function(button, lx, ly, gx, gy){
 // Slide callback function TEST
 var mouseSelection = function(button, lx, ly, gx, gy){
 	if (button == MouseButtons.RIGHT){
-		gameLogic.setMouseSelection([mouse.originDown_x, mouse.originDown_y, gx, gy]);
+		selector.setMouseSelection([mouse.originDown_x, mouse.originDown_y, gx, gy]);
 	};
 };
 
 // Up callback function TEST
 var mouseEndSelection = function(){
-	gameLogic.endMouseSelection();
+	selector.endMouseSelection();
 };
 
 

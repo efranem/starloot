@@ -17,7 +17,7 @@ function debugData(ctx){
     ctx.fillText("Keys: "+keyboard.keysPressed,10,60);
     ctx.fillText("FPS: "+fps.fpsVal.toFixed(2)+" fps",10,80);
     ctx.fillText("Sprite: "+scout1.sprite,10,110);
-    ctx.fillText("Angle: "+(scout1.angle/(Math.PI/180)),10,130);
+    ctx.fillText("Angle: "+(scout1.angle/(Math.PI/180)).toFixed(2),10,130);
     ctx.fillText("Camera: "+camera.transformX+","+camera.transformY,10,150);
 	ctx.fillText("Target: "+(scout1.target == undefined ? "undefined" : scout1.target.x+","+scout1.target.y),10,170);
 };
@@ -31,7 +31,7 @@ function renderFrame(){
 	ctx.save()
     ctx.translate(-camera.transformX,-camera.transformY);
 	board.paint(ctx);
-	gameLogic.paint(ctx);
+	gui.paint(ctx);
     ctx.restore();
 	debugData(ctx); // Print usefull data
 };
