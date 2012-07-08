@@ -31,10 +31,10 @@ function Mouse(){
     
     this.overAbles = new Array;
     this.outAbles = new Array;
-    this.downAbles = new Array;
-    this.upAbles = new Array;
-    this.clickAbles = new Array;
-    this.doubleclickAbles = new Array;
+    this.downAbles = new Array(3);
+    this.upAbles = new Array(3);
+    this.clickAbles = new Array(3);
+    this.doubleclickAbles = new Array(3);
     this.wheelAbles = new Array;
 	this.slideAbles = new Array;
     
@@ -48,9 +48,13 @@ function Mouse(){
         window.onmousemove      = function(evt){mouse.mouseMoved(evt);};
         window.onmousewheel     = function(evt){mouse.mouseWheel(evt);};
         window.oncontextmenu    = function(evt){return false;}; // Disable right-click context menu*/
-		window.ontouchstart     = function(evt){mouse.mouseDown(evt);};
-		window.ontouchend       = function(evt){mouse.mouseUp(evt);};
-		window.ontouchmove      = function(evt){mouse.mouseMoved(evt);};
+		//window.ontouchstart     = function(evt){mouse.mouseDown(evt);};
+		//window.ontouchend       = function(evt){mouse.mouseUp(evt);};
+		//window.ontouchmove      = function(evt){mouse.mouseMoved(evt);};
+		this.downAbles = [[], [], []];
+		this.upAbles = [[], [], []];
+		this.clickAbles = [[], [], []];
+		this.doubleclickAbles = [[], [], []];
 	};
     
     this.mouseOver = function(evt){
@@ -79,14 +83,14 @@ function Mouse(){
     
     this.mouseDown = function(evt){
         this.button = evt.button;
-        for(var i in this.downAbles)
+        for(var i in this.downAbles[ this.button ])
         {
-            var object = this.downAbles[ i ][ 0 ];
-            var callback = this.downAbles[ i ][ 1 ];
+            var object = this.downAbles[ this.button ][ i ][ 0 ];
+            var callback = this.downAbles[ this.button ][ i ][ 1 ];
             if (object != undefined)
-                object[callback](this.button);
+                object[callback]();
             else
-                callback(this.button);
+                callback();
         }
 		this.lastX = this.x;
 		this.lastY = this.y;
@@ -99,14 +103,14 @@ function Mouse(){
     
     this.mouseUp = function(evt){
         this.button = evt.button;
-        for(var i in this.upAbles)
+        for(var i in this.upAbles[ this.button ])
         {
-            var object = this.upAbles[ i ][ 0 ];
-            var callback = this.upAbles[ i ][ 1 ];
+            var object = this.upAbles[ this.button ][ i ][ 0 ];
+            var callback = this.upAbles[ this.button ][ i ][ 1 ];
             if (object != undefined)
-                object[callback](this.button);
+                object[callback]();
             else
-                callback(this.button);
+                callback();
         }
 		this.button = 'none';
 		this.buttondown = false;
@@ -116,30 +120,30 @@ function Mouse(){
     
     this.mouseClick = function(evt){
         this.button = evt.button;
-        for(var i in this.clickAbles)
+        for(var i in this.clickAbles[ this.button ])
         {
-            var object = this.clickAbles[ i ][ 0 ];
-            var callback = this.clickAbles[ i ][ 1 ];
+            var object = this.clickAbles[ this.button ][ i ][ 0 ];
+            var callback = this.clickAbles[ this.button ][ i ][ 1 ];
             if (object != undefined){
                  if (object.x - camera.transformX < this.x && this.x < object.x + object.sizeX - camera.transformX &&
                     object.y - camera.transformY < this.y && this.y < object.y + object.sizeY - camera.transformY)
-                    object[callback](this.button);
+                    object[callback]();
             }
             else
-                callback(this.button);
+                callback();
         } 
     };
     
     this.mouseDoubleClick = function(evt){
         this.button = evt.button;
-        for(var i in this.doubleclickAbles)
+        for(var i in this.doubleclickAbles[ this.button ])
         {
-            var object = this.doubleclickAbles[ i ][ 0 ];
-            var callback = this.doubleclickAbles[ i ][ 1 ];
+            var object = this.doubleclickAbles[ this.button ][ i ][ 0 ];
+            var callback = this.doubleclickAbles[ this.button ][ i ][ 1 ];
             if (object != undefined)
-                object[callback](this.button);
+                object[callback]();
             else
-                callback(this.button);
+                callback();
         }
         console.log("MouseDoubleClick");
     };
@@ -196,48 +200,104 @@ function Mouse(){
         evt.stopPropagation();        
     };   
 
-    this.addEventListener = function (event, object, callback){
+    this.addEventListener = function (event, object, callback, button){
         switch (event){
-            case MouseEvents.MOUSE_OVER:    this.overAbles.push([object, callback]);       break;
-            case MouseEvents.MOUSE_OUT:     this.outAbles.push([object, callback]);        break;
-            case MouseEvents.MOUSE_DOWN:    this.downAbles.push([object, callback]);       break;
-            case MouseEvents.MOUSE_UP:      this.upAbles.push([object, callback]);         break;
-            case MouseEvents.CLICK:         this.clickAbles.push([object, callback]);      break;
-            case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.push([object, callback]);break;
-            case MouseEvents.MOUSE_MOVE:    break;
-            case MouseEvents.WHEEL:         this.wheelAbles.push([object, callback]);      break;
-			case MouseEvents.MOUSE_SLIDE:   this.slideAbles.push([object, callback]);      break;
-            default:    return false;
+            case MouseEvents.MOUSE_OVER:    
+				this.overAbles.push([object, callback]);       
+				break;
+            case MouseEvents.MOUSE_OUT:     
+				this.outAbles.push([object, callback]);        
+				break;
+            case MouseEvents.MOUSE_DOWN:    
+				this.downAbles[ button ].push([object, callback]);       
+				break;
+            case MouseEvents.MOUSE_UP:      
+				this.upAbles[ button ].push([object, callback]);         	
+				break;
+            case MouseEvents.CLICK:         
+				this.clickAbles[ button ].push([object, callback]);      	
+				break;
+            case MouseEvents.DOUBLE_CLICK:  
+				this.doubleclickAbles[ button ].push([object, callback]);
+				break;
+            case MouseEvents.MOUSE_MOVE:    
+				break;
+            case MouseEvents.WHEEL:         
+				this.wheelAbles.push([object, callback]);      
+				break;
+			case MouseEvents.MOUSE_SLIDE:   
+				this.slideAbles.push([object, callback]);      
+				break;
+            default:    
+				return false;
         };
     };    
 	
-	this.removeEventListener = function (event, object, callback){
+	this.removeEventListener = function (event, object, callback, button){
 		var list;
 		switch (event){
-            case MouseEvents.MOUSE_OVER:    list = this.overAbles;	     break;
-            case MouseEvents.MOUSE_OUT:     list = this.outAbles;	     break;
-            case MouseEvents.MOUSE_DOWN:    list = this.downAbles;       break;
-            case MouseEvents.MOUSE_UP:      list = this.upAbles;         break;
-            case MouseEvents.CLICK:         list = this.clickAbles;      break;
-            case MouseEvents.DOUBLE_CLICK:  list = this.doubleclickAbles;break;
-            case MouseEvents.MOUSE_MOVE:    list = [];			  		 break;
-            case MouseEvents.WHEEL:         list = this.wheelAbles;      break;
-			case MouseEvents.MOUSE_SLIDE:   list = this.slideAbles;      break;
-            default:    return false;
+            case MouseEvents.MOUSE_OVER:    
+				list = this.overAbles;	     			
+				break;
+            case MouseEvents.MOUSE_OUT:     
+				list = this.outAbles;	     			
+				break;
+            case MouseEvents.MOUSE_DOWN:    
+				list = this.downAbles[ button ];       	
+				break;
+            case MouseEvents.MOUSE_UP:      
+				list = this.upAbles[ button ];         	
+				break;
+            case MouseEvents.CLICK:         
+				list = this.clickAbles[ button ];      	
+				break;
+            case MouseEvents.DOUBLE_CLICK:  
+				list = this.doubleclickAbles[ button ];		
+				break;
+            case MouseEvents.MOUSE_MOVE:    
+				list = [];			  		 			
+				break;
+            case MouseEvents.WHEEL:         
+				list = this.wheelAbles;      			
+				break;
+			case MouseEvents.MOUSE_SLIDE:   
+				list = this.slideAbles;      			
+				break;
+            default:    
+				return false;
         };
-		var idx = indexPair( [object, callback], list);
+		var idx = indexPair( [object, callback], list, button);
 		if (idx != -1){
 			switch (event){
-				case MouseEvents.MOUSE_OVER:    this.overAbles.splice(idx, 1);	      break;
-				case MouseEvents.MOUSE_OUT:     this.outAbles.splice(idx, 1);	      break;
-				case MouseEvents.MOUSE_DOWN:    this.downAbles.splice(idx, 1);        break;
-				case MouseEvents.MOUSE_UP:      this.upAbles.splice(idx, 1);          break;
-				case MouseEvents.CLICK:         this.clickAbles.splice(idx, 1);       break;
-				case MouseEvents.DOUBLE_CLICK:  this.doubleclickAbles.splice(idx, 1); break;
-				case MouseEvents.MOUSE_MOVE:    			  		 			      break;
-				case MouseEvents.WHEEL:         this.wheelAbles.splice(idx, 1);       break;
-				case MouseEvents.MOUSE_SLIDE:   this.slideAbles.splice(idx, 1);       break;
-				default: console.warn("Mouse::removeEventListener: callback " + callback + " not existing in " + object + "." + event); break;			
+				case MouseEvents.MOUSE_OVER:    
+					this.overAbles.splice(idx, 1);	      			
+					break;
+				case MouseEvents.MOUSE_OUT:     
+					this.outAbles.splice(idx, 1);	      			
+					break;
+				case MouseEvents.MOUSE_DOWN:    
+					this.downAbles[ button ].splice(idx, 1);        
+					break;
+				case MouseEvents.MOUSE_UP:      
+					this.upAbles[ button ].splice(idx, 1);          
+					break;
+				case MouseEvents.CLICK:         
+					this.clickAbles[ button ].splice(idx, 1);       
+					break;
+				case MouseEvents.DOUBLE_CLICK:  
+					this.doubleclickAbles[ button ].splice(idx, 1); 
+					break;
+				case MouseEvents.MOUSE_MOVE:    			  		 			      			
+					break;
+				case MouseEvents.WHEEL:         
+					this.wheelAbles.splice(idx, 1);       			
+					break;
+				case MouseEvents.MOUSE_SLIDE:   
+					this.slideAbles.splice(idx, 1);       			
+					break;
+				default: 
+					console.warn("Mouse::removeEventListener: callback " + callback + " not existing in " + object + "." + event); 
+					break;			
 			};
 		}	
 		else{

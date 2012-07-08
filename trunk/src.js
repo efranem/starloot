@@ -46,12 +46,12 @@ function init(){
     keyboard.addEventListener(Keys.A, undefined, pressedKey);
     keyboard.addEventListener(Keys.D, undefined, pressedKey);
 	mouse.init();
-    mouse.addEventListener(MouseEvents.CLICK, scout1, 'select');
-    mouse.addEventListener(MouseEvents.CLICK, scout2, 'select');
-    mouse.addEventListener(MouseEvents.CLICK, undefined, clickedTarget);
+    mouse.addEventListener(MouseEvents.CLICK, scout1, 'select', MouseButtons.LEFT);
+    mouse.addEventListener(MouseEvents.CLICK, scout2, 'select', MouseButtons.LEFT);
+    mouse.addEventListener(MouseEvents.CLICK, undefined, clickedTarget, MouseButtons.LEFT);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, slideScreen);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
-	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection);
+	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection, MouseButtons.RIGHT);
     // loop game
 	setInterval(gameLoop,16);
 };
@@ -117,10 +117,8 @@ var mouseSelection = function(button, lx, ly, gx, gy){
 };
 
 // Up callback function TEST
-var mouseEndSelection = function(button){
-	if (button == MouseButtons.RIGHT){
-		gameLogic.setMouseSelection([]);
-	};
+var mouseEndSelection = function(){
+	gameLogic.endMouseSelection();
 };
 
 
