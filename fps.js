@@ -1,4 +1,4 @@
-function FPS(){
+/*function FPS(){
 	this.fpsVal;
 	this.lastLoop = new Date;
 	
@@ -10,4 +10,4 @@ function FPS(){
 	
 }
 
-fps = new FPS;
+fps = new FPS;*/
