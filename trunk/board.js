@@ -113,7 +113,7 @@ function Board(){
         for (var obj in selector.selection){
             var scout = selector.selection[ obj ];
             var coords = scout.middle();
-            if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
+            if (Math.abs(coords.x - mouse.x) > 50 || Math.abs(coords.y - mouse.y) > 50){
                 var point = camera.localPosition({x: mouse.x, y: mouse.y});
                 scout.target = selector.targetPoint(scout.x, scout.y, point.x, point.y);
             }
