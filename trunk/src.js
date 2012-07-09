@@ -28,7 +28,8 @@ var tree = new kdTree(terrainProps,distance,["x","y"]);
 function init(){
 	var canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
-	
+	canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 	 
 	camera.transformX = 0;
 	camera.transformY = 0;
@@ -59,6 +60,7 @@ function init(){
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
 	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection, MouseButtons.RIGHT);
 	mouse.addEventListener(MouseEvents.MOUSE_DOWN, selector, 'clearSelection', MouseButtons.RIGHT);
+    
     // loop game
 	window.onEachFrame(Game.loop);
 };

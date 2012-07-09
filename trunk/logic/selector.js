@@ -94,8 +94,9 @@ function Selector(){
 	
 	this.paint = function(ctx){
 		if (this.squareSelection.length == 4){
-			ctx.strokeStyle="blue";
-			ctx.strokeRect(this.squareSelection[0]+camera.transformX,this.squareSelection[1]+camera.transformY,this.squareSelection[2],this.squareSelection[3]);
+            ctx.strokeStyle="blue";
+            var point = camera.localPosition({x: this.squareSelection[0], y: this.squareSelection[1]});
+			ctx.strokeRect(point.x , point.y, this.squareSelection[2], this.squareSelection[3]);
 		}
 	};
 };
