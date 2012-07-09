@@ -86,7 +86,8 @@ var slideScreen = function(button, lx, ly, gx, gy){
 // Slide callback function TEST
 var mouseSelection = function(button, lx, ly, gx, gy){
 	if (button == MouseButtons.RIGHT){
-		selector.setMouseSelection([mouse.originDown_x, mouse.originDown_y, gx, gy]);
+        var point = camera.localPosition({x: mouse.originDown_x, y: mouse.originDown_y});
+		selector.setMouseSelection({x: point.x, y: point.y, gx: gx, gy: gy});
 	};
 };
 
