@@ -20,6 +20,8 @@ terrainProps.push(new Wall(353.5,201.5, 0));
 terrainProps.push(new Wall(430,283, 2));*/
 terrainProps.push(new Crater(600,440));
 
+var stats;
+
 var distance = function(a, b){
   return Math.sqrt(Math.pow(a.x - b.x, 2) +  Math.pow(a.y - b.y, 2));
 }
@@ -61,6 +63,13 @@ function init(){
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
 	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection, MouseButtons.RIGHT);
 	mouse.addEventListener(MouseEvents.MOUSE_DOWN, selector, 'clearSelection', MouseButtons.RIGHT);
+    
+    // Stats windows
+    stats = new Stats();
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.right = '0px';
+    stats.domElement.style.top = '0px';
+    document.body.appendChild(stats.domElement);
     
     // loop game
 	window.onEachFrame(Game.loop);

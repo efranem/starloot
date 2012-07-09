@@ -21,3 +21,13 @@ function overlap(P1, P2){ // P = [x0, xn, y0, yn] Element coords
 	var yOverlap = valueInRange(P1[2], P2[2], P2[3]) || valueInRange(P2[2], P1[2], P1[3]);
 	return xOverlap && yOverlap;
 };
+
+var AngleDirection = {
+    COUNTER: 0,
+    CLOCK: 1
+};
+function direction(angleStart, angleEnd){ // Returns shortest direcction between two angles
+    if (((angleEnd - angleStart +(2 * Math.PI)) % (2 * Math.PI)) > Math.PI)
+        return AngleDirection.COUNTER;
+    else return AngleDirection.CLOCK;
+};
