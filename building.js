@@ -1,19 +1,38 @@
-function Building(x, y, orientation){
+var BuildingTypes = {
+    RECON_HQ : 0,
+    ANTENNA : 1,
+};
+
+function Building(type, x, y, orientation){
 	this.x = x;
 	this.y = y;
 	this.dim = [1.3,1.3];
     this.orientation = orientation;
 	this.img = new Image;
-	this.img.src = 'sprites/buildings/recon_hq_01.png';
-    this.sprites = [
-		[256*0,256*0],
-		[256*0,256*1],
-		[256*1,256*0],
-		[256*1,256*1],
-	];
+	switch (type) {
+	case BuildingTypes.RECON_HQ:
+		this.img.src = 'sprites/buildings/recon_hq_01.png';	
+		this.sprites = [
+			[256*0,256*0],
+			[256*0,256*1],
+			[256*1,256*0],
+			[256*1,256*1],
+		];
+		this.size_x = 256;
+		this.size_y = 256;
+	    break;
+	case BuildingTypes.ANTENNA:
+		this.img.src = 'sprites/buildings/antenna_01.png';
+		this.sprites = [[0,0],[0,0],[0,0],[0,0]];
+		this.size_x = 512;
+		this.size_y = 512;
+		break;
+	default:
+		break;
+	}
 		
 	this.paint = function(ctx){
-        ctx.drawImage(this.img, this.sprites[this.orientation][0], this.sprites[this.orientation][1], 256, 256, this.x-128, this.y-128, 256, 256);
+        ctx.drawImage(this.img, this.sprites[this.orientation][0], this.sprites[this.orientation][1], this.size_x, this.size_y, this.x-this.size_x/2, this.y-this.size_y/2, this.size_x, this.size_y);
 		ctx.strokeStyle="red";
 		var cdx = (this.dim[0]*128)/2;
 		var cdy = (this.dim[1]*128)/2;
