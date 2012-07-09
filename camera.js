@@ -18,6 +18,10 @@ function Camera(){
 		if (this.transformX > this.maxX) this.transformX = this.maxX;
 		if (this.transformY > this.maxY) this.transformY = this.maxY;
 	};
+    
+    this.localPosition = function(point){
+        return { x: point.x + this.transformX, y: point.y + this.transformY};
+    };
 }
 
 camera = new Camera;

@@ -114,7 +114,8 @@ function Board(){
             var scout = selector.selection[ obj ];
             var coords = scout.middle();
             if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
-                scout.target = selector.targetPoint(scout.x, scout.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
+                var point = camera.localPosition({x: mouse.x, y: mouse.y});
+                scout.target = selector.targetPoint(scout.x, scout.y, point.x, point.y);
             }
         };
     };
@@ -146,12 +147,9 @@ function Board(){
 	this.paintMap = function(){
 		var tileWidth = 256;
 		var tileHeight = 128;
-		// Get current X and Y of map
-		var currX = camera.transformX;
-		var currY = camera.transformY;
 		// Let's see where we have to paint...
-		var startTileX = Math.floor(camera.transformX / tileWidth) * tileWidth;// + (tileWidth * (camera.transformX % tileWidth));
-		var startTileY = Math.floor(camera.transformY / tileHeight) * tileHeight;// (tileHeight * (camera.transformY % tileHeight));
+		var startTileX = Math.floor(camera.transformX / tileWidth) * tileWidth;
+		var startTileY = Math.floor(camera.transformY / tileHeight) * tileHeight;
 		for (var i = startTileX; i < startTileX + canvas.width + tileWidth; i += tileWidth){
             for (var j = startTileY; j < startTileY + canvas.height + tileHeight; j += tileHeight){
                 ctx.drawImage(img, i, j, 256, 128);
