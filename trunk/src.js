@@ -41,85 +41,26 @@ function init(){
 	
     // init event handlers
     keyboard.init();
-    keyboard.addEventListener(Keys.UP_ARROW, undefined, pressedKey);
-    keyboard.addEventListener(Keys.DOWN_ARROW, undefined, pressedKey);
-    keyboard.addEventListener(Keys.LEFT_ARROW, undefined, pressedKey);
-    keyboard.addEventListener(Keys.RIGHT_ARROW, undefined, pressedKey);
-    keyboard.addEventListener(Keys.W, undefined, pressedKey);
-    keyboard.addEventListener(Keys.S, undefined, pressedKey);
-    keyboard.addEventListener(Keys.A, undefined, pressedKey);
-    keyboard.addEventListener(Keys.D, undefined, pressedKey);
+    keyboard.addEventListener(Keys.UP_ARROW, board, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.DOWN_ARROW, board, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.LEFT_ARROW, board, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.RIGHT_ARROW, board, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.W, board, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.S, board, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.A, board, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.D, board, 'onkeyboarddown');
 	mouse.init();
     mouse.addEventListener(MouseEvents.CLICK, scout1, 'onclick', MouseButtons.LEFT);
     mouse.addEventListener(MouseEvents.CLICK, scout2, 'onclick', MouseButtons.LEFT);
 	mouse.addEventListener(MouseEvents.CLICK, scout3, 'onclick', MouseButtons.LEFT);
 	mouse.addEventListener(MouseEvents.CLICK, scout4, 'onclick', MouseButtons.LEFT);
-    mouse.addEventListener(MouseEvents.CLICK, undefined, clickedTarget, MouseButtons.LEFT);
+    mouse.addEventListener(MouseEvents.CLICK, board, 'onclick', MouseButtons.LEFT);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, slideScreen);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
 	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection, MouseButtons.RIGHT);
 	mouse.addEventListener(MouseEvents.MOUSE_DOWN, selector, 'clearSelection', MouseButtons.RIGHT);
     // loop game
-	setInterval(gameLoop,16);
-};
-
-function gameLoop(){
-    logicTick();
-    //physicsTick(); // Not physics at this moment
-    renderFrame();
-};
-
-// Mouse callbacks functions TEST
-var clickedTarget = function(){
-    console.log("Button clicked in mouse");
-    if (selector.isSelected(scout1)){
-        var coords = scout1.middle();
-        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
-			scout1.target = selector.targetPoint(scout1.x, scout1.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
-		}
-    }
-    if (selector.isSelected(scout2)){
-        var coords = scout2.middle();
-        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
-				scout2.target = selector.targetPoint(scout2.x, scout2.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
-		};
-    }
-	if (selector.isSelected(scout3)){
-        var coords = scout3.middle();
-        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
-				scout3.target = selector.targetPoint(scout3.x, scout3.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
-		};
-    }
-	if (selector.isSelected(scout4)){
-        var coords = scout4.middle();
-        if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
-				scout4.target = selector.targetPoint(scout4.x, scout4.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
-		};
-    }
-};
-
-// Keyboard callback function TEST
-var pressedKey = function(key){
-    switch (key) {
-    case 87: /* W */
-    case 38: /* Up arrow was pressed */
-        camera.transformY -= camera.CAMERA_SPEED;
-        break;
-    case 83: /* S */
-    case 40: /* Down arrow was pressed */
-        camera.transformY += camera.CAMERA_SPEED;
-        break;
-    case 65: /* A */   
-    case 37: /* Left arrow was pressed */
-        camera.transformX -= camera.CAMERA_SPEED;
-        break;
-    case 68: /* D */   
-    case 39: /* Right arrow was pressed */
-        camera.transformX += camera.CAMERA_SPEED;
-        break;
-    case 107: scout1.rotate(0.18);break;
-    case 109:scout1.rotate(-0.18);break;
-    }
+	window.onEachFrame(Game.loop);
 };
 
 // Slide callback function TEST

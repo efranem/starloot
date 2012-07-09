@@ -41,6 +41,11 @@ function PaintTile(row, col) {
 }
 
 function Board(){
+    this.x = 0;
+	this.y = 0;
+    this.sizeX = 2000;
+    this.sizeY = 2000;
+    
     this.obstacles = new Array;
     this.movable = new Array;
     this.buildings = new Array;
@@ -101,6 +106,42 @@ function Board(){
                 this.movable[i].update();
         }
 	};
+    
+    // Captures mouse click event
+    this.onclick = function(){
+        console.log("Button clicked in board");
+        for (var obj in selector.selection){
+            var scout = selector.selection[ obj ];
+            var coords = scout.middle();
+            if (Math.abs(coords[0] - mouse.x) > 50 || Math.abs(coords[1] - mouse.y) > 50){
+                scout.target = selector.targetPoint(scout.x, scout.y, mouse.x + camera.transformX, mouse.y+camera.transformY);
+            }
+        };
+    };
+    
+    // Captures keyboard key pressed
+    this.onkeyboarddown = function(key){
+        switch (key) {
+        case 87: /* W */
+        case 38: /* Up arrow was pressed */
+            camera.transformY -= camera.CAMERA_SPEED;
+            break;
+        case 83: /* S */
+        case 40: /* Down arrow was pressed */
+            camera.transformY += camera.CAMERA_SPEED;
+            break;
+        case 65: /* A */   
+        case 37: /* Left arrow was pressed */
+            camera.transformX -= camera.CAMERA_SPEED;
+            break;
+        case 68: /* D */   
+        case 39: /* Right arrow was pressed */
+            camera.transformX += camera.CAMERA_SPEED;
+            break;
+        case 107: scout1.rotate(0.18);break;
+        case 109:scout1.rotate(-0.18);break;
+        }
+    };
 	
 	this.paintMap = function(){
 		var tileWidth = 256;
