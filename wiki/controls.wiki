@@ -18,3 +18,9 @@
 *Right click*: Default action depending on unit and target. Examples: if unit is a mechanic and target is a building, go repair it. If unit is a scout and target is the ground, move there. If unit is a harvester and unit is a resource, go harvest.
 
 *Right drag*: Pan camera OR deploy formation
+
+
+= Mobile devices =
+
+== Touch Screens ==
+*Information about mobile devices controls*: http://developer.apple.com/library/ios/#DOCUMENTATION/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html
