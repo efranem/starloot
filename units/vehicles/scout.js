@@ -90,8 +90,9 @@ function Scout(x,y){
     }
     
     this.middle = function(){
-        var coords = [this.x + (this.sizeX / 2) - camera.transformX, this.y + (this.sizeY / 2) - camera.transformY];
-        return coords;
+        return {x: this.x + (this.sizeX / 2),
+                y: this.y + (this.sizeY / 2)
+                };
     }
 	
 	this.onclick = function(){

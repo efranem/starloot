@@ -13,6 +13,12 @@ function Minimap(){
         this.y = canvas.height - this.sizeY;
     };
     
+    this.toMinimapCoord = function(point){
+        var origin = camera.localPosition({x:this.x, y:this.y});
+        return {x: origin.x + ((point.x / (camera.maxX + canvas.width)) * this.sizeX), 
+                y: origin.y + ((point.y / (camera.maxY + canvas.height)) * this.sizeY)};
+    };
+    
     this.paint = function(ctx){
         this.refreshSize();
         // Background
@@ -29,25 +35,42 @@ function Minimap(){
             }
         }
         // Let's paint every other component...
-        /*for (var i = 0; i < board.movable.length; i++){
-                board.movable[i].paint(ctx);
-        }
+        for (var obj in board.movable){
+            var middle = board.movable[ obj ].middle();
+            ctx.fillStyle="red";
+            ctx.beginPath();
+            var coord = this.toMinimapCoord({x: middle.x, y: middle.y});
+            ctx.arc(coord.x,coord.y,2,0,Math.PI*2,true);
+            ctx.closePath();
+            ctx.fill();
+        };
+        
         // Paint every building
-        for (var i = 0; i < board.buildings.length; i++){
-                board.buildings[i].paint(ctx);
+        for (var obj in board.buildings){
+            var middle = board.buildings[ obj ].middle();
+            ctx.fillStyle="blue";
+            ctx.beginPath();
+            var coord = this.toMinimapCoord({x: middle.x, y: middle.y});
+            ctx.arc(coord.x,coord.y,2,0,Math.PI*2,true);
+            ctx.closePath();
+            ctx.fill();
         }
         // Paint obstacles
-        for (var i = 0; i < board.obstacles.length; i++){
-                board.obstacles[i].paint(ctx);
-        }*/
+        for (var obj in board.obstacles){
+            var middle = board.obstacles[ obj ].middle();
+            ctx.fillStyle="yellow";
+            ctx.beginPath();
+            var coord = this.toMinimapCoord({x: middle.x, y: middle.y});
+            ctx.arc(coord.x,coord.y,2,0,Math.PI*2,true);
+            ctx.closePath();
+            ctx.fill();
+        }
         // Current view
         ctx.strokeStyle="green";
         var point = camera.localPosition({x:this.x, y:this.y});
         var startView = {x: point.x + ((camera.transformX / (camera.maxX + canvas.width)) * this.sizeX), y: point.y + ((camera.transformY / (camera.maxY + canvas.height)) * this.sizeY)};
         var sizeView = {sizeX: (canvas.width / camera.maxX) * this.sizeX, sizeY: (canvas.height / camera.maxY) * this.sizeY};
 		ctx.strokeRect(startView.x, startView.y, sizeView.sizeX, sizeView.sizeY);
-        //console.log("Position: " + startView.x + "," + startView.y);
-        //console.log("Size: " + sizeView.sizeX + "," + sizeView.sizeY);
 	};
 };
 

@@ -1,6 +1,8 @@
 function Wall(x, y, orientation){
 	this.x = x;
 	this.y = y;
+    this.sizeX = 256;
+    this.sizeY = 256;
 	this.dim = [1,1.5];
     this.orientation = orientation;
 	this.img = new Image;
@@ -24,6 +26,12 @@ function Wall(x, y, orientation){
 		ctx.closePath();
 		ctx.fill();
 	};
+    
+    this.middle = function(){
+        return {x: this.x + (this.sizeX / 2),
+                y: this.y + (this.sizeY / 2)
+                };
+    }
 	
 	this.update = function(){
 	};

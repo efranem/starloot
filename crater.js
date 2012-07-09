@@ -1,6 +1,8 @@
 function Crater(x, y){
 	this.x = x;
 	this.y = y;
+    this.sizeX = 512;
+    this.sizeY = 256;
 	this.dim = [2,1.5];
 	this.img = new Image;
 	this.img.src = 'sprites/decoration/crater_4x4.png';
@@ -18,4 +20,10 @@ function Crater(x, y){
 	};
 	this.update = function(){
 	};
+    
+    this.middle = function(){
+        return {x: this.x + (this.sizeX / 2),
+                y: this.y + (this.sizeY / 2)
+                };
+    }
 };

@@ -6,6 +6,8 @@ var BuildingTypes = {
 function Building(type, x, y, orientation){
 	this.x = x;
 	this.y = y;
+    this.sizeX = 256;
+    this.sizeY = 256;
 	this.dim = [1.3,1.3];
     this.orientation = orientation;
 	this.img = new Image;
@@ -30,6 +32,12 @@ function Building(type, x, y, orientation){
 	default:
 		break;
 	}
+    
+    this.middle = function(){
+        return {x: this.x + (this.sizeX / 2),
+                y: this.y + (this.sizeY / 2)
+                };
+    }
 		
 	this.paint = function(ctx){
         ctx.drawImage(this.img, this.sprites[this.orientation][0], this.sprites[this.orientation][1], this.size_x, this.size_y, this.x-this.size_x/2, this.y-this.size_y/2, this.size_x, this.size_y);
