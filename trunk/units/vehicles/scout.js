@@ -8,17 +8,6 @@ function Scout(x,y){
 	this.target = undefined;
 	this.img = new Image;
 	this.img.src = 'sprites/units/recon_01.png';
-	this.sprites = [
-		[128*1,128*1],
-		[128*2,128*1],
-		[128*3,128*1],
-		[128*0,128*0],
-		[128*1,128*0],
-		[128*2,128*0],
-		[128*3,128*0],
-		[128*0,128*1],
-	];
-	this.sprite;
     this.isSelected = false;
     var selectedImg = new Image;
     selectedImg.src = 'sprites/ui/selector.png';    
@@ -29,14 +18,10 @@ function Scout(x,y){
 			
         }
         
-		var sprite = Math.round(this.angle / (45 * (Math.PI/180)));
-		
-		sprite = sprite % 8;
-		this.sprite = sprite;
-        
+		var sprite = Math.round(this.angle / (11.25 * (Math.PI/180))) % 32;
         ctx.drawImage(this.img,
-			this.sprites[sprite][0],
-			this.sprites[sprite][1],
+   			(sprite%8)*128,
+   			Math.floor(sprite/8)*128,
 			128,
 			128,
 			this.x,
