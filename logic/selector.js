@@ -54,23 +54,22 @@ function Selector(){
     };
 	
 	this.setMouseSelection = function(a){
-		this.squareSelection = a;
+		this.squareSelection = [a.x, a.y, a.gx, a.gy];
+        
 		// Lets see ogirin from selection (different starting points)
-		if (a[2] < 0){
-			a[0] += a[2];
-			a[2] = -a[2];
+		if (a.gx < 0){
+			a.x += a.gx;
+			a.gx = -a.gx;
 		};
-		if (a[3] < 0){
-			a[1] += a[3];
-			a[3] = -a[3];
+		if (a.gy < 0){
+			a.y += a.gy;
+			a.gy = -a.gy;
 		};
 		// Select objects under selection
 		for (var obj in board.movable){
 			var object = board.movable[ obj ];
 			var P1 = [object.x, object.x + object.sizeX, object.y, object.y + object.sizeY];
-			var P2 = [a[0], a[0] + a[2], a[1], a[1] + a[3]];
-			//console.log("P1: " + P1);
-			//console.log("P2: " + P2);
+			var P2 = [a.x, a.x + a.gx, a.y, a.y + a.gy];
 			if ( overlap(P1,P2)){
 				object.isSelected = true;
 				object.updateSelect();
@@ -95,8 +94,8 @@ function Selector(){
 	this.paint = function(ctx){
 		if (this.squareSelection.length == 4){
             ctx.strokeStyle="blue";
-            var point = camera.localPosition({x: this.squareSelection[0], y: this.squareSelection[1]});
-			ctx.strokeRect(point.x , point.y, this.squareSelection[2], this.squareSelection[3]);
+            //var point = camera.localPosition({x: this.squareSelection[0], y: this.squareSelection[1]});
+			ctx.strokeRect(this.squareSelection[0] , this.squareSelection[1], this.squareSelection[2], this.squareSelection[3]);
 		}
 	};
 };

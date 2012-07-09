@@ -66,7 +66,7 @@ function Scout(x,y){
             if (Math.abs(tempAngle - this.angle) < 0.1){ // If the angle is correct we move
                 this.angle = tempAngle;
                 var x = this.x + Math.cos(alpha)*2.0;
-                var y = this.y + Math.sin(alpha)*2.0;
+                var y = this.y + Math.sin(alpha);//*2.0;
                 if (!collision(x+64,y+64)){
                     this.x = x;
                     this.y = y;
