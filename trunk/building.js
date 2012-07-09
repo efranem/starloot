@@ -20,6 +20,8 @@ function Building(type, x, y, orientation){
 		this.size = [256,256];
 		this.center = [128,128];
 		this.dim = [1.3,1.3];
+        this.sizeX = 256;
+        this.sizeY = 256;
 	    break;
 	case BuildingTypes.ANTENNA:
 		this.img.src = 'sprites/buildings/antenna_01.png';
@@ -27,6 +29,8 @@ function Building(type, x, y, orientation){
 		this.size = [512,512];
 		this.center = [111,475];
 		this.dim = [0.9,0.45];
+        this.sizeX = 512;
+        this.sizeY = 512;
 		break;
 	default:
 		break;
