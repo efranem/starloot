@@ -10,8 +10,8 @@ var scout2 = new Scout(800, 60);
 var scout3 = new Scout(500, 230);
 var scout4 = new Scout(800, 350);
 var terrainProps = new Array;
-terrainProps.push(new Building(0,500, 620, 0));
-terrainProps.push(new Building(1,1200, 620, 0));
+terrainProps.push(new Building(0,6, 8, 0));
+terrainProps.push(new Building(1,9, 8, 0));
 /*terrainProps.push(new Building(250, 400, 2));
 terrainProps.push(new Building(100, 400, 1));
 terrainProps.push(new Building(800, 700, 3));*/
