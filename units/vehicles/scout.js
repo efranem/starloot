@@ -61,13 +61,36 @@ function Scout(x,y){
 			if (alpha < 0) alpha += 2 * Math.PI;
 			else alpha %= 2 * Math.PI;
 			//console.log("Alpha: "+(scout.angle/(Math.PI/180)).toFixed(2) +" degrees");
-			this.angle = (2 * Math.PI) - alpha;		
-			var x = this.x + Math.cos(alpha)*2.0;
-			var y = this.y + Math.sin(alpha)*2.0;
-			if (!collision(x+64,y+64)){
-				this.x = x;
-				this.y = y;
-			}
+			var tempAngle = (2 * Math.PI) - alpha;		
+            // First we turn to get correct direction and if we got the right direction we move
+            if (Math.abs(tempAngle - this.angle) < 0.1){ // If the angle is correct we move
+                this.angle = tempAngle;
+                var x = this.x + Math.cos(alpha)*2.0;
+                var y = this.y + Math.sin(alpha)*2.0;
+                if (!collision(x+64,y+64)){
+                    this.x = x;
+                    this.y = y;
+                }
+            } else { // We turn
+                if (direction(this.angle, tempAngle) == AngleDirection.COUNTER){
+                    this.angle -= 0.075;
+                    if (this.angle < 0) this.angle += (2 * Math.PI);
+                }
+                else {
+                    this.angle += 0.075;
+                    this.angle %= (2 * Math.PI);
+                }
+                    
+                /*var dif = Math.abs(tempAngle - this.angle);
+                if (dif > Math.PI){ // If it's bigger than 180º we move uncounterwise
+                    this.angle -= 0.05;
+                    if (this.angle < 0) this.angle += (2 * Math.PI);
+                }
+                else { // we turn conterclockwise
+                    this.angle += 0.05;
+                    if (this.angle > (2 * Math.PI)) this.angle %= (2 * Math.PI);
+                }*/
+            }
 		}
 	}
 	
