@@ -48,6 +48,7 @@ function Building(type, x, y, orientation){
 		this.sprites = [[0,0],[0,0],[0,0],[0,0]];
 		this.size = [512,256];
 		this.center = [256,118];
+		this.dim = [1.3,1.3];
 		break;
 	default:
 		break;
