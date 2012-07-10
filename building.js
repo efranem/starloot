@@ -1,6 +1,7 @@
 var BuildingTypes = {
     RECON_HQ : 0,
     ANTENNA : 1,
+	CRATER: 2
 };
 
 function drawParalel(ctx, p1, p2, r) {
@@ -40,6 +41,13 @@ function Building(type, x, y, orientation){
 		this.size = [512,512];
 		this.center = [111,475];
 		this.dim = [0.9,0.45];
+		break;
+	case BuildingTypes.CRATER:
+		this.box = [[306,43],[371,86],[399,103],[400,127],[385,148],[349,166],[295,202],[247,204],[207,190],[163,175],[144,168],[91,131],[124,99],[151,83],[220,40],[267,22]];
+		this.img.src = 'sprites/decoration/crater_4x4.png';
+		this.sprites = [[0,0],[0,0],[0,0],[0,0]];
+		this.size = [512,256];
+		this.center = [256,118];
 		break;
 	default:
 		break;
