@@ -3,6 +3,14 @@ var BuildingTypes = {
     ANTENNA : 1,
 };
 
+function drawParalel(ctx, p1, p2, r) {
+	var alpha = Math.PI - Math.atan2(p1[0] - p2[0],p1[1] - p2[1]);
+	var a = [p1[0] + Math.cos(alpha)*r, p1[1] + Math.sin(alpha)*r/2];
+	var b = [p2[0] + Math.cos(alpha)*r, p2[1] + Math.sin(alpha)*r/2];
+	ctx.lineTo(a[0],a[1]);
+	ctx.lineTo(b[0],b[1]);
+}
+
 function Building(type, x, y, orientation){
 	this.x = x*128;
 	this.y = y*64;
@@ -10,6 +18,10 @@ function Building(type, x, y, orientation){
 	this.img = new Image;
 	switch (type) {
 	case BuildingTypes.RECON_HQ:
+		this.box = [[73,143],[121,167],[151,177],[176,184],[193,188],[222,172],[120,120]];
+		// concave shit (still not implemented):
+		//this.box = [[120,120],[222,172],[193,188],[176,184],[151,174],[150,168],[121,167],[73,143]];
+		this.box = [[120,120],[222,172],[193,188],[176,184],[151,174],[121,167],[73,143]];
 		this.img.src = 'sprites/buildings/recon_hq_01.png';	
 		this.sprites = [
 			[256*0,256*0],
@@ -20,39 +32,60 @@ function Building(type, x, y, orientation){
 		this.size = [256,256];
 		this.center = [128,128];
 		this.dim = [1.3,1.3];
-        this.sizeX = 256;
-        this.sizeY = 256;
 	    break;
 	case BuildingTypes.ANTENNA:
+		this.box = [[55,475],[111,447],[168,475],[111,503]];
 		this.img.src = 'sprites/buildings/antenna_01.png';
 		this.sprites = [[0,0],[0,0],[0,0],[0,0]];
 		this.size = [512,512];
 		this.center = [111,475];
 		this.dim = [0.9,0.45];
-        this.sizeX = 512;
-        this.sizeY = 512;
 		break;
 	default:
 		break;
 	}
     
     this.middle = function(){
-        return {x: this.x + (this.sizeX / 2),
-                y: this.y + (this.sizeY / 2)
+        return {x: this.x + (this.size[0] / 2),
+                y: this.y + (this.size[1] / 2)
                 };
     }
 		
 	this.paint = function(ctx){
+		/* draw sprite */
         ctx.drawImage(this.img, this.sprites[this.orientation][0], this.sprites[this.orientation][1], this.size[0], this.size[1], this.x-this.center[0], this.y-this.center[1], this.size[0], this.size[1]);
-		ctx.strokeStyle="red";
-		var cdx = (this.dim[0]*128)/2;
-		var cdy = (this.dim[1]*128)/2;
-		ctx.strokeRect(this.x-cdx,this.y-cdy,cdx*2,cdy*2);
-		ctx.fillStyle="#FF0000";
-		ctx.beginPath();
-		ctx.arc(this.x,this.y,1.5,0,Math.PI*2,true);
+
+        /* draw bounding box */
+        ctx.strokeStyle="#AA6600";
+        ctx.beginPath();
+        var i = 0;
+        while (i<this.box.length) {
+        	ctx.lineTo(this.x+this.box[i][0]-this.center[0],this.y+this.box[i][1]-this.center[1]);
+        	i++;
+        }
 		ctx.closePath();
-		ctx.fill();
+		ctx.stroke();
+
+		/* draw expanded bounding box */
+		ctx.strokeStyle="#BB66BB";
+		ctx.beginPath();
+		i = 0;
+		var r = 30; // the radius of the expansion (this will be the radius of the moving unit)
+		while (i<this.box.length-1) {
+			drawParalel(ctx, 
+					[this.x - this.center[0] + this.box[i][0],this.y - this.center[1] + this.box[i][1]],
+					[this.x - this.center[0] + this.box[i+1][0],this.y - this.center[1] + this.box[i+1][1]],
+					r);
+			i++;
+		}
+		drawParalel(ctx, 
+				[this.x - this.center[0] + this.box[i][0],this.y - this.center[1] + this.box[i][1]],
+				[this.x - this.center[0] + this.box[0][0],this.y - this.center[1] + this.box[0][1]],
+				r);
+		
+		ctx.closePath();
+		ctx.stroke();
+
 	};
 	
 	this.update = function(){
