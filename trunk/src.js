@@ -12,13 +12,14 @@ var scout4 = new Scout(800, 350);
 var terrainProps = new Array;
 terrainProps.push(new Building(0,6, 8, 0));
 terrainProps.push(new Building(1,9, 8, 0));
+terrainProps.push(new Building(2,3, 8, 0));
 /*terrainProps.push(new Building(250, 400, 2));
 terrainProps.push(new Building(100, 400, 1));
 terrainProps.push(new Building(800, 700, 3));*/
 terrainProps.push(new Wall(353.5,201.5, 0));
 /*terrainProps.push(new Wall(430,240, 0));
 terrainProps.push(new Wall(430,283, 2));*/
-terrainProps.push(new Crater(600,440));
+//terrainProps.push(new Crater(600,440));
 
 var stats;
 
