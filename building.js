@@ -5,12 +5,17 @@ var BuildingTypes = {
 	WALL: 3
 };
 
-function drawParalel(ctx, p1, p2, r) {
+function getParalel(p1,p2,r) {
 	var alpha = Math.PI - Math.atan2(p1[0] - p2[0],p1[1] - p2[1]);
 	var a = [p1[0] + Math.cos(alpha)*r, p1[1] + Math.sin(alpha)*r/2];
 	var b = [p2[0] + Math.cos(alpha)*r, p2[1] + Math.sin(alpha)*r/2];
-	ctx.lineTo(a[0],a[1]);
-	ctx.lineTo(b[0],b[1]);
+	return [a,b];
+}
+
+function drawParalel(ctx, p1, p2, r) {
+	var p = getParalel(p1,p2,r);
+	ctx.lineTo(p[0][0],p[0][1]);
+	ctx.lineTo(p[1][0],p[1][1]);
 }
 
 function Building(type, x, y, orientation){
@@ -20,9 +25,6 @@ function Building(type, x, y, orientation){
 	this.img = new Image;
 	switch (type) {
 	case BuildingTypes.RECON_HQ:
-		this.box = [[73,143],[121,167],[151,177],[176,184],[193,188],[222,172],[120,120]];
-		// concave shit (still not implemented):
-		//this.box = [[120,120],[222,172],[193,188],[176,184],[151,174],[150,168],[121,167],[73,143]];
 		this.box = [[120,120],[222,172],[193,188],[176,184],[151,174],[121,167],[73,143]];
 		this.img.src = 'sprites/buildings/recon_hq_01.png';	
 		this.sprites = [
@@ -58,8 +60,23 @@ function Building(type, x, y, orientation){
 	default:
 		break;
 	}
-    
-    this.middle = function(){
+	
+	this.getBoundingBox = function(r) {
+		var nodes = new Array;
+		var i = 0;
+		while (i<this.box.length) {
+			var p = getParalel( 
+					[this.x - this.center[0] + this.box[i][0],this.y - this.center[1] + this.box[i][1]],
+					[this.x - this.center[0] + this.box[(i+1)%this.box.length][0],this.y - this.center[1] + this.box[(i+1)%this.box.length][1]],
+					r);
+			nodes.push(p[0]);
+			nodes.push(p[1]);
+			i++;
+		}
+		return nodes;
+	}
+	
+	this.middle = function(){
         return {x: this.x + (this.size[0] / 2),
                 y: this.y + (this.size[1] / 2)
                 };
