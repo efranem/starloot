@@ -1,33 +1,3 @@
-/*function Movable(obj){
-    this.id = 0;
-    this.name = "none";
-    this.leftX = 0.0;
-    this.topY = 0.0;
-    this.rightX = 0.0;
-    this.bottonY = 0.0;
-    this.isSelected = true;
-    var selectedImg = new Image;
-    selectedImg.src = 'sprites/ui/selector.png';
-    this.object = obj;
-    
-    this.overlap = function(other){
-        area = (max(this.leftX, other.leftX) - min(this.rightX, other.rightX)) * (max(this.topY, other.topY) - min(this.bottomY, other.bottomY))
-        return (area != 0);
-    };
-    
-    this.paint = function(ctx){
-        
-        if (this.isSelected == true){
-            ctx.drawImage(selectedImg, this.object.x, this.object.y+15);
-        }
-		this.object.paint(ctx);
-    };
-	
-	this.update = function(){
-		this.object.update();
-	}
-}*/
-
 function PaintTile(row, col) {
 	// Now paint something on a specific tile
 	if ((row+col) % 2 == 0) {
@@ -46,7 +16,6 @@ function Board(){
     this.sizeX = 2000;
     this.sizeY = 2000;
     
-    this.obstacles = new Array;
     this.movable = new Array;
     this.buildings = new Array;
     var img = new Image;
@@ -58,9 +27,6 @@ function Board(){
 			if (a[k] instanceof Building){
 				this.addBuilding(a[k]);
 			}
-			if (a[k] instanceof Wall || a[k] instanceof Crater){
-				this.addObstacle(a[k]);
-			}
 		}
 	}
 	
@@ -71,10 +37,6 @@ function Board(){
     
     this.addBuilding = function(m){
         this.buildings.push(m);
-    };
-    
-    this.addObstacle = function(m){
-        this.obstacles.push(m);
     };
     
     this.removeMovable = function(m){
@@ -177,10 +139,7 @@ function Board(){
         for (var i = 0; i < this.buildings.length; i++){
                 this.buildings[i].paint(ctx);
         }
-        // Paint obstacles
-        for (var i = 0; i < this.obstacles.length; i++){
-                this.obstacles[i].paint(ctx);
-        }
+        
 
 		PaintTile(0,0);
 		PaintTile(1,0);
