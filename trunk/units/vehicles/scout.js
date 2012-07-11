@@ -31,7 +31,7 @@ function Scout(x,y){
 		
 	}
 	
-	function collision(x,y){
+	/*function collision(x,y){
 		var collisions = tree.nearest({'x':x,'y':y},10,5000);
 		if (collisions.length > 0){
 			for(var key in collisions){
@@ -49,7 +49,7 @@ function Scout(x,y){
 			}
 		}
 		return false;
-	}
+	}*/
 	
 	this.update = function(){
 		if (this.target != undefined && Math.abs(this.target.x - (this.x + 64)) < 1.5 && Math.abs(this.target.y - (this.y + 64)) < 1.5){
@@ -67,10 +67,10 @@ function Scout(x,y){
                 this.angle = tempAngle;
                 var x = this.x + Math.cos(alpha)*2.0;
                 var y = this.y + Math.sin(alpha);//*2.0;
-                if (!collision(x+64,y+64)){
+                /*if (!collision(x+64,y+64)){*/
                     this.x = x;
                     this.y = y;
-                }
+                /*}*/
             } else { // We turn
                 if (direction(this.angle, tempAngle) == AngleDirection.COUNTER){
                     this.angle -= 0.075;
