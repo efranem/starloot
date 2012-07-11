@@ -74,8 +74,8 @@ function Board(){
         console.log("Button clicked in board");
         for (var obj in selector.selection){
             var scout = selector.selection[ obj ];
-            var coords = scout.middle();
-            if (Math.abs(coords.x - mouse.x) > 50 || Math.abs(coords.y - mouse.y) > 50){
+            //var coords = scout.middle();
+            if (Math.abs(scout.x - mouse.x) > 50 || Math.abs(scout.y - mouse.y) > 50){
                 var point = camera.localPosition({x: mouse.x, y: mouse.y});
                 scout.target = selector.targetPoint(scout.x, scout.y, point.x, point.y);
             }
@@ -150,6 +150,13 @@ function Board(){
 		PaintTile(5,1);
 		//PaintTile(0,1);
 		PaintTile(mouse.tile_x,mouse.tile_y);
+	};
+	
+	/**
+		Checks if current board has been touched
+	*/
+	this.isTouched = function(point){
+		return true;
 	};
 }
 

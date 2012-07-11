@@ -125,9 +125,11 @@ function Mouse(){
             var object = this.clickAbles[ this.button ][ i ][ 0 ];
             var callback = this.clickAbles[ this.button ][ i ][ 1 ];
             if (object != undefined){
-                 if (object.x - camera.transformX < this.x && this.x < object.x + object.sizeX - camera.transformX &&
+				if (object.isTouched( {x: this.x + camera.transformX, y: this.y + camera.transformY} ))
+					object[callback]();
+                 /*if (object.x - camera.transformX < this.x && this.x < object.x + object.sizeX - camera.transformX &&
                     object.y - camera.transformY < this.y && this.y < object.y + object.sizeY - camera.transformY)
-                    object[callback]();
+                    object[callback]();*/
             }
             else
                 callback();

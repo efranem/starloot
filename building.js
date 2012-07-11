@@ -76,11 +76,11 @@ function Building(type, x, y, orientation){
 		return nodes;
 	}
 	
-	this.middle = function(){
+	/*this.middle = function(){
         return {x: this.x + (this.size[0] / 2),
                 y: this.y + (this.size[1] / 2)
                 };
-    }
+    }*/
 		
 	this.paint = function(ctx){
 		/* draw sprite */

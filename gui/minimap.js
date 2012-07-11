@@ -36,10 +36,10 @@ function Minimap(){
         }
         // Let's paint every other component...
         for (var obj in board.movable){
-            var middle = board.movable[ obj ].middle();
+            var object = board.movable[ obj ];
             ctx.fillStyle="red";
             ctx.beginPath();
-            var coord = this.toMinimapCoord({x: middle.x, y: middle.y});
+            var coord = this.toMinimapCoord({x: object.x, y: object.y});
             ctx.arc(coord.x,coord.y,2,0,Math.PI*2,true);
             ctx.closePath();
             ctx.fill();
@@ -47,20 +47,20 @@ function Minimap(){
         
         // Paint every building
         for (var obj in board.buildings){
-            var middle = board.buildings[ obj ].middle();
+            var object = board.buildings[ obj ];
             ctx.fillStyle="blue";
             ctx.beginPath();
-            var coord = this.toMinimapCoord({x: middle.x, y: middle.y});
+            var coord = this.toMinimapCoord({x: object.x, y: object.y});
             ctx.arc(coord.x,coord.y,2,0,Math.PI*2,true);
             ctx.closePath();
             ctx.fill();
         }
         // Paint obstacles
         for (var obj in board.obstacles){
-            var middle = board.obstacles[ obj ].middle();
+            var object = board.obstacles[ obj ];
             ctx.fillStyle="yellow";
             ctx.beginPath();
-            var coord = this.toMinimapCoord({x: middle.x, y: middle.y});
+            var coord = this.toMinimapCoord({x: object.x, y: object.y});
             ctx.arc(coord.x,coord.y,2,0,Math.PI*2,true);
             ctx.closePath();
             ctx.fill();
