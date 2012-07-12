@@ -7,7 +7,6 @@ function PaintTile(row, col) {
 		var col_px = col*32;
 		ctx.drawImage(tile, row_px-64, col_px-32);
 	}
-
 }
 
 function Board(){
@@ -81,31 +80,33 @@ function Board(){
             }
         };
     };
-    
+    var cam_direction_X	= 0;
+	var cam_direction_Y	= 0;
     // Captures keyboard key pressed
     this.onkeyboarddown = function(key){
         switch (key) {
         case 87: /* W */
         case 38: /* Up arrow was pressed */
-            camera.transformY -= camera.CAMERA_SPEED;
+			cam_direction_Y = 1;
             break;
         case 83: /* S */
         case 40: /* Down arrow was pressed */
-            camera.transformY += camera.CAMERA_SPEED;
-            break;
+			cam_direction_Y = 2;
+			break;
         case 65: /* A */   
         case 37: /* Left arrow was pressed */
-            camera.transformX -= camera.CAMERA_SPEED;
+			cam_direction_X = 1;
             break;
         case 68: /* D */   
         case 39: /* Right arrow was pressed */
-            camera.transformX += camera.CAMERA_SPEED;
+			cam_direction_X = 2;
             break;
         case 107: scout1.rotate(0.18);break;
-        case 109:scout1.rotate(-0.18);break;
+        case 109: scout1.rotate(-0.18);break;
         }
     };
 	
+
 	this.paintMap = function(){
 		var tileWidth = 256;
 		var tileHeight = 128;
@@ -117,20 +118,41 @@ function Board(){
                 ctx.drawImage(img, i, j, 256, 128);
             }
         }
+		
+		if (cam_direction_X>0) {
+			if (cam_direction_X==2) {
+				camera.CAMERA_SPEED_X += 0.5;
+			} else if (cam_direction_X==1) {
+				camera.CAMERA_SPEED_X -= 0.5;
+			}
+		} else {
+			if (camera.CAMERA_SPEED_X < 0.3 && camera.CAMERA_SPEED_X > -0.3) {camera.CAMERA_SPEED_X = 0;}
+			if (camera.CAMERA_SPEED_X > 0) {camera.CAMERA_SPEED_X -= 0.3;}
+			if (camera.CAMERA_SPEED_X < 0) {camera.CAMERA_SPEED_X += 0.3;}
+		}
+		
+		if (cam_direction_Y>0) {
+			if (cam_direction_Y==2) {
+				camera.CAMERA_SPEED_Y += 0.5;
+			} else if (cam_direction_Y==1) {
+				camera.CAMERA_SPEED_Y -= 0.5;
+			}
+		} else {
+			if (camera.CAMERA_SPEED_Y < 0.3 && camera.CAMERA_SPEED_Y > -0.3) {camera.CAMERA_SPEED_Y = 0;}
+			if (camera.CAMERA_SPEED_Y > 0) {camera.CAMERA_SPEED_Y -= 0.3;}
+			if (camera.CAMERA_SPEED_Y < 0) {camera.CAMERA_SPEED_Y += 0.3;}
+		}
+		camera.transformX += camera.CAMERA_SPEED_X;
+		camera.transformY += camera.CAMERA_SPEED_Y;
+		
+		cam_direction_X = 0;
+		cam_direction_Y = 0;
 	};
     
     this.paint = function(ctx){
-//        ctx.save();
-//        camera.applyTransforms(ctx); // Apply isometric view
-            
-        //A partir de aqu?, todo torcido 45?
-        //ctx.fillStyle="#00FF00";
-        //ctx.fillRect(0,0,c.width,c.height);
-        
         // Paint tiles
         this.paintMap();
 
-//        ctx.restore(); // Restore non-isometric view
         // Paint every movable component
         for (var i = 0; i < this.movable.length; i++){
                 this.movable[i].paint(ctx);
@@ -140,15 +162,6 @@ function Board(){
                 this.buildings[i].paint(ctx);
         }
         
-
-		PaintTile(0,0);
-		PaintTile(1,0);
-		PaintTile(2,0);
-		PaintTile(3,0);
-		PaintTile(4,0);
-		PaintTile(5,0);
-		PaintTile(5,1);
-		//PaintTile(0,1);
 		PaintTile(mouse.tile_x,mouse.tile_y);
 	};
 	
