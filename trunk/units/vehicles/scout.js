@@ -9,14 +9,13 @@ function Scout(x, y){
 	this.v = 2;
 	this.target = undefined;
 	
-	this.image = new Paintable	(x, y, 'sprites/units/recon_01.png', 
+    this.sprite = 0;
+	this.image = new Paintable	(x, y, 'recon_01', //'sprites/units/recon_01.png', 
 								{pX: 1024, pY: 512}, {numX: 8, numY: 4});
 	
 	this.isSelected = false;
-	this.imageSelected = new Paintable (x, y + 15, 'sprites/ui/selector.png',
+	this.imageSelected = new Paintable (x, y + 15, 'selector',
 										{pX: 128, pY: 128}, {numX: 1, numY: 1});   
-
-	this.touch = new Touchable (this.image.getChoosableArea());
 
 	/*function collision(x,y){
 		var collisions = tree.nearest({'x':x,'y':y},10,5000);
@@ -73,8 +72,6 @@ function Scout(x, y){
 			this.image.setCentralPoint({x: this.x, y: this.y});
 			this.image.setCurrentFrame(sprite);
 			this.imageSelected.setCentralPoint({x: this.x, y: this.y + 15});
-			// Updating touching data
-			this.touch.updateTouchableArea(this.image.getChoosableArea());
 		}
 	}
 	
@@ -120,6 +117,6 @@ function Scout(x, y){
 		Checks if current scout has been touched
 	*/
 	this.isTouched = function(point){
-		return this.touch.hasTouchedIn(point);
+		return this.image.isPaintedPixel(point);
 	};
 }
