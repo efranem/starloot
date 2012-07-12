@@ -63,6 +63,37 @@ function Board(){
     };
 	
 	this.updateLogic = function(){
+		// Update camera position
+		if (cam_direction_X>0) {
+			if (cam_direction_X==2) {
+				camera.CAMERA_SPEED_X += 0.5;
+			} else if (cam_direction_X==1) {
+				camera.CAMERA_SPEED_X -= 0.5;
+			}
+		} else {
+			if (camera.CAMERA_SPEED_X < 0.3 && camera.CAMERA_SPEED_X > -0.3) {camera.CAMERA_SPEED_X = 0;}
+			if (camera.CAMERA_SPEED_X > 0) {camera.CAMERA_SPEED_X -= 0.3;}
+			if (camera.CAMERA_SPEED_X < 0) {camera.CAMERA_SPEED_X += 0.3;}
+		}
+		
+		if (cam_direction_Y>0) {
+			if (cam_direction_Y==2) {
+				camera.CAMERA_SPEED_Y += 0.5;
+			} else if (cam_direction_Y==1) {
+				camera.CAMERA_SPEED_Y -= 0.5;
+			}
+		} else {
+			if (camera.CAMERA_SPEED_Y < 0.3 && camera.CAMERA_SPEED_Y > -0.3) {camera.CAMERA_SPEED_Y = 0;}
+			if (camera.CAMERA_SPEED_Y > 0) {camera.CAMERA_SPEED_Y -= 0.3;}
+			if (camera.CAMERA_SPEED_Y < 0) {camera.CAMERA_SPEED_Y += 0.3;}
+		}
+		camera.transformX += camera.CAMERA_SPEED_X;
+		camera.transformY += camera.CAMERA_SPEED_Y;
+		
+		cam_direction_X = 0;
+		cam_direction_Y = 0;
+		
+		// Update each movable object
 		for (var i = 0; i < this.movable.length; i++){
                 this.movable[i].update();
         }
@@ -118,35 +149,6 @@ function Board(){
                 ctx.drawImage(img, i, j, 256, 128);
             }
         }
-		
-		if (cam_direction_X>0) {
-			if (cam_direction_X==2) {
-				camera.CAMERA_SPEED_X += 0.5;
-			} else if (cam_direction_X==1) {
-				camera.CAMERA_SPEED_X -= 0.5;
-			}
-		} else {
-			if (camera.CAMERA_SPEED_X < 0.3 && camera.CAMERA_SPEED_X > -0.3) {camera.CAMERA_SPEED_X = 0;}
-			if (camera.CAMERA_SPEED_X > 0) {camera.CAMERA_SPEED_X -= 0.3;}
-			if (camera.CAMERA_SPEED_X < 0) {camera.CAMERA_SPEED_X += 0.3;}
-		}
-		
-		if (cam_direction_Y>0) {
-			if (cam_direction_Y==2) {
-				camera.CAMERA_SPEED_Y += 0.5;
-			} else if (cam_direction_Y==1) {
-				camera.CAMERA_SPEED_Y -= 0.5;
-			}
-		} else {
-			if (camera.CAMERA_SPEED_Y < 0.3 && camera.CAMERA_SPEED_Y > -0.3) {camera.CAMERA_SPEED_Y = 0;}
-			if (camera.CAMERA_SPEED_Y > 0) {camera.CAMERA_SPEED_Y -= 0.3;}
-			if (camera.CAMERA_SPEED_Y < 0) {camera.CAMERA_SPEED_Y += 0.3;}
-		}
-		camera.transformX += camera.CAMERA_SPEED_X;
-		camera.transformY += camera.CAMERA_SPEED_Y;
-		
-		cam_direction_X = 0;
-		cam_direction_Y = 0;
 	};
     
     this.paint = function(ctx){
