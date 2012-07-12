@@ -1,30 +1,34 @@
 function Minimap(){
     this.x = 0;
     this.y = 0;
+	this.maxSizeX = 128;
     this.sizeX = 0;
     this.sizeY = 0;
     var img = new Image;
     img.src = 'sprites/background/gravel_red.jpg';
     
     this.refreshSize = function(){
-        this.sizeX = canvas.width / 4;
-        this.sizeY = canvas.height / 4;
-        this.x = canvas.width - this.sizeX;
-        this.y = canvas.height - this.sizeY;
+		var rel = canvas.width / this.maxSizeX;
+        this.sizeX = canvas.width / rel;
+        this.sizeY = canvas.height / rel;
+        this.x = 0;
+        this.y = (this.maxSizeX-this.sizeY)/2;
     };
     
     this.toMinimapCoord = function(point){
         var origin = camera.localPosition({x:this.x, y:this.y});
-        return {x: origin.x + ((point.x / (camera.maxX + canvas.width)) * this.sizeX), 
-                y: origin.y + ((point.y / (camera.maxY + canvas.height)) * this.sizeY)};
+        return {x: this.x + ((point.x / (camera.maxX + menuCanvas.width)) * this.sizeX), 
+                y: this.y + ((point.y / (camera.maxY + menuCanvas.height)) * this.sizeY)};
     };
     
     this.paint = function(ctx){
         this.refreshSize();
         // Background
         ctx.fillStyle="black";
-        var point = camera.localPosition({x:this.x, y:this.y});
-		ctx.fillRect(point.x - 1, point.y - 1, this.sizeX, this.sizeY);
+        /*var point = camera.localPosition({x:this.x, y:this.y});
+		ctx.fillRect(point.x - 1, point.y - 1, this.sizeX, this.sizeY);*/
+		var point = {x:0,y:this.y};
+		ctx.fillRect(0,0, menuCanvas.width, menuCanvas.height);
         // Tiles
         var tileWidth = 256 / 8;
 		var tileHeight = 128 / 8;
@@ -67,7 +71,7 @@ function Minimap(){
         }
         // Current view
         ctx.strokeStyle="green";
-        var point = camera.localPosition({x:this.x, y:this.y});
+        var point = {x:this.x, y:this.y};
         var startView = {x: point.x + ((camera.transformX / (camera.maxX + canvas.width)) * this.sizeX), y: point.y + ((camera.transformY / (camera.maxY + canvas.height)) * this.sizeY)};
         var sizeView = {sizeX: (canvas.width / camera.maxX) * this.sizeX, sizeY: (canvas.height / camera.maxY) * this.sizeY};
 		ctx.strokeRect(startView.x, startView.y, sizeView.sizeX, sizeView.sizeY);

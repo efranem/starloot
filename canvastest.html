@@ -9,10 +9,26 @@
 		margin:0;
 		padding:0;
 	}
+	#rightPanel div{
+		padding:1px 5px 1px 5px;
+	}
 </style>
-	<canvas id="canvas">
 
-</canvas>
+	<canvas id="canvas"></canvas>
+	<div id="rightPanel" style="position:absolute;top:0;right:0;width:128px;color:white;background-color:rgba(0,0,128,0.5)">
+		<div>SOME INFO DUDES!</div>
+		
+		<div style="position:absolute;bottom:0;background-color:rgba(0,0,0,1);padding:0"><canvas id="mapCanvas"></canvas></div>
+	</div>
+	<script type="text/javascript">
+	window.onresize = function(event){
+		document.getElementById('rightPanel').style.height = window.innerHeight+'px';
+	};
+	
+		alert("HELLO");
+		document.getElementById('rightPanel').style.height = window.innerHeight+'px';
+	
+</script>
 <script src="kdtree.js" type="text/javascript"></script>
 <script src="utils.js" type="text/javascript"></script>
 <script src="events/keyboard.js" type="text/javascript"></script>

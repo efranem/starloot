@@ -1,7 +1,7 @@
 function GUI(){
 	this.paint = function(ctx){
         // Minimap
-        minimap.paint(ctx);
+        minimap.paint(menuCtx);
         // Menu
         menu.paint(ctx);
         // Selection rectangle
