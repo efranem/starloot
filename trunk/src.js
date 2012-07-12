@@ -3,7 +3,11 @@ document.body.onload = function(){
 }
 
 var canvas = document.getElementById("canvas");
+var menuCanvas = document.getElementById("mapCanvas");
+menuCanvas.width=128;
+menuCanvas.height=128;
 var ctx;
+var menuCtx;
 var pos = 0;
 var scout1 = new Scout(500, 50);
 var scout2 = new Scout(800, 60);
@@ -26,11 +30,14 @@ var tree = new kdTree(terrainProps,distance,["x","y"]);
 function init(){
 	var canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
-	canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-	 
+	menuCtx = menuCanvas.getContext("2d");
+	
 	camera.transformX = 0;
 	camera.transformY = 0;
+	
+	// scrollbars deletion
+	document.documentElement.style.overflow='hidden';
+	document.body.scroll="no";
     
     board.addMovable(scout1);
     board.addMovable(scout2);
@@ -62,8 +69,8 @@ function init(){
     // Stats windows
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
-    stats.domElement.style.right = '0px';
-    stats.domElement.style.top = '0px';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.bottom = '0px';
     document.body.appendChild(stats.domElement);
     
     // loop game
