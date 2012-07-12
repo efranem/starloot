@@ -85,7 +85,7 @@ function Selector(){
 		this.squareSelection = [];
 	};
 	
-	this.update = function(){
+	this.updateLogic = function(){
 		if (this.selection.length > 0){
 			this.refreshAveragePoint(); // Refresh avg point of current selection
 		}

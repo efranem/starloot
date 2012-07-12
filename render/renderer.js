@@ -1,13 +1,6 @@
 function Renderer(){
     this.timeRendering = 0;
     
-    this.clear = function(ctx){
-        // Espacio 'normal' horizontal
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle="#000000";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-    };
-    
     this.debugData = function(ctx){
         ctx.fillStyle="#FFFFFF";
         ctx.font = "bold 14px sans-serif";
@@ -26,7 +19,7 @@ function Renderer(){
         ctx.fillText("Target: "+(scout1.target == undefined ? "undefined" : scout1.target.x+","+scout1.target.y),10,210);
     };
 
-    this.renderFrame = function(ctx){
+    this.renderFrame = function(ctx, menuCtx){
         // Start timing
         var time1 = new Date().getTime();
         
@@ -34,11 +27,10 @@ function Renderer(){
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         
-        this.clear(ctx);
         ctx.save()
         ctx.translate(-camera.transformX,-camera.transformY);
         board.paint(ctx);
-        gui.paint(ctx);
+        gui.paint(ctx, menuCtx);
         ctx.restore();
         this.debugData(ctx); // Print usefull data
         this.timeRendering = new Date().getTime() - time1;
