@@ -6,15 +6,15 @@
  numFrames - [numX:, numY:] Number of frames in each dimension
 */
 function Paintable(x, y, file, size, numFrames){
-	this.img = new Image;
-	this.img.src = file;
-	this.currentSprite = 0;
+	this.img = document.getElementById(file);
+    this.currentSprite = 0;
 	this.spriteSize = {x: size.pX / numFrames.numX, y: size.pY / numFrames.numY};
 	this.x = x - (this.spriteSize.x / 2); // x is the origin of drawing
 	this.y = y - (this.spriteSize.y / 2); // y is the origin of drawing
+    this.numFrames = numFrames;
 	this.sprites = new Array;
-	for (var j = 0; j < numFrames.numY; j++){
-		for (var i = 0; i < numFrames.numX; i++){
+	for (var j = 0; j < this.numFrames.numY; j++){
+		for (var i = 0; i < this.numFrames.numX; i++){
 			this.sprites.push( {x: this.spriteSize.x * i, y: this.spriteSize.y * j} );
 		};
 	};
@@ -34,12 +34,17 @@ function Paintable(x, y, file, size, numFrames){
 		this.currentSprite = frame;
 	};
 	
-	/**
-		Returns two points of topleft and bottomright coordinates
-	*/
-	this.getChoosableArea = function(){
-		return {topLeft: {x: this.x, y: this.y}, bottomRight: {x: this.x + this.spriteSize.x, y: this.y + this.spriteSize.y}};
-	};
+    /**
+        Returns true if custom pixel is visible and false if it is transparent
+    */
+    this.isPaintedPixel = function(pixel){
+        // Let's see if it's inside the painted zone
+        if (this.x > pixel.x || pixel.x > this.x + this.spriteSize.x ||
+			this.y > pixel.y || pixel.y > this.y + this.spriteSize.y)
+			return false;
+        
+        return true;
+    };
 	
 	/**
 		Paints the current sprite on screen
@@ -54,14 +59,5 @@ function Paintable(x, y, file, size, numFrames){
 			this.y,
 			this.spriteSize.x,
 			this.spriteSize.y);
-		/*
-		// Code to paint the border
-		ctx.beginPath();
-		ctx.moveTo(this.x, this.y);
-		ctx.lineTo(this.x + this.spriteSize.x, this.y);
-		ctx.lineTo(this.x + this.spriteSize.x, this.y + this.spriteSize.y);
-		ctx.lineTo(this.x, this.y + this.spriteSize.y);
-		ctx.lineTo(this.x, this.y);
-		ctx.stroke();*/
 	};
 };
