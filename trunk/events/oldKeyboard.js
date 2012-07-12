@@ -91,10 +91,12 @@ var Keys = {
 
 function Keyboard(){
 	this.keysPressed = new Array;
+    this.keyCallbacks = new Array;
     
     this.init = function(){
         window.onkeydown    = function(evt){keyboard.keyDown(evt);};
         window.onkeyup      = function(evt){keyboard.keyUp(evt);};
+        setInterval(keyboard.keyBoardLoop,10); // Lets do keyboard loop
     };
 	
 	this.keyDown = function (evt){
@@ -108,16 +110,48 @@ function Keyboard(){
 	    if (!contains){
 	        this.keysPressed.push(evt.keyCode)
 	    }
-		root.onkeyboardevent(evt);
 	};
 	
 	this.keyUp = function (evt){
         var i = this.keysPressed.indexOf(evt.keyCode);
 	    if (i != -1)
 	        this.keysPressed.splice(i, 1);
-		root.onkeyboardevent(evt);
         //console.log("KeyUp: " + evt.keyCode + ',' + this.keysPressed);
 	};
+    
+    this.addEventListener = function (key, object, callback){
+        var list = this.keyCallbacks[ key ];
+        if (list != undefined){
+            list.push([object, callback]);
+        }
+        else 
+            list = [ [object , callback] ];
+        this.keyCallbacks[ key ] = list;
+    };
+	
+	this.removeEventListener = function(key, object, callback){
+        var list = this.keyCallbacks[ key ];
+		var idx = indexPair( [object, callback], list);
+		if (idx != -1){
+			this.keyCallbacks[ key ].splice(idx, 1);
+        }
+		else{
+			console.warn("Keyboard::removeEventListener: Trying to remove key " + key + " event with " + object + "." +callback);
+        }
+	};
+    
+    this.keyBoardLoop = function(){
+        for (var keys in keyboard.keysPressed){
+            for(var pairs in keyboard.keyCallbacks[ keyboard.keysPressed[ keys ] ]){
+                var object = keyboard.keyCallbacks[ keyboard.keysPressed[keys] ] [ pairs ] [ 0 ];
+                var callback = keyboard.keyCallbacks[ keyboard.keysPressed[keys] ] [ pairs ] [ 1 ];
+                if (object != undefined)
+                    object[callback]( keyboard.keysPressed[keys] );
+                else
+                    callback( keyboard.keysPressed[keys] );
+            }
+        }
+    };
 }
 
 keyboard = new Keyboard;

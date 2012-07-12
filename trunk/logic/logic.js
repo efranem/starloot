@@ -6,11 +6,11 @@ function GameLogic(){
         var time1 = new Date().getTime();
         
         // Let's apply limits to movement
-        camera.applyLimits();
+        camera.updateLogic();
         // Update logic
         board.updateLogic();
         // Update GUI logic
-        selector.update();
+        selector.updateLogic();
         
         this.logicTime = new Date().getTime() - time1;
     };

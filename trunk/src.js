@@ -18,6 +18,7 @@ terrainProps.push(new Building(BuildingTypes.RECON_HQ,6, 8, 0));
 terrainProps.push(new Building(BuildingTypes.ANTENNA,9, 8, 0));
 terrainProps.push(new Building(BuildingTypes.CRATER,3, 8, 0));
 terrainProps.push(new Building(BuildingTypes.WALL,3,3,0));
+var root = new Group("board");
 
 var stats;
 
@@ -47,16 +48,16 @@ function init(){
 	
     // init event handlers
     keyboard.init();
-    keyboard.addEventListener(Keys.UP_ARROW, board, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.DOWN_ARROW, board, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.LEFT_ARROW, board, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.RIGHT_ARROW, board, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.W, board, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.S, board, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.A, board, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.D, board, 'onkeyboarddown');
+    /*keyboard.addEventListener(Keys.UP_ARROW, camera, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.DOWN_ARROW, camera, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.LEFT_ARROW, camera, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.RIGHT_ARROW, camera, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.W, camera, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.S, camera, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.A, camera, 'onkeyboarddown');
+    keyboard.addEventListener(Keys.D, camera, 'onkeyboarddown');*/
 	mouse.init();
-    mouse.addEventListener(MouseEvents.CLICK, scout1, 'onclick', MouseButtons.LEFT);
+    /*mouse.addEventListener(MouseEvents.CLICK, scout1, 'onclick', MouseButtons.LEFT);
     mouse.addEventListener(MouseEvents.CLICK, scout2, 'onclick', MouseButtons.LEFT);
 	mouse.addEventListener(MouseEvents.CLICK, scout3, 'onclick', MouseButtons.LEFT);
 	mouse.addEventListener(MouseEvents.CLICK, scout4, 'onclick', MouseButtons.LEFT);
@@ -64,7 +65,20 @@ function init(){
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, slideScreen);
 	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
 	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection, MouseButtons.RIGHT);
-	mouse.addEventListener(MouseEvents.MOUSE_DOWN, selector, 'clearSelection', MouseButtons.RIGHT);
+	mouse.addEventListener(MouseEvents.MOUSE_DOWN, selector, 'clearSelection', MouseButtons.RIGHT);*/
+	
+	// init main groups
+	root.addNode(board);
+	root.addGroup("buildings")
+					.addNode(terrainProps[0])
+					.addNode(terrainProps[1])
+					.addNode(terrainProps[2])
+					.addNode(terrainProps[3]);
+	root.addGroup("scouts")
+					.addNode(scout1)
+					.addNode(scout2)
+					.addNode(scout3)
+					.addNode(scout4);
     
     // Stats windows
     stats = new Stats();
