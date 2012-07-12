@@ -7,8 +7,9 @@ var BuildingTypes = {
 
 function getParalel(p1,p2,r) {
 	var alpha = Math.PI - Math.atan2(p1[0] - p2[0],p1[1] - p2[1]);
-	var a = [p1[0] + Math.cos(alpha)*r, p1[1] + Math.sin(alpha)*r/2];
-	var b = [p2[0] + Math.cos(alpha)*r, p2[1] + Math.sin(alpha)*r/2];
+	// We don't need float precision for this
+	var a = [Math.floor(p1[0] + Math.cos(alpha)*r), Math.floor(p1[1] + Math.sin(alpha)*r/2)];
+	var b = [Math.floor(p2[0] + Math.cos(alpha)*r), Math.floor(p2[1] + Math.sin(alpha)*r/2)];
 	return [a,b];
 }
 
@@ -76,12 +77,6 @@ function Building(type, x, y, orientation){
 		return nodes;
 	}
 	
-	/*this.middle = function(){
-        return {x: this.x + (this.size[0] / 2),
-                y: this.y + (this.size[1] / 2)
-                };
-    }*/
-		
 	this.paint = function(ctx){
 		/* draw sprite */
         ctx.drawImage(this.img, this.sprites[this.orientation][0], this.sprites[this.orientation][1], this.size[0], this.size[1], this.x-this.center[0], this.y-this.center[1], this.size[0], this.size[1]);
