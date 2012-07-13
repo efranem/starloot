@@ -94,12 +94,16 @@ function Scout(x, y){
     }
 	
 	/**
-		Onclick callback event
+		onMouseEvent callback event
 	*/
-	this.onclick = function(){
-		this.isSelected = !this.isSelected;
-		selector.clearSelection();
-		this.updateSelect();
+	this.onmouseevent = function(evt){
+        if (this.isTouched({x: evt.x, y: evt.y})){
+            this.isSelected = !this.isSelected;
+            selector.clearSelection();
+            this.updateSelect();
+            return true;
+        }
+        return false;
 	};
 	
 	/**

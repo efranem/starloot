@@ -119,7 +119,8 @@ function Mouse(){
     };
     
     this.mouseClick = function(evt){
-        this.button = evt.button;
+        root.onmouseevent(evt);
+        /*this.button = evt.button;
         for(var i in this.clickAbles[ this.button ])
         {
             var object = this.clickAbles[ this.button ][ i ][ 0 ];
@@ -127,13 +128,10 @@ function Mouse(){
             if (object != undefined){
 				if (object.isTouched( {x: this.x + camera.transformX, y: this.y + camera.transformY} ))
 					object[callback]();
-                 /*if (object.x - camera.transformX < this.x && this.x < object.x + object.sizeX - camera.transformX &&
-                    object.y - camera.transformY < this.y && this.y < object.y + object.sizeY - camera.transformY)
-                    object[callback]();*/
             }
             else
                 callback();
-        } 
+        }*/
     };
     
     this.mouseDoubleClick = function(evt){

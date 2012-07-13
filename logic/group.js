@@ -26,6 +26,24 @@ function Group(name){
 		// Event has not been captured, so noone wanted it...
 		return false;
 	};
+    
+    this.onmouseevent = function(event){
+		var captured = false;
+		for (var group in this.groups){
+			if (this.groups[ group ].onmouseevent){
+				captured = this.groups[ group ].onmouseevent(event);
+				if (captured) return true;
+			};
+		};
+		for (var node in this.nodes){
+			if (this.nodes[ node ].onmouseevent){
+				captured = this.nodes[ node ].onmouseevent(event);
+				if (captured) return true;
+			};
+		}
+		// Event has not been captured, so noone wanted it...
+		return false;
+	};
 	
 	this.onevent = function(event){
 		var captured = false;
@@ -62,7 +80,16 @@ function Group(name){
 		}
 		return this;
 	};
-	
+    
+    this.getGroup = function(name){
+        var idx = 0;
+		for (idx in this.groups){
+			if (this.groups[ idx ].name == name)
+				return this.groups[ idx ];
+		};
+		return undefined;
+    };
+    
 	this.addNode = function(node){
 		this.nodes.push(node);
 		return this;
