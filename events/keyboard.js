@@ -109,15 +109,15 @@ function Keyboard(){
 	    if (!contains){
 	        this.keysPressed.push(evt.keyCode)
 	    }
-		root.onkeyboardevent(evt);
+		root.onevent('onkeyboardevent', evt);
 	};
 	
 	this.keyUp = function (evt){
         var i = this.keysPressed.indexOf(evt.keyCode);
 	    if (i != -1)
 	        this.keysPressed.splice(i, 1);
-		root.onkeyboardevent(evt);
-        //console.log("KeyUp: " + evt.keyCode + ',' + this.keysPressed);
+		root.onevent('onkeyboardevent', evt);
+		//console.log("KeyUp: " + evt.keyCode + ',' + this.keysPressed);
 	};
     
     this.keyPress = function (evt){
@@ -130,7 +130,7 @@ function Keyboard(){
 	    if (!contains){
 	        this.keysPressed.push(evt.keyCode)
 	    }
-		root.onkeyboardevent(evt);
+		root.onevent('onkeyboardevent', evt);
     };
 }
 

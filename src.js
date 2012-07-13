@@ -55,25 +55,8 @@ function init(){
 	
     // init event handlers
     keyboard.init();
-    /*keyboard.addEventListener(Keys.UP_ARROW, camera, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.DOWN_ARROW, camera, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.LEFT_ARROW, camera, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.RIGHT_ARROW, camera, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.W, camera, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.S, camera, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.A, camera, 'onkeyboarddown');
-    keyboard.addEventListener(Keys.D, camera, 'onkeyboarddown');*/
 	mouse.init();
-    /*mouse.addEventListener(MouseEvents.CLICK, scout1, 'onclick', MouseButtons.LEFT);
-    mouse.addEventListener(MouseEvents.CLICK, scout2, 'onclick', MouseButtons.LEFT);
-	mouse.addEventListener(MouseEvents.CLICK, scout3, 'onclick', MouseButtons.LEFT);
-	mouse.addEventListener(MouseEvents.CLICK, scout4, 'onclick', MouseButtons.LEFT);
-    mouse.addEventListener(MouseEvents.CLICK, board, 'onclick', MouseButtons.LEFT);
-	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, slideScreen);
-	mouse.addEventListener(MouseEvents.MOUSE_SLIDE, undefined, mouseSelection);
-	mouse.addEventListener(MouseEvents.MOUSE_UP, undefined, mouseEndSelection, MouseButtons.RIGHT);
-	mouse.addEventListener(MouseEvents.MOUSE_DOWN, selector, 'clearSelection', MouseButtons.RIGHT);*/
-	
+
 	// init main groups
 	root.addNode(camera);
     root.addGroup("board").addNode(board);
@@ -102,27 +85,6 @@ function init(){
 	//findPath([50,50],[1300,700],terrainProps,50);
 	//var time_b = (new Date).getTime();
 	//console.log("Path found in " + (time_b - time_a) + " ms.");
-};
-
-// Slide callback function TEST
-var slideScreen = function(button, lx, ly, gx, gy){
-	if (button == MouseButtons.LEFT){
-		camera.transformX -= lx;
-		camera.transformY -= ly;
-	};
-};
-
-// Slide callback function TEST
-var mouseSelection = function(button, lx, ly, gx, gy){
-	if (button == MouseButtons.RIGHT){
-        var point = camera.localPosition({x: mouse.originDown_x, y: mouse.originDown_y});
-		selector.setMouseSelection({x: point.x, y: point.y, gx: gx, gy: gy});
-	};
-};
-
-// Up callback function TEST
-var mouseEndSelection = function(){
-	selector.endMouseSelection();
 };
 
 

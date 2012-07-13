@@ -9,53 +9,17 @@ function Group(name){
 	this.groups = new Array;
 	this.nodes = new Array;
 	
-	this.onkeyboardevent = function(event){
-		var captured = false;
-		for (var group in this.groups){
-			if (this.groups[ group ].onkeyboardevent){
-				captured = this.groups[ group ].onkeyboardevent(event);
-				if (captured) return true;
-			};
-		};
-		for (var node in this.nodes){
-			if (this.nodes[ node ].onkeyboardevent){
-				captured = this.nodes[ node ].onkeyboardevent(event);
-				if (captured) return true;
-			};
-		}
-		// Event has not been captured, so noone wanted it...
-		return false;
-	};
-    
-    this.onmouseevent = function(event){
-		var captured = false;
-		for (var group in this.groups){
-			if (this.groups[ group ].onmouseevent){
-				captured = this.groups[ group ].onmouseevent(event);
-				if (captured) return true;
-			};
-		};
-		for (var node in this.nodes){
-			if (this.nodes[ node ].onmouseevent){
-				captured = this.nodes[ node ].onmouseevent(event);
-				if (captured) return true;
-			};
-		}
-		// Event has not been captured, so noone wanted it...
-		return false;
-	};
-	
-	this.onevent = function(event){
+	this.onevent = function(type, event){
 		var captured = false;
 		for (var group in this.groups){
 			if (this.groups[ group ].onevent){
-				captured = this.groups[ group ].onevent(event);
+				captured = this.groups[ group ].onevent(type, event);
 				if (captured) return true;
 			};
 		};
 		for (var node in this.nodes){
-			if (this.nodes[ node ].onevent){
-				captured = this.nodes[ node ].onevent(event);
+			if (this.nodes[ node ][type]){
+				captured = this.nodes[ node ][ type ](event);
 				if (captured) return true;
 			};
 		}
