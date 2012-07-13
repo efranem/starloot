@@ -77,7 +77,9 @@ function Board(){
             //var coords = scout.middle();
             if (Math.abs(scout.x - evt.x) > 50 || Math.abs(scout.y - evt.y) > 50){
                 var point = camera.localPosition({x: evt.x, y: evt.y});
-                scout.target = selector.targetPoint(scout.x, scout.y, point.x, point.y);
+                //scout.target = selector.targetPoint(scout.x, scout.y, point.x, point.y);
+				scout.path = findPath([scout.x,scout.y],[point.x,point.y],terrainProps,40);
+				scout.target = undefined;
             }
         };
     };

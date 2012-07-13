@@ -26,7 +26,7 @@ function Building(type, x, y, orientation){
 	this.img = new Image;
 	switch (type) {
 	case BuildingTypes.RECON_HQ:
-		this.box = [[120,120],[222,172],[193,188],[176,184],[151,174],[121,167],[73,143]];
+		this.box = [[120,120],[222,172],[193,188],[121,167],[73,143]];
 		this.img.src = 'sprites/buildings/recon_hq_01.png';	
 		this.sprites = [
 			[256*0,256*0],
@@ -45,7 +45,7 @@ function Building(type, x, y, orientation){
 		this.center = [111,475];
 		break;
 	case BuildingTypes.CRATER:
-		this.box = [[306,43],[371,86],[399,103],[400,127],[385,148],[349,166],[295,202],[247,204],[207,190],[163,175],[144,168],[91,131],[124,99],[151,83],[220,40],[267,22]];
+		this.box = [[306,35],[399,103],[400,127],[385,148],[295,202],[247,204],[207,190],[163,175],[144,168],[91,131],[124,99],[151,83],[220,40],[267,22]];
 		this.img.src = 'sprites/decoration/crater_4x4.png';
 		this.sprites = [[0,0],[0,0],[0,0],[0,0]];
 		this.size = [512,256];
@@ -86,6 +86,7 @@ function Building(type, x, y, orientation){
         ctx.drawImage(this.img, this.sprites[this.orientation][0], this.sprites[this.orientation][1], this.size[0], this.size[1], this.x-this.center[0], this.y-this.center[1], this.size[0], this.size[1]);
 
         /* draw bounding box */
+		
         ctx.strokeStyle="#AA6600";
         ctx.beginPath();
         var i = 0;
@@ -95,8 +96,10 @@ function Building(type, x, y, orientation){
         }
 		ctx.closePath();
 		ctx.stroke();
+		
 
 		/* draw expanded bounding box */
+		/*
 		ctx.strokeStyle="#BB66BB";
 		ctx.beginPath();
 		i = 0;
@@ -115,6 +118,7 @@ function Building(type, x, y, orientation){
 		
 		ctx.closePath();
 		ctx.stroke();
+		*/
 
 	};
 	

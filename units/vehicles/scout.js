@@ -8,13 +8,14 @@ function Scout(x, y){
     this.angle = 0 * Math.PI/180;
 	this.v = 2;
 	this.target = undefined;
+	this.path = new Array;
 	
     this.sprite = 0;
-	this.image = new Paintable	(x, y, 'recon_01', //'sprites/units/recon_01.png', 
+	this.image = new Paintable	(x, y -30, 'recon_01', //'sprites/units/recon_01.png', 
 								{pX: 1024, pY: 512}, {numX: 8, numY: 4});
 	
 	this.isSelected = false;
-	this.imageSelected = new Paintable (x, y + 15, 'selector',
+	this.imageSelected = new Paintable (x, y, 'selector',
 										{pX: 128, pY: 128}, {numX: 1, numY: 1});   
 
 	/*function collision(x,y){
@@ -31,18 +32,19 @@ function Scout(x, y){
 				if ((x >= cx && x <= cdx) && (y >= cy && y <= cdy)){
 					return true;
 				}
-				
 			}
 		}
 		return false;
 	}*/
 	
 	this.update = function(){
+		if (this.path != undefined && this.path.length > 0 && this.target == undefined) {
+			this.target = this.path.splice(0,1)[0];
+		}
 		if (this.target != undefined && Math.abs(this.target.x - (this.x)) < 1.5 && Math.abs(this.target.y - (this.y)) < 1.5){
 			this.target = undefined;
 		}
 		if (this.v!= 0 && this.target != undefined){
-		
 			var alpha = Math.atan2((this.target.y- (this.y)),(this.target.x - (this.x)));
 			if (alpha < 0) alpha += 2 * Math.PI;
 			else alpha %= 2 * Math.PI;
@@ -52,7 +54,7 @@ function Scout(x, y){
             if (Math.abs(tempAngle - this.angle) < 0.1){ // If the angle is correct we move
                 this.angle = tempAngle;
                 var x = this.x + Math.cos(alpha)*2.0;
-                var y = this.y + Math.sin(alpha);//*2.0;
+                var y = this.y + Math.sin(alpha)*2.0;
                 /*if (!collision(x,y)){*/
                     this.x = x;
                     this.y = y;
@@ -69,9 +71,9 @@ function Scout(x, y){
             }
 			// Update painting data
 			var sprite = Math.round(this.angle / (11.25 * (Math.PI/180))) % 32;
-			this.image.setCentralPoint({x: this.x, y: this.y});
+			this.image.setCentralPoint({x: this.x, y: this.y-30});
 			this.image.setCurrentFrame(sprite);
-			this.imageSelected.setCentralPoint({x: this.x, y: this.y + 15});
+			this.imageSelected.setCentralPoint({x: this.x, y: this.y});
 		}
 	}
 	

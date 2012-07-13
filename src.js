@@ -14,6 +14,13 @@ var scout2 = new Scout(800, 60);
 var scout3 = new Scout(500, 230);
 var scout4 = new Scout(800, 350);
 var terrainProps = new Array;
+/*
+for (var i=0; i<5; i++) {
+	for (var j=0; j<5; j++) {
+		terrainProps.push(new Building(BuildingTypes.RECON_HQ,8+1.5*i+0.5*j, 10+1.8*j, 0));
+	}
+}
+*/
 terrainProps.push(new Building(BuildingTypes.RECON_HQ,6, 8, 0));
 terrainProps.push(new Building(BuildingTypes.ANTENNA,9, 8, 0));
 terrainProps.push(new Building(BuildingTypes.CRATER,3, 8, 0));
@@ -90,7 +97,11 @@ function init(){
     
     // loop game
 	window.onEachFrame(Game.loop);
-	createGraph(terrainProps,50);
+	//createGraph(terrainProps,50,[50,50],[1300,700]);
+	//var time_a = (new Date).getTime();
+	//findPath([50,50],[1300,700],terrainProps,50);
+	//var time_b = (new Date).getTime();
+	//console.log("Path found in " + (time_b - time_a) + " ms.");
 };
 
 // Slide callback function TEST
