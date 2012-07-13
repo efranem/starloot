@@ -112,6 +112,36 @@ function Camera(){
             }
         };
     };
+	
+	// Captures the slide
+	this.onmouseslide = function(evt){
+        if (evt.button == MouseButtons.LEFT){
+			this.transformX -= evt.lx;
+			this.transformY -= evt.ly;
+			return true;
+		};
+		
+		if (evt.button == MouseButtons.RIGHT){
+			var point = this.localPosition({x: evt.originDown_x, y: evt.originDown_y});
+			selector.setMouseSelection({x: point.x, y: point.y, gx: evt.gx, gy: evt.gy});
+			return true;
+		};
+		
+		return false;
+    };
+	
+	this.onmouseup = function(evt){
+		if (evt.button == MouseButtons.RIGHT){
+			selector.endMouseSelection();
+		}
+	};
+	
+	this.onmousedown = function(evt){
+		if (evt.button == MouseButtons.RIGHT){
+			selector.clearSelection();
+		}
+	};
+    
 }
 
 camera = new Camera;

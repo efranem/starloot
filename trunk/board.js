@@ -70,7 +70,7 @@ function Board(){
 	};
     
     // Captures mouse click event
-    this.onmouseevent = function(evt){
+    this.onclick = function(evt){
         //console.log("Button clicked in board");
         for (var obj in selector.selection){
             var scout = selector.selection[ obj ];
@@ -82,6 +82,8 @@ function Board(){
 				scout.target = undefined;
             }
         };
+		
+		return false;
     };
     
 	this.paintMap = function(){
@@ -101,14 +103,51 @@ function Board(){
         // Paint tiles
         this.paintMap();
 
+		// Paint according it's position on map...
+		var movableIdx = 0;
+		var buildingIdx = 0;
+		while (movableIdx < this.movable.length || buildingIdx < this.buildings.length){
+			var currMovable = this.movable[ movableIdx ];
+			var currBuilding = this.buildings[ buildingIdx ];
+			if (currMovable && this.buildings[ buildingIdx ]){
+				// Gets the minimum y
+				if (currMovable.y < currBuilding.y){
+					currMovable.paint(ctx);
+					movableIdx++;
+				}
+				else if (currMovable.y == currBuilding.y){
+					if (currMovable.x < currBuilding.x){
+						currMovable.paint(ctx);
+						movableIdx++;
+					}
+					else{
+						currBuilding.paint(ctx);
+						buildingIdx++;
+					};
+				}
+				else{
+					currBuilding.paint(ctx);
+					buildingIdx++;
+				};
+			}
+			else if (currMovable){
+				currMovable.paint(ctx);
+				movableIdx++;
+			}
+			else if (currBuilding){
+				currBuilding.paint(ctx);
+				buildingIdx++;
+			};
+		};
+		
         // Paint every movable component
-        for (var i = 0; i < this.movable.length; i++){
+        /*for (var i = 0; i < this.movable.length; i++){
                 this.movable[i].paint(ctx);
-        }
+        }*/
         // Paint every building
-        for (var i = 0; i < this.buildings.length; i++){
+        /*for (var i = 0; i < this.buildings.length; i++){
                 this.buildings[i].paint(ctx);
-        }
+        }*/
         
 		PaintTile(mouse.tile_x,mouse.tile_y);
 	};

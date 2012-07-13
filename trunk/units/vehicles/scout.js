@@ -98,8 +98,9 @@ function Scout(x, y){
 	/**
 		onMouseEvent callback event
 	*/
-	this.onmouseevent = function(evt){
-        if (this.isTouched({x: evt.x, y: evt.y})){
+	this.onclick = function(evt){
+		var point = camera.localPosition({x: evt.x, y: evt.y});
+		if (this.isTouched(point)){			
             this.isSelected = !this.isSelected;
             selector.clearSelection();
             this.updateSelect();
