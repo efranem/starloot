@@ -63,18 +63,22 @@ function Building(type, x, y, orientation){
 	}
 	
 	this.getBoundingBox = function(r) {
-		var nodes = new Array;
-		var i = 0;
-		while (i<this.box.length) {
-			var p = getParalel( 
-					[this.x - this.center[0] + this.box[i][0],this.y - this.center[1] + this.box[i][1]],
-					[this.x - this.center[0] + this.box[(i+1)%this.box.length][0],this.y - this.center[1] + this.box[(i+1)%this.box.length][1]],
-					r);
-			nodes.push(p[0]);
-			nodes.push(p[1]);
-			i++;
-		}
-		return nodes;
+		// create bounding box only if it isn't created or if radius has changed
+		if (this.boundingBox == undefined || this.r!=r) {
+			this.boundingBox = new Array;
+			this.r = r;
+			var i = 0;
+			while (i<this.box.length) {
+				var p = getParalel( 
+						[this.x - this.center[0] + this.box[i][0],this.y - this.center[1] + this.box[i][1]],
+						[this.x - this.center[0] + this.box[(i+1)%this.box.length][0],this.y - this.center[1] + this.box[(i+1)%this.box.length][1]],
+						r);
+				this.boundingBox.push(p[0]);
+				this.boundingBox.push(p[1]);
+				i++;
+			}
+		}	
+		return this.boundingBox;
 	}
 	
 	this.paint = function(ctx){

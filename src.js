@@ -90,8 +90,7 @@ function init(){
     
     // loop game
 	window.onEachFrame(Game.loop);
-	var nodes = gatherNodes(terrainProps);
-	paintGraph(ctx,nodes);
+	createGraph(terrainProps,50);
 };
 
 // Slide callback function TEST
