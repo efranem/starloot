@@ -70,13 +70,13 @@ function Board(){
 	};
     
     // Captures mouse click event
-    this.onclick = function(){
+    this.onmouseevent = function(evt){
         //console.log("Button clicked in board");
         for (var obj in selector.selection){
             var scout = selector.selection[ obj ];
             //var coords = scout.middle();
-            if (Math.abs(scout.x - mouse.x) > 50 || Math.abs(scout.y - mouse.y) > 50){
-                var point = camera.localPosition({x: mouse.x, y: mouse.y});
+            if (Math.abs(scout.x - evt.x) > 50 || Math.abs(scout.y - evt.y) > 50){
+                var point = camera.localPosition({x: evt.x, y: evt.y});
                 scout.target = selector.targetPoint(scout.x, scout.y, point.x, point.y);
             }
         };
@@ -117,30 +117,6 @@ function Board(){
 	this.isTouched = function(point){
 		return true;
 	};
-	
-	// Captures keyboard key pressed
-    this.onkeyboardevent = function(evt){
-        switch (evt.keyCode) {
-        case Keys.W: /* W */
-        case Keys.UP_ARROW: /* Up arrow was pressed */
-			camera.cam_direction_Y = 1;
-            break;
-        case Keys.S: /* S */
-        case Keys.DOWN_ARROW: /* Down arrow was pressed */
-			camera.cam_direction_Y = 2;
-			break;
-        case Keys.A: /* A */   
-        case Keys.LEFT_ARROW: /* Left arrow was pressed */
-			camera.cam_direction_X = 1;
-            break;
-        case Keys.D: /* D */   
-        case Keys.RIGHT_ARROW: /* Right arrow was pressed */
-			camera.cam_direction_X = 2;
-            break;
-        case Keys.ADD: scout1.rotate(0.18);break;
-        case Keys.SUBSTRACT: scout1.rotate(-0.18);break;
-        }
-    };
 }
 
 board = new Board;

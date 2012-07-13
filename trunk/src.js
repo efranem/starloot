@@ -18,7 +18,7 @@ terrainProps.push(new Building(BuildingTypes.RECON_HQ,6, 8, 0));
 terrainProps.push(new Building(BuildingTypes.ANTENNA,9, 8, 0));
 terrainProps.push(new Building(BuildingTypes.CRATER,3, 8, 0));
 terrainProps.push(new Building(BuildingTypes.WALL,3,3,0));
-var root = new Group("board");
+var root = new Group("world");
 
 var stats;
 
@@ -68,13 +68,14 @@ function init(){
 	mouse.addEventListener(MouseEvents.MOUSE_DOWN, selector, 'clearSelection', MouseButtons.RIGHT);*/
 	
 	// init main groups
-	root.addNode(board);
-	root.addGroup("buildings")
-					.addNode(terrainProps[0])
-					.addNode(terrainProps[1])
-					.addNode(terrainProps[2])
-					.addNode(terrainProps[3]);
-	root.addGroup("scouts")
+	root.addNode(camera);
+    root.addGroup("board").addNode(board);
+    root.getGroup("board").addGroup("buildings")
+                        .addNode(terrainProps[0])
+                        .addNode(terrainProps[1])
+                        .addNode(terrainProps[2])
+                        .addNode(terrainProps[3]);
+    root.getGroup("board").addGroup("scouts")
 					.addNode(scout1)
 					.addNode(scout2)
 					.addNode(scout3)

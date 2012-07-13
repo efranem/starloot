@@ -32,33 +32,86 @@ function Camera(){
 		// Update camera position
 		if (this.cam_direction_X>0) {
 			if (this.cam_direction_X==2) {
-				this.CAMERA_SPEED_X += 0.5;
+                if (this.CAMERA_SPEED_X < 0) this.CAMERA_SPEED_X = 0
+				this.CAMERA_SPEED_X += 0.4;
 			} else if (this.cam_direction_X==1) {
-				this.CAMERA_SPEED_X -= 0.5;
+                if (this.CAMERA_SPEED_X > 0) this.CAMERA_SPEED_X = 0
+				this.CAMERA_SPEED_X -= 0.4;
 			}
 		} else {
-			if (this.CAMERA_SPEED_X < 0.3 && this.CAMERA_SPEED_X > -0.3) {this.CAMERA_SPEED_X = 0;}
-			if (this.CAMERA_SPEED_X > 0) {this.CAMERA_SPEED_X -= 0.3;}
-			if (this.CAMERA_SPEED_X < 0) {this.CAMERA_SPEED_X += 0.3;}
+			if (this.CAMERA_SPEED_X < 0.4 && this.CAMERA_SPEED_X > -0.4) {this.CAMERA_SPEED_X = 0;}
+			if (this.CAMERA_SPEED_X > 0) {this.CAMERA_SPEED_X -= 0.4;}
+			if (this.CAMERA_SPEED_X < 0) {this.CAMERA_SPEED_X += 0.4;}
 		}
 		
 		if (this.cam_direction_Y>0) {
 			if (this.cam_direction_Y==2) {
-				this.CAMERA_SPEED_Y += 0.5;
+                if (this.CAMERA_SPEED_Y < 0) this.CAMERA_SPEED_Y = 0
+				this.CAMERA_SPEED_Y += 0.4;
 			} else if (this.cam_direction_Y==1) {
-				this.CAMERA_SPEED_Y -= 0.5;
+                if (this.CAMERA_SPEED_Y > 0) this.CAMERA_SPEED_Y = 0
+				this.CAMERA_SPEED_Y -= 0.4;
 			}
 		} else {
-			if (this.CAMERA_SPEED_Y < 0.3 && this.CAMERA_SPEED_Y > -0.3) {this.CAMERA_SPEED_Y = 0;}
-			if (this.CAMERA_SPEED_Y > 0) {this.CAMERA_SPEED_Y -= 0.3;}
-			if (this.CAMERA_SPEED_Y < 0) {this.CAMERA_SPEED_Y += 0.3;}
+			if (this.CAMERA_SPEED_Y < 0.4 && this.CAMERA_SPEED_Y > -0.4) {this.CAMERA_SPEED_Y = 0;}
+			if (this.CAMERA_SPEED_Y > 0) {this.CAMERA_SPEED_Y -= 0.4;}
+			if (this.CAMERA_SPEED_Y < 0) {this.CAMERA_SPEED_Y += 0.4;}
 		}
 		this.transformX += this.CAMERA_SPEED_X;
 		this.transformY += this.CAMERA_SPEED_Y;
+        //console.log("Speed: " + this.CAMERA_SPEED_X + "," + this.CAMERA_SPEED_Y);
 		
-		this.cam_direction_X = 0;
-		this.cam_direction_Y = 0;
+		//this.cam_direction_X = 0;
+		//this.cam_direction_Y = 0;
 	};
+    
+    // Captures keyboard key pressed
+    this.onkeyboardevent = function(evt){
+        if (evt.type == "keydown"){
+            switch (evt.keyCode) {
+            case Keys.W: /* W */
+            case Keys.UP_ARROW: /* Up arrow was pressed */
+                this.cam_direction_Y = 1;
+                break;
+            case Keys.S: /* S */
+            case Keys.DOWN_ARROW: /* Down arrow was pressed */
+                this.cam_direction_Y = 2;
+                break;
+            case Keys.A: /* A */   
+            case Keys.LEFT_ARROW: /* Left arrow was pressed */
+                this.cam_direction_X = 1;
+                break;
+            case Keys.D: /* D */   
+            case Keys.RIGHT_ARROW: /* Right arrow was pressed */
+                this.cam_direction_X = 2;
+                break;
+            case Keys.ADD: scout1.rotate(0.18);break;
+            case Keys.SUBSTRACT: scout1.rotate(-0.18);break;
+            }
+        }
+        else if (evt.type == "keyup"){
+            switch (evt.keyCode) {
+            case Keys.W: /* W */
+            case Keys.UP_ARROW: /* Up arrow was pressed */
+                this.cam_direction_Y = 0;
+                break;
+            case Keys.S: /* S */
+            case Keys.DOWN_ARROW: /* Down arrow was pressed */
+                this.cam_direction_Y = 0;
+                break;
+            case Keys.A: /* A */   
+            case Keys.LEFT_ARROW: /* Left arrow was pressed */
+                this.cam_direction_X = 0;
+                break;
+            case Keys.D: /* D */   
+            case Keys.RIGHT_ARROW: /* Right arrow was pressed */
+                this.cam_direction_X = 0;
+                break;
+            case Keys.ADD: scout1.rotate(0.18);break;
+            case Keys.SUBSTRACT: scout1.rotate(-0.18);break;
+            }
+        };
+    };
 }
 
 camera = new Camera;

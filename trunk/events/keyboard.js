@@ -95,6 +95,7 @@ function Keyboard(){
     this.init = function(){
         window.onkeydown    = function(evt){keyboard.keyDown(evt);};
         window.onkeyup      = function(evt){keyboard.keyUp(evt);};
+        //window.onkeypress   = function(evt){keyboard.keyPress(evt);};
     };
 	
 	this.keyDown = function (evt){
@@ -118,6 +119,19 @@ function Keyboard(){
 		root.onkeyboardevent(evt);
         //console.log("KeyUp: " + evt.keyCode + ',' + this.keysPressed);
 	};
+    
+    this.keyPress = function (evt){
+        var contains = false;
+        for (var i in this.keysPressed)
+            if (this.keysPressed[i] == evt.keyCode){
+	            contains = true;
+	            break;
+	        }
+	    if (!contains){
+	        this.keysPressed.push(evt.keyCode)
+	    }
+		root.onkeyboardevent(evt);
+    };
 }
 
 keyboard = new Keyboard;
