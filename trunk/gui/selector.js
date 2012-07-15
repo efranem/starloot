@@ -19,29 +19,11 @@ function Selector(){
 		this.avgY = Math.floor(sumY / this.selection.length);
 		//console.log("Avg point: " + this.avgX + "," + this.avgY);
 	};
-	
-	this.writeSelected = function(){
-		var ul = document.getElementById('selectionList');
-		if (ul == undefined) return;
-		if ( ul.hasChildNodes() )
-		{
-			while ( ul.childNodes.length >= 1 )
-			{
-				ul.removeChild( ul.firstChild );       
-			} 
-		}
-		var li;
-		for(var i = 0; i < this.selection.length; i++){
-			li = document.createElement('li');
-			li.innerHTML = this.selection[i].name;
-			ul.appendChild(li);
-		}
-	}
-    
+	    
     this.addSelection = function(obj){
 		this.selection.push(obj);
         obj.isSelected = true;
-		this.writeSelected();
+		root.onevent('onSelection',{selected:this.selection},'guiEvents');
 		this.refreshAveragePoint();
     };
     
@@ -51,7 +33,7 @@ function Selector(){
             this.selection[ idx ].isSelected = false;
             this.selection.splice(idx, 1);
         }
-		this.writeSelected();
+		root.onevent('onUnSelection', {selected:this.selection},'guiEvents');
 		this.refreshAveragePoint();
     };
     
@@ -60,7 +42,7 @@ function Selector(){
             this.selection[ idx ].isSelected = false;
         };
         this.selection = [];
-		this.writeSelected();
+		root.onevent('onUnSelection', {selected:this.selection},'guiEvents');
 		this.avgX = 0; 
 		this.avgY = 0;
     };
