@@ -9,8 +9,13 @@ function Group(name){
 	this.groups = new Array;
 	this.nodes = new Array;
 	
-	this.onevent = function(type, event){
+	this.onevent = function(type, event, groupName){
 		var captured = false;
+		if (groupName != undefined){
+			if ( this.groups[ groupName ].onevent){
+				return this.groups[ groupName ].onevent(type, event);
+			}
+		}
 		for (var group in this.groups){
 			if (this.groups[ group ].onevent){
 				captured = this.groups[ group ].onevent(type, event);
@@ -29,28 +34,21 @@ function Group(name){
 	
 	this.addGroup = function(name){
 		var appended = new Group(name);
-		this.groups.push(appended);
+		this.groups[name] = appended;
 		return appended;
 	};
 	
 	this.removeGroup = function(name){
-		var idx = 0;
-		for (idx in this.groups){
-			if (this.groups[ idx ].name == name)
-				break;
-		};
-		if (idx != this.groups.length){
-			this.groups.splice(idx, 1);
+		if(typeof this.groups[name] != 'undefined'){
+			delete this.groups[name];
 		}
 		return this;
 	};
     
     this.getGroup = function(name){
-        var idx = 0;
-		for (idx in this.groups){
-			if (this.groups[ idx ].name == name)
-				return this.groups[ idx ];
-		};
+        if(typeof this.groups[name] != 'undefined'){
+			return this.groups[name];
+		}
 		return undefined;
     };
     

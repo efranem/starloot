@@ -66,6 +66,8 @@ function init(){
 					.addNode(scout2)
 					.addNode(scout3)
 					.addNode(scout4);
+	
+	gui.initEvents(root.addGroup("guiEvents"));
     
     // Stats windows
     stats = new Stats();
