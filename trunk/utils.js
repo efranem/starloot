@@ -31,3 +31,5 @@ function direction(angleStart, angleEnd){ // Returns shortest direcction between
         return AngleDirection.COUNTER;
     else return AngleDirection.CLOCK;
 };
+
+

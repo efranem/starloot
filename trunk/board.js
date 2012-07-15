@@ -9,6 +9,10 @@ function PaintTile(row, col) {
 	}
 }
 
+function compare(obj1, obj2) {
+	return (obj1.y == obj2.y) ? 0 : (obj1.y < obj2.y) ? -1 : 1;
+};
+
 function Board(){
     this.x = 0;
 	this.y = 0;
@@ -17,6 +21,7 @@ function Board(){
     
     this.movable = new Array;
     this.buildings = new Array;
+	this.elements = new MinHeap(null, compare);
     var img = new Image;
     img.src = 'sprites/background/gravel_red.jpg';
     
@@ -30,12 +35,13 @@ function Board(){
 	}
 	
     this.addMovable = function(m){
-        //obj = new Movable(m);
         this.movable.push(m);
+		this.elements.push(m);
     };
     
     this.addBuilding = function(m){
         this.buildings.push(m);
+		this.elements.push(m);
     };
     
     this.removeMovable = function(m){
@@ -104,51 +110,14 @@ function Board(){
         this.paintMap();
 
 		// Paint according it's position on map...
-		var movableIdx = 0;
-		var buildingIdx = 0;
-		while (movableIdx < this.movable.length || buildingIdx < this.buildings.length){
-			var currMovable = this.movable[ movableIdx ];
-			var currBuilding = this.buildings[ buildingIdx ];
-			if (currMovable && this.buildings[ buildingIdx ]){
-				// Gets the minimum y
-				if (currMovable.y < currBuilding.y){
-					currMovable.paint(ctx);
-					movableIdx++;
-				}
-				else if (currMovable.y == currBuilding.y){
-					if (currMovable.x < currBuilding.x){
-						currMovable.paint(ctx);
-						movableIdx++;
-					}
-					else{
-						currBuilding.paint(ctx);
-						buildingIdx++;
-					};
-				}
-				else{
-					currBuilding.paint(ctx);
-					buildingIdx++;
-				};
-			}
-			else if (currMovable){
-				currMovable.paint(ctx);
-				movableIdx++;
-			}
-			else if (currBuilding){
-				currBuilding.paint(ctx);
-				buildingIdx++;
-			};
+		var tempHeap = new MinHeap(null, compare);
+		while (this.elements.size() > 0){
+			var element = this.elements.pop();
+			element.paint(ctx);
+			tempHeap.push(element);
 		};
+		this.elements = tempHeap;		
 		
-        // Paint every movable component
-        /*for (var i = 0; i < this.movable.length; i++){
-                this.movable[i].paint(ctx);
-        }*/
-        // Paint every building
-        /*for (var i = 0; i < this.buildings.length; i++){
-                this.buildings[i].paint(ctx);
-        }*/
-        
 		PaintTile(mouse.tile_x,mouse.tile_y);
 	};
 	
