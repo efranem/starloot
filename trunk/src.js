@@ -50,8 +50,7 @@ function init(){
     board.addTerrainProps(terrainProps);
 	
     // init event handlers
-    keyboard.init();
-	mouse.init();
+	eventManager.init();
 
 	// init main groups
 	root.addNode(camera);

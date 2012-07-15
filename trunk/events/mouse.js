@@ -39,22 +39,10 @@ function Mouse(){
         window.onmousemove      = function(evt){mouse.mouseMoved(evt);};
         window.onmousewheel     = function(evt){mouse.mouseWheel(evt);};
         window.oncontextmenu    = function(evt){return false;}; // Disable right-click context menu*/
-		//window.ontouchstart     = function(evt){mouse.mouseDown(evt);};
-		//window.ontouchend       = function(evt){mouse.mouseUp(evt);};
-		//window.ontouchmove      = function(evt){mouse.mouseMoved(evt);};
 	};
     
     this.mouseOver = function(evt){
 		root.onevent('onmouseover');
-        for(var i in this.overAbles)
-        {
-            var object = this.overAbles[ i ][ 0 ];
-            var callback = this.overAbles[ i ][ 1 ];
-            if (object != undefined)
-                object[callback]();
-            else
-                callback();
-        }
     };
     
     this.mouseOut = function(){
