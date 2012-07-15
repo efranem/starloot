@@ -91,11 +91,30 @@ function Selector(){
 		}
 	};
 	
-	this.paint = function(ctx){
+	this.paint = function(ctx, menuCtx){
 		if (this.squareSelection.length == 4){
             ctx.strokeStyle="blue";
             //var point = camera.localPosition({x: this.squareSelection[0], y: this.squareSelection[1]});
 			ctx.strokeRect(this.squareSelection[0] , this.squareSelection[1], this.squareSelection[2], this.squareSelection[3]);
+		}
+		
+		// Clear the GUI window
+		guiCtx.clearRect(0, 0, guiCanvas.width, guiCanvas.height);
+		var w = guiCanvas.width;
+		guiCanvas.width = 1;
+		guiCanvas.width = w;
+		
+		guiCtx.fillStyle = "yellow";
+		guiCtx.font = "bold 12px Arial";
+		guiCtx.fillText("Selection", 10, 10);
+		
+		if (this.selection.length > 0){ // If there is something selected we display info
+			for (var i in this.selection){
+				var obj = this.selection[ i ];
+				guiCtx.fillStyle = "red";
+				guiCtx.font = "bold 12px Arial";
+				guiCtx.fillText(obj.name, 12, 22 + (i * 12));
+			}
 		}
 	};
 };

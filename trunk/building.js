@@ -19,9 +19,10 @@ function drawParalel(ctx, p1, p2, r) {
 	ctx.lineTo(p[1][0],p[1][1]);
 }
 
-function Building(type, x, y, orientation){
+function Building(type, x, y, name, orientation){
 	this.x = x*128;
 	this.y = y*64;
+	this.name = name;
     this.orientation = orientation;
 	this.img = new Image;
 	switch (type) {

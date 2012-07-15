@@ -8,23 +8,18 @@ menuCanvas.width=128;
 menuCanvas.height=128;
 var ctx;
 var menuCtx;
+var guiCtx;
 var pos = 0;
-var scout1 = new Scout(500, 50);
-var scout2 = new Scout(800, 60);
-var scout3 = new Scout(500, 230);
-var scout4 = new Scout(800, 350);
+var scout1 = new Scout(500, 50, 'scout1');
+var scout2 = new Scout(800, 60, 'scout2');
+var scout3 = new Scout(500, 230, 'scout3');
+var scout4 = new Scout(800, 350, 'scout4');
 var terrainProps = new Array;
-/*
-for (var i=0; i<5; i++) {
-	for (var j=0; j<5; j++) {
-		terrainProps.push(new Building(BuildingTypes.RECON_HQ,8+1.5*i+0.5*j, 10+1.8*j, 0));
-	}
-}
-*/
-terrainProps.push(new Building(BuildingTypes.RECON_HQ,6, 8, 0));
-terrainProps.push(new Building(BuildingTypes.ANTENNA,9, 8, 0));
-terrainProps.push(new Building(BuildingTypes.CRATER,3, 8, 0));
-terrainProps.push(new Building(BuildingTypes.WALL,3,3,0));
+
+terrainProps.push(new Building(BuildingTypes.RECON_HQ,6, 8, 'reconbuild1', 0));
+terrainProps.push(new Building(BuildingTypes.ANTENNA,9, 8, 'antenna1', 0));
+terrainProps.push(new Building(BuildingTypes.CRATER,3, 8, 'crater1', 0));
+terrainProps.push(new Building(BuildingTypes.WALL,3,3, 'wall1', 0));
 var root = new Group("world");
 
 var stats;
@@ -39,6 +34,7 @@ function init(){
 	var canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
 	menuCtx = menuCanvas.getContext("2d");
+	guiCtx = guiCanvas.getContext("2d");
 	
 	camera.transformX = 0;
 	camera.transformY = 0;

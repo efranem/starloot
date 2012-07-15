@@ -5,7 +5,7 @@ function GUI(){
         // Menu
         menu.paint(menuCtx);
         // Selection rectangle
-		selector.paint(ctx);
+		selector.paint(ctx, menuCtx);
 	};
 };
 

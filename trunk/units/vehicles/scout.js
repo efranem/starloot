@@ -2,9 +2,10 @@
  x - Central x coord
  y - Central y coord
 */
-function Scout(x, y){
+function Scout(x, y, name){
 	this.x = x;
 	this.y = y;
+	this.name = name;
     this.angle = 0 * Math.PI/180;
 	this.v = 2;
 	this.target = undefined;
