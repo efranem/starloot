@@ -1,4 +1,4 @@
-#summary Event handling in game engine
+#summary Events handling in game engine
 #labels Phase-Design
 
 = Introduction =
