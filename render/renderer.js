@@ -27,7 +27,7 @@ function Renderer(){
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         
-        ctx.save()
+        ctx.save();
         ctx.translate(-camera.transformX,-camera.transformY);
         board.paint(ctx);
         gui.paint(ctx, menuCtx);

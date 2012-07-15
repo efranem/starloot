@@ -34,7 +34,7 @@ function init(){
 	var canvas = document.getElementById("canvas");
 	ctx = canvas.getContext("2d");
 	menuCtx = menuCanvas.getContext("2d");
-	guiCtx = guiCanvas.getContext("2d");
+	//guiCtx = guiCanvas.getContext("2d");
 	
 	camera.transformX = 0;
 	camera.transformY = 0;

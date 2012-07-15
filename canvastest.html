@@ -18,8 +18,10 @@
     
 	<canvas id="canvas"></canvas>
 	<div id="rightPanel" style="position:absolute;top:0;right:0;width:128px;color:white;background-color:rgba(0,0,128,0.5)">
-		<div style="position:absolute;background-color:rgba(0,0,0,0.5);padding:0"><canvas id="guiCanvas"></canvas></div>
+		<div style="position:absolute;background-color:rgba(0,0,0,0.5);padding:0"><ul id="selectionList"></ul></div>
 		<div style="position:absolute;bottom:0;background-color:rgba(0,0,0,1);padding:0"><canvas id="mapCanvas"></canvas></div>
+		
+		<div id="whooots"></div>
 	</div>
 	<script type="text/javascript">
 	window.onresize = function(event){

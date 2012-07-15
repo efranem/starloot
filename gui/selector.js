@@ -19,11 +19,29 @@ function Selector(){
 		this.avgY = Math.floor(sumY / this.selection.length);
 		//console.log("Avg point: " + this.avgX + "," + this.avgY);
 	};
+	
+	this.writeSelected = function(){
+		var ul = document.getElementById('selectionList');
+		if (ul == undefined) return;
+		if ( ul.hasChildNodes() )
+		{
+			while ( ul.childNodes.length >= 1 )
+			{
+				ul.removeChild( ul.firstChild );       
+			} 
+		}
+		var li;
+		for(var i = 0; i < this.selection.length; i++){
+			li = document.createElement('li');
+			li.innerHTML = this.selection[i].name;
+			ul.appendChild(li);
+		}
+	}
     
     this.addSelection = function(obj){
 		this.selection.push(obj);
         obj.isSelected = true;
-
+		this.writeSelected();
 		this.refreshAveragePoint();
     };
     
@@ -33,6 +51,7 @@ function Selector(){
             this.selection[ idx ].isSelected = false;
             this.selection.splice(idx, 1);
         }
+		this.writeSelected();
 		this.refreshAveragePoint();
     };
     
@@ -41,6 +60,7 @@ function Selector(){
             this.selection[ idx ].isSelected = false;
         };
         this.selection = [];
+		this.writeSelected();
 		this.avgX = 0; 
 		this.avgY = 0;
     };
@@ -99,7 +119,7 @@ function Selector(){
 		}
 		
 		// Clear the GUI window
-		guiCtx.clearRect(0, 0, guiCanvas.width, guiCanvas.height);
+		/*guiCtx.clearRect(0, 0, guiCanvas.width, guiCanvas.height);
 		var w = guiCanvas.width;
 		guiCanvas.width = 1;
 		guiCanvas.width = w;
@@ -108,14 +128,14 @@ function Selector(){
 		guiCtx.font = "bold 12px Arial";
 		guiCtx.fillText("Selection", 10, 10);
 		
-		if (this.selection.length > 0){ // If there is something selected we display info
+		/*if (this.selection.length > 0){ // If there is something selected we display info
 			for (var i in this.selection){
 				var obj = this.selection[ i ];
 				guiCtx.fillStyle = "red";
 				guiCtx.font = "bold 12px Arial";
 				guiCtx.fillText(obj.name, 12, 22 + (i * 12));
 			}
-		}
+		}*/
 	};
 };
 
