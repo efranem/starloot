@@ -110,7 +110,7 @@ function Keyboard(){
 	};
     
     this.isDown = function(key){
-        return this.keysPressed[ key ];
+        return this.keysPressed[ key ] != undefined;
     };
 }
 
