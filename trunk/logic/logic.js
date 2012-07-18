@@ -1,7 +1,7 @@
 function GameLogic(){
     this.logicTime = 0;
 
-    this.logicTick = function(){
+    this.logicTick = function(elapsedTime){
         // Start timing
         var time1 = new Date().getTime();
         
@@ -11,6 +11,8 @@ function GameLogic(){
         board.updateLogic();
         // Update GUI logic
         selector.updateLogic();
+		// Test logic of animations
+		animTest.updateCurrentFrame(elapsedTime);
         
         this.logicTime = new Date().getTime() - time1;
     };

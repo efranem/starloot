@@ -71,7 +71,8 @@ function Board(){
 	this.updateLogic = function(){
 		// Update each movable object
 		for (var i = 0; i < this.movable.length; i++){
-                this.movable[i].update();
+				if (this.movable[i].update)
+					this.movable[i].update();
         }
 	};
     
