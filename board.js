@@ -77,18 +77,6 @@ function Board(){
     
     // Captures mouse click event
     this.onclick = function(evt){
-        //console.log("Button clicked in board");
-        for (var obj in selector.selection){
-            var scout = selector.selection[ obj ];
-            //var coords = scout.middle();
-            if (Math.abs(scout.x - evt.x) > 50 || Math.abs(scout.y - evt.y) > 50){
-                var point = camera.localPosition({x: evt.x, y: evt.y});
-                //scout.target = selector.targetPoint(scout.x, scout.y, point.x, point.y);
-				scout.path = findPath([scout.x,scout.y],[point.x,point.y],terrainProps,40);
-				scout.target = undefined;
-            }
-        };
-		
 		return false;
     };
     

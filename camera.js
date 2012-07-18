@@ -85,8 +85,6 @@ function Camera(){
             case Keys.RIGHT_ARROW: /* Right arrow was pressed */
                 this.cam_direction_X = 2;
                 break;
-            case Keys.ADD: scout1.rotate(0.18);break;
-            case Keys.SUBSTRACT: scout1.rotate(-0.18);break;
             }
         }
         else if (evt.type == "keyup"){
@@ -107,8 +105,6 @@ function Camera(){
             case Keys.RIGHT_ARROW: /* Right arrow was pressed */
                 this.cam_direction_X = 0;
                 break;
-            case Keys.ADD: scout1.rotate(0.18);break;
-            case Keys.SUBSTRACT: scout1.rotate(-0.18);break;
             }
         };
     };
