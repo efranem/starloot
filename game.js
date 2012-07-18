@@ -27,13 +27,15 @@ Game.initialize = (function() {
 Game.loop = (function() {
     var loops = 0, skipTicks = 1000 / Game.fps,
         maxFrameSkip = 10,
-        nextLogicTick = (new Date).getTime();
+        nextLogicTick = (new Date).getTime(),
+		timeBefore = (new Date).getTime();
 
     return function() {
         loops = 0;
 
         while ((new Date).getTime() > nextLogicTick) {
-            logic.logicTick(); // Logic tick
+            logic.logicTick((new Date).getTime() - timeBefore); // Logic tick
+			timeBefore = (new Date).getTime();
             stats.update(); // Update statistics...
             nextLogicTick += skipTicks;
             loops++;

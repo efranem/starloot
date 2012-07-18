@@ -1,4 +1,12 @@
-function Animation(file, x, y, numFrames, timeBetweenFrames){
+/**
+ file - Name to image file to draw
+ x - Central x coord
+ y - Central y coord 
+ size - [pX:, pY:] Number of pixels in each dimension of full sprite
+ numFrames - [numX:, numY:] Number of frames in each dimension
+ timeBetweenFrames - time between each couple of frames in ms
+*/
+function Animation(file, x, y, size, numFrames, timeBetweenFrames){
     this.img = document.getElementById(file);
     this.currentSprite = 0;
 	this.spriteSize = {x: size.pX / numFrames, y: size.pY};
@@ -7,9 +15,10 @@ function Animation(file, x, y, numFrames, timeBetweenFrames){
     this.numFrames = numFrames;
     this.sprites = new Array;
     for (var i = 0; i < this.numFrames; i++){
-        this.sprites.push( {x: this.spriteSize.x * i, y: this.spriteSize.y} );
+        this.sprites.push( {x: this.spriteSize.x * i, y: this.spriteSize.y * 0} );
     };
     this.timeBetweenFrames = timeBetweenFrames || 40; // Updates each 40 ms (24 fps aprox)
+	this.timePending = this.timeBetweenFrames;
     
     /**
 		Sets the current central point of the sprite
@@ -31,9 +40,16 @@ function Animation(file, x, y, numFrames, timeBetweenFrames){
 	*/
     this.updateCurrentFrame = function(timeElapsed){
         if (this.timeBetweenFrames > 0){
-            var framesElapsed = Math.floor(timeElapsed / this.timeBetweenFrames);
-            this.currentSprite += framesElapsed;
-            this.currentSprite %= numFrames;
+			this.timePending -= timeElapsed;
+			if (this.timePending <= 0){
+				var counter = 0;
+				while (this.timePending <= 0){
+					this.timePending += this.timeBetweenFrames;
+					counter++;
+				};				
+				this.currentSprite += counter;
+				this.currentSprite %= numFrames;
+			};
         };
     };
 };

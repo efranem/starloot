@@ -14,6 +14,7 @@ var scout1 = new Scout(500, 50, 'scout1');
 var scout2 = new Scout(800, 60, 'scout2');
 var scout3 = new Scout(500, 230, 'scout3');
 var scout4 = new Scout(800, 350, 'scout4');
+var animTest = new Animation('animtest', 200, 200, {pX: 250, pY: 50}, 5, 1000);
 var terrainProps = new Array;
 
 terrainProps.push(new Building(BuildingTypes.RECON_HQ,6, 8, 'reconbuild1', 0));
@@ -48,6 +49,7 @@ function init(){
 	board.addMovable(scout3);
 	board.addMovable(scout4);
     board.addTerrainProps(terrainProps);
+	board.addMovable(animTest);
 	
     // init event handlers
 	eventManager.init();
@@ -67,7 +69,7 @@ function init(){
 					.addNode(scout4);
 	
 	gui.initEvents(root.addGroup("guiEvents"));
-    
+	
     // Stats windows
     stats = new Stats();
     stats.domElement.style.position = 'absolute';
