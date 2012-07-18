@@ -1,6 +1,7 @@
 /**
  x - Central x coord
  y - Central y coord
+ name - Element name
 */
 function Scout(x, y, name){
 	this.x = x;
@@ -106,6 +107,15 @@ function Scout(x, y, name){
             selector.clearSelection();
             this.updateSelect();
             return true;
+        }
+        else if (this.isSelected){
+            if (Math.abs(this.x - evt.x) > 50 || Math.abs(this.y - evt.y) > 50){
+                var point = camera.localPosition({x: evt.x, y: evt.y});
+                //this.target = selector.targetPoint(this.x, this.y, point.x, point.y);
+				this.path = findPath([this.x,this.y],[point.x,point.y],terrainProps,40);
+				this.target = undefined;
+                return false; // Not capturing as another element may have a new target as well
+            }
         }
         return false;
 	};
