@@ -95,43 +95,34 @@ function Keyboard(){
     this.init = function(){
         window.onkeydown    = function(evt){keyboard.keyDown(evt);};
         window.onkeyup      = function(evt){keyboard.keyUp(evt);};
-        //window.onkeypress   = function(evt){keyboard.keyPress(evt);};
     };
 	
 	this.keyDown = function (evt){
         //console.log("KeyDown: " + evt.keyCode + "," + this.keysPressed);
-	    var contains = false;
-        for (var i in this.keysPressed)
-            if (this.keysPressed[i] == evt.keyCode){
-	            contains = true;
-	            break;
-	        }
-	    if (!contains){
-	        this.keysPressed.push(evt.keyCode)
-	    }
+        this.keysPressed[ evt.keyCode ] = evt.keyCode;
 		root.onevent('onkeyboardevent', evt);
 	};
 	
 	this.keyUp = function (evt){
-        var i = this.keysPressed.indexOf(evt.keyCode);
-	    if (i != -1)
-	        this.keysPressed.splice(i, 1);
+        this.keysPressed[ evt.keyCode ] = undefined;
 		root.onevent('onkeyboardevent', evt);
 		//console.log("KeyUp: " + evt.keyCode + ',' + this.keysPressed);
 	};
     
-    this.keyPress = function (evt){
-        var contains = false;
-        for (var i in this.keysPressed)
-            if (this.keysPressed[i] == evt.keyCode){
-	            contains = true;
-	            break;
-	        }
-	    if (!contains){
-	        this.keysPressed.push(evt.keyCode)
-	    }
-		root.onevent('onkeyboardevent', evt);
+    this.isDown = function(key){
+        return this.keysPressed[ key ];
     };
 }
+
+Keyboard.prototype.toString = function(){
+    var str = "";
+    for (var idx in this.keysPressed){
+        if (this.keysPressed[ idx ])
+            str += this.keysPressed[ idx ] + ', ';
+    }
+    if (str.length > 0)
+         str = str.substring(0, str.length - 2); // Remove last ", "
+    return str;
+};
 
 keyboard = new Keyboard;
