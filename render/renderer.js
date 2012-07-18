@@ -10,7 +10,7 @@ function Renderer(){
             ctx.fillText("MouseButton: "+mouse.button+" pressed", 10, 40);
         else
             ctx.fillText("MouseButton: idle", 10, 40);
-        ctx.fillText("Keys: "+keyboard.keysPressed,10,60);
+        ctx.fillText("Keys: "+keyboard.toString(),10,60);
         ctx.fillText("RenderTime: "+this.timeRendering+" ms",10,80);
         ctx.fillText("LogicTime: "+logic.logicTime+" ms",10,100);
         ctx.fillText("Sprite: "+scout1.sprite,10,150);

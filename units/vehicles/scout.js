@@ -104,7 +104,9 @@ function Scout(x, y, name){
 		var point = camera.localPosition({x: evt.x, y: evt.y});
 		if (this.isTouched(point)){			
             this.isSelected = !this.isSelected;
-            selector.clearSelection();
+            if (keyboard.isDown( Keys.CTRL ) == false){
+                selector.clearSelection();
+            }
             this.updateSelect();
             return true;
         }
