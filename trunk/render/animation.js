@@ -23,7 +23,7 @@ function Animation(file, x, y, size, numFrames, timeBetweenFrames){
 	/**
 		Drawable inheritance calling public constructor with parameters
 	*/
-	this.inherits( Drawable, x, y, file, this.spriteSize );
+	this.inherits( Drawable, file, x, y, this.spriteSize );
     
     /**
 		Updates the current frame to draw

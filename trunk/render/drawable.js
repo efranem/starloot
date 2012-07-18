@@ -1,10 +1,10 @@
 /**
+ file - Name to id  of image file to draw
  x - Origin x coord
  y - Origin y coord
- file - Name to id  of image file to draw
  size - [x: , y:] Size in pixels in each direction to draw
 */
-function Drawable(x, y, file, size){
+function Drawable(file, x, y, size){
 	this.img = document.getElementById(file);
 	this.x = x;
 	this.y = y;
