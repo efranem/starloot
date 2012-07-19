@@ -9,6 +9,21 @@ function Drawable(file, x, y, size){
 	this.x = x;
 	this.y = y;
 	this.size = size;
+    
+    /**
+		Set origin point to draw
+	*/
+    this.setOrigin = function(x, y){
+        this.x = x;
+        this.y = y;
+    };
+    
+    /**
+		Set size to draw
+	*/
+    this.setSize = function(X, Y){
+        this.size = {x: X, y: Y};
+    };
 };
 
 /**

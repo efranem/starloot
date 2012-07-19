@@ -70,9 +70,9 @@ function Selector(){
 		// Select objects under selection
 		for (var obj in board.movable){
 			var object = board.movable[ obj ];
-			var P1 = [object.x - Math.floor(object.image.spriteSize.x / 2), object.x + Math.floor(object.image.spriteSize.x / 2), 
-					  object.y - Math.floor(object.image.spriteSize.y / 2), object.y + Math.floor(object.image.spriteSize.y / 2)];
-			var P2 = [a.x, a.x + a.gx, a.y, a.y + a.gy];
+            var P1 = [object.x - Math.floor(object.image.spriteSize.x / 2), object.x + Math.floor(object.image.spriteSize.x / 2), 
+                        object.y - Math.floor(object.image.spriteSize.y / 2), object.y + Math.floor(object.image.spriteSize.y / 2)];
+            var P2 = [a.x, a.x + a.gx, a.y, a.y + a.gy];
 			if ( overlap(P1,P2)){
 				object.isSelected = true;
 				object.updateSelect();
