@@ -1,6 +1,6 @@
 // Encapsulating inheritance
 /**
-    For ES5 compliant browsers we must define new propertys to Object class
+    For ES5 compliant browsers we must define new properties to Object class
     this way, or any object in the code will have it as a new visible property,
     making all the for..in loops end with a undefined behaviour
     The other solution is to check, in every loop, Object.prototype.hasOwnProperty(object, key),
