@@ -56,6 +56,7 @@ function init(){
 
 	// init main groups
 	root.addNode(camera);
+	root.addGroup("selector").addNode(selector);
     root.addGroup("board").addNode(board);
     root.getGroup("board").addGroup("buildings")
                         .addNode(terrainProps[0])

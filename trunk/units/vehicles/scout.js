@@ -13,6 +13,7 @@ function Scout(x, y, name){
 	this.v = 2;
 	this.target = undefined;
 	this.path = new Array;
+	this.selectionSize = {x:50,y:50};
 	
     this.sprite = 0;
     this.animations = new Array;
@@ -23,26 +24,7 @@ function Scout(x, y, name){
 		
 	this.isSelected = false;
     this.animSelected = new Animation('selector', this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y + 15, sizeOfSprite, 1, 0, false, false);
-	
-	/*function collision(x,y){
-		var collisions = tree.nearest({'x':x,'y':y},10,5000);
-		if (collisions.length > 0){
-			for(var key in collisions){
-				
-				var dimx = (collisions[key][0].dim[0]*128)/2;
-				var dimy = (collisions[key][0].dim[1]*128)/2;
-				var cx = collisions[key][0].x-dimx;
-				var cy = collisions[key][0].y-dimy;
-				var cdx = collisions[key][0].x + dimx;
-				var cdy = collisions[key][0].y + dimy;
-				if ((x >= cx && x <= cdx) && (y >= cy && y <= cdy)){
-					return true;
-				}
-			}
-		}
-		return false;
-	}*/
-	
+
 	this.update = function(){
 		if (this.path != undefined && this.path.length > 0 && this.target == undefined) {
 			this.target = this.path.splice(0,1)[0];
@@ -101,35 +83,19 @@ function Scout(x, y, name){
 		}		
 	}
     
-    this.updateSelect = function(){
-        if (this.isSelected){
-			selector.removeSelection(this);
-            selector.addSelection(this);
-        }
-        else
-            selector.removeSelection(this);
-    }
+    
 	
 	/**
 		onMouseEvent callback event
 	*/
 	this.onclick = function(evt){
 		var point = camera.localPosition({x: evt.x, y: evt.y});
-		if (this.isTouched(point)){			
-            this.isSelected = !this.isSelected;
-            if (keyboard.isDown( Keys.CTRL ) == false){
-                selector.clearSelection();
-            }
-            this.updateSelect();
-            return true;
-        }
-        else if (this.isSelected){
-            if (Math.abs(this.x - evt.x) > 50 || Math.abs(this.y - evt.y) > 50){
-                var point = camera.localPosition({x: evt.x, y: evt.y});
-				this.path = findPath([this.x,this.y],[point.x,point.y],terrainProps,40);
-				this.target = undefined;
-                return false; // Not capturing as another element may have a new target as well
-            }
+		if (this.isSelected && !this.isTouched(point)){
+            var point = camera.localPosition({x: evt.x, y: evt.y});
+			this.path = findPath([this.x,this.y],[point.x,point.y],terrainProps,40);
+			this.target = undefined;
+			return false; // Not capturing as another element may have a new target as well
+            
         }
         return false;
 	};
