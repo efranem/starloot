@@ -77,13 +77,38 @@ function Selector(){
             var P2 = [a.x, a.x + a.gx, a.y, a.y + a.gy];
 			if ( overlap(P1,P2)){
 				object.isSelected = true;
-				object.updateSelect();
+				this.updateSelectedItem(object);
 			}
 			else{
 				object.isSelected = false;
-				object.updateSelect();
+				this.updateSelectedItem(object);
 			};
 		};
+	};
+	
+	this.updateSelectedItem = function(item){
+		if (item.isSelected){
+			this.removeSelection(item);
+			this.addSelection(item);
+		}
+		else{
+			this.removeSelection(item);
+		}
+	}
+	
+	this.onclick = function(evt){
+		var point = camera.localPosition({x: evt.x, y: evt.y});
+		for (var obj in board.movable){
+			if (board.movable[obj].isTouched(point)){
+				board.movable[obj].isSelected = !board.movable[obj].isSelected;
+				if (keyboard.isDown( Keys.CTRL ) == false){
+					this.clearSelection();
+				}
+				this.updateSelectedItem(board.movable[obj]);
+				break;
+			}
+		}
+		return false;
 	};
 	
 	this.endMouseSelection = function(){
