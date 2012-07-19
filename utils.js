@@ -32,4 +32,7 @@ function direction(angleStart, angleEnd){ // Returns shortest direcction between
     else return AngleDirection.CLOCK;
 };
 
+function zfill(num, len) {
+    return (Array(len).join("0") + num).slice(-len);
+}
 

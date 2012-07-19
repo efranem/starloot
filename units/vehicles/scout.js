@@ -6,6 +6,8 @@
 function Scout(x, y, name){
 	this.x = x;
 	this.y = y;
+    var sizeOfSprite = {x: 128, y: 128};
+    var offsetDrawingZone = {x: 64, y: 64};
 	this.name = name;
     this.angle = 0 * Math.PI/180;
 	this.v = 2;
@@ -13,14 +15,15 @@ function Scout(x, y, name){
 	this.path = new Array;
 	
     this.sprite = 0;
-	this.image = new Paintable	(x, y -30, 'recon_01', //'sprites/units/recon_01.png', 
-								{pX: 1024, pY: 512}, {numX: 8, numY: 4});
-	
+    this.animations = new Array;
+    for (var idx = 1; idx <= 32; idx++){
+        var name = "recon_01_" + zfill(idx, 2);
+        this.animations.push(new Animation(name, this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y, sizeOfSprite, 1, 0, true, false));
+    };
+		
 	this.isSelected = false;
-    this.animSelected = new Animation('selector', x, y, {x: 128, y: 128}, 1, 0, false, false);
-	/*this.imageSelected = new Paintable (x, y, 'selector',
-										{pX: 128, pY: 128}, {numX: 1, numY: 1});   */
-
+    this.animSelected = new Animation('selector', this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y + 15, sizeOfSprite, 1, 0, false, false);
+	
 	/*function collision(x,y){
 		var collisions = tree.nearest({'x':x,'y':y},10,5000);
 		if (collisions.length > 0){
@@ -73,10 +76,9 @@ function Scout(x, y, name){
                 }
             }
 			// Update painting data
-			var sprite = Math.round(this.angle / (11.25 * (Math.PI/180))) % 32;
-			this.image.setCentralPoint({x: this.x, y: this.y-30});
-			this.image.setCurrentFrame(sprite);
-            this.animSelected.setOrigin(this.x, this.y);
+			this.sprite = Math.round(this.angle / (11.25 * (Math.PI/180))) % 32;
+            this.animations[ this.sprite ].setOrigin(this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y);
+            this.animSelected.setOrigin(this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y + 15);
 		}
         if (this.isSelected){
             this.animSelected.show();
@@ -85,6 +87,10 @@ function Scout(x, y, name){
             this.animSelected.hide();
         };
 	}
+    
+    this.getSize = function(){
+        return {x: this.animations[ this.sprite ].spriteSize.x, y: this.animations[ this.sprite ].spriteSize.y};
+    };
 	
 	this.rotate = function(angle){
 		var newAngle = this.angle+angle;
@@ -120,7 +126,6 @@ function Scout(x, y, name){
         else if (this.isSelected){
             if (Math.abs(this.x - evt.x) > 50 || Math.abs(this.y - evt.y) > 50){
                 var point = camera.localPosition({x: evt.x, y: evt.y});
-                //this.target = selector.targetPoint(this.x, this.y, point.x, point.y);
 				this.path = findPath([this.x,this.y],[point.x,point.y],terrainProps,40);
 				this.target = undefined;
                 return false; // Not capturing as another element may have a new target as well
@@ -135,16 +140,15 @@ function Scout(x, y, name){
 	this.paint = function(ctx){
         if (this.isSelected == true){ // Paint selector graph
             this.animSelected.paint(ctx);
-			//this.imageSelected.paint(ctx);
         }
         
-		this.image.paint(ctx);
+        this.animations[ this.sprite ].paint(ctx);
 	}
 	
 	/**
 		Checks if current scout has been touched
 	*/
 	this.isTouched = function(point){
-		return this.image.isPaintedPixel(point);
+		return this.animations[ this.sprite ].isPaintedPixel(point);
 	};
 }
