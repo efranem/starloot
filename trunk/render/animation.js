@@ -3,7 +3,7 @@
  x - Origin x coord
  y - Origin y coord 
  size - [x:, y:] Number of pixels in each dimension of full sprite
- numFrames - [numX:, numY:] Number of frames in each dimension
+ numFrames - Number of frames 
  timeBetweenFrames - time between each couple of frames in ms
  visible - true if the animation is shown by default
  play - true or false if animation should start playing by default
