@@ -12,7 +12,7 @@ function GameLogic(){
         // Update GUI logic
         selector.updateLogic();
 		// Test logic of animations
-		animTest.updateCurrentFrame(elapsedTime);
+		//animTest.updateCurrentFrame(elapsedTime);
         
         this.logicTime = new Date().getTime() - time1;
     };

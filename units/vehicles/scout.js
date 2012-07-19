@@ -17,8 +17,9 @@ function Scout(x, y, name){
 								{pX: 1024, pY: 512}, {numX: 8, numY: 4});
 	
 	this.isSelected = false;
-	this.imageSelected = new Paintable (x, y, 'selector',
-										{pX: 128, pY: 128}, {numX: 1, numY: 1});   
+    this.animSelected = new Animation('selector', x, y, {x: 128, y: 128}, 1, 0, false, false);
+	/*this.imageSelected = new Paintable (x, y, 'selector',
+										{pX: 128, pY: 128}, {numX: 1, numY: 1});   */
 
 	/*function collision(x,y){
 		var collisions = tree.nearest({'x':x,'y':y},10,5000);
@@ -75,8 +76,14 @@ function Scout(x, y, name){
 			var sprite = Math.round(this.angle / (11.25 * (Math.PI/180))) % 32;
 			this.image.setCentralPoint({x: this.x, y: this.y-30});
 			this.image.setCurrentFrame(sprite);
-			this.imageSelected.setCentralPoint({x: this.x, y: this.y});
+            this.animSelected.setOrigin(this.x, this.y);
 		}
+        if (this.isSelected){
+            this.animSelected.show();
+        }
+        else{
+            this.animSelected.hide();
+        };
 	}
 	
 	this.rotate = function(angle){
@@ -127,7 +134,8 @@ function Scout(x, y, name){
 	*/
 	this.paint = function(ctx){
         if (this.isSelected == true){ // Paint selector graph
-			this.imageSelected.paint(ctx);
+            this.animSelected.paint(ctx);
+			//this.imageSelected.paint(ctx);
         }
         
 		this.image.paint(ctx);
