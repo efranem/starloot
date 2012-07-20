@@ -15,21 +15,30 @@ body{
 	font-family:LCDSolid;
 	position:absolute;	
 }
-.translucent{
+.translucent2{
 	opacity:0.2;
 	filter: alpha(opacity = 40); /* For IE */
 }
-#mainMenuContent{
+
+.absolute{
 	position:absolute;
 	top:0;
 	left:0;
+}
+
+.translucent95{
+	opacity:0.95;
+	filter: alpha(opacity = 95); /* For IE */
+}
+#mainMenyTileableBg{
+	background-image: url('../gui/images/menu_tiled_bg.png');
+	background-repeat:repeat-xy;
+}
+#mainMenuContent{
 	padding: 5px;
 }
 #mainMenuPlanetBg{
 	background-image: url('../gui/images/menu_bg.jpg');
-	position:absolute;
-	top:0;
-	left:0;
 }
 .gameWindow a{
 	
