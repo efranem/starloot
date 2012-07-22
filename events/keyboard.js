@@ -101,12 +101,16 @@ function Keyboard(){
         //console.log("KeyDown: " + evt.keyCode + "," + this.keysPressed);
         this.keysPressed[ evt.keyCode ] = evt.keyCode;
 		root.onevent('onkeyboardevent', evt);
+		evt.preventDefault();
+        evt.stopPropagation();
 	};
 	
 	this.keyUp = function (evt){
         this.keysPressed[ evt.keyCode ] = undefined;
 		root.onevent('onkeyboardevent', evt);
 		//console.log("KeyUp: " + evt.keyCode + ',' + this.keysPressed);
+		evt.preventDefault();
+        evt.stopPropagation();
 	};
     
     this.isDown = function(key){

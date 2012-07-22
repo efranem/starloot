@@ -105,6 +105,9 @@ function Camera(){
             case Keys.RIGHT_ARROW: /* Right arrow was pressed */
                 this.cam_direction_X = 0;
                 break;
+            case Keys.F1: /* F1 */
+            	renderer.debugMode = ! renderer.debugMode;
+            	break;
             }
         };
     };
