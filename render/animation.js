@@ -13,87 +13,101 @@ function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play
 	/**
 		Own properties
 	*/
-	this.currentFrame = 0;
-	this.spriteSize = {x: size.x / numFrames, y: size.y};
-	this.numFrames = numFrames;
-	this.sprites = new Array;
-    for (var i = 0; i < numFrames; i++){
-        this.sprites.push( {x: this.spriteSize.x * i, y: this.spriteSize.y * 0} );
+	var _currentFrame = 0;
+	var _spriteSize = {x: size.x / numFrames, y: size.y};
+	var _nFrames = numFrames;
+	var _sprites = new Array;
+    for (var i = 0; i < _nFrames; i++){
+        _sprites.push( {x: _spriteSize.x * i, y: _spriteSize.y * 0} );
     };
-	this.timeBetweenFrames = timeBetweenFrames || 40; // Updates each 40 ms (24 fps aprox)
-	this.timePending = timeBetweenFrames;
-    this.isPlaying = play || false;
-    this.isVisible = visible || false;
+	var _timeBetweenFrames = timeBetweenFrames || 40; // Updates each 40 ms (24 fps aprox)
+	var _timePending = timeBetweenFrames;
+    var _isPlaying = play || false;
+    var _isVisible = visible || false;
 	
 	/**
 		Drawable inheritance calling public constructor with parameters
 	*/
-	this.inherits( Drawable, file, x, y, this.spriteSize );
+	this.inherits( Drawable, file, x, y, _spriteSize );
     
     /**
 		Set current animation frame
 	*/
     this.setCurrentFrame = function(newFrame){
-        this.currentFrame = newFrame;
+        _currentFrame = newFrame;
     };
     
     /**
 		Get current animation's frame
 	*/
     this.getCurrentFrame = function(){
-        return this.currentFrame;
+        return _currentFrame;
+    };
+    
+    /**
+     	Returns the sprites array coordinates 
+     */
+    this.getSprites = function(){
+    	return _sprites;
     };
     
     /**
 		Start playing animation from current frame
 	*/
     this.play = function(){
-        this.isPlaying = true;
-        this.timePending = timeBetweenFrames;
+        _isPlaying = true;
+        _timePending = _timeBetweenFrames;
     };
     
     /**
 		Stop playing animation
 	*/
     this.stop = function(){
-        this.isPlaying = false;
+        _isPlaying = false;
     };
     
     /**
 		Get the number of frames of the animation
 	*/
     this.getNumFrames = function(){
-        return ( this.numFrames.numX * this.numFrames.numY );
+        return ( _nFrames.numX * _nFrames.numY );
     };
     
     /**
 		Shows the animation frame
 	*/
     this.show = function(){
-        this.isVisible = true;
+        _isVisible = true;    
     };
     
     /**
 		Hides the animation
 	*/
     this.hide = function(){
-        this.isVisible = false;
+        _isVisible = false;
+    };
+    
+    /**
+     	Returns if the current animation is or not visible 
+     */
+    this.isVisible = function(){
+    	return _isVisible;
     };
     
     /**
 		Updates the current frame to draw
 	*/
     this.updateCurrentFrame = function(timeElapsed){
-        if (this.isPlaying && this.timeBetweenFrames > 0){
-			this.timePending -= timeElapsed;
-			if (this.timePending <= 0){
+        if (_isPlaying && _timeBetweenFrames > 0){
+			_timePending -= timeElapsed;
+			if (_timePending <= 0){
 				var counter = 0;
-				while (this.timePending <= 0){
-					this.timePending += this.timeBetweenFrames;
+				while (_timePending <= 0){
+					_timePending += _timeBetweenFrames;
 					counter++;
 				};				
-				this.currentFrame += counter;
-				this.currentFrame %= numFrames;
+				_currentFrame += counter;
+				_currentFrame %= _nFrames;
 			};
         };
     };
@@ -103,9 +117,11 @@ function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play
     Override paint drawable method
 */
 Animation.prototype.paint = function(ctx){
-    if (this.isVisible)
+	var currentFrame 	= this.getCurrentFrame();
+	var sprites			= this.getSprites();
+    if (this.isVisible())
         Drawable.prototype.paint.call(this, ctx, 
-                            this.sprites[ this.currentFrame ].x, 
-                            this.sprites[ this.currentFrame ].y);
+                            sprites[ currentFrame ].x, 
+                            sprites[ currentFrame ].y);
 };
 

@@ -71,7 +71,8 @@ function Scout(x, y, name){
 	}
     
     this.getSize = function(){
-        return {x: this.animations[ this.sprite ].spriteSize.x, y: this.animations[ this.sprite ].spriteSize.y};
+    	var size = this.animations[ this.sprite ].getSize();
+        return {x: size.x, y: size.y};
     };
 	
 	this.rotate = function(angle){
