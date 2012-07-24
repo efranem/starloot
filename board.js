@@ -10,7 +10,7 @@ function PaintTile(row, col) {
 }
 
 function compare(obj1, obj2) {
-	return (obj1.y == obj2.y) ? 0 : (obj1.y < obj2.y) ? -1 : 1;
+	return (obj1.getPosition().y == obj2.getPosition().y) ? 0 : (obj1.getPosition().x < obj2.getPosition().x) ? -1 : 1;
 };
 
 function Board(){
