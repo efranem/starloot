@@ -1,13 +1,13 @@
 /**
  * @author alkaitz
- * file - Name to image file to draw
- * x - Origin x coord
- * y - Origin y coord 
- * size - [x:, y:] Number of pixels in each dimension of full sprite
- * numFrames - [x:, y:] Number of frames in each dimension
- * timeBetweenFrames - time between each couple of frames in ms
- * visible - true if the animation is shown by default
- * play - true or false if animation should start playing by default
+ * @param file - Name to image file to draw
+ * @param x - Origin x coord
+ * @param y - Origin y coord 
+ * @param size - [x:, y:] Number of pixels in each dimension of full sprite
+ * @param numFrames - [x:, y:] Number of frames in each dimension
+ * @param timeBetweenFrames - time between each couple of frames in ms
+ * @param visible - true if the animation is shown by default
+ * @param play - true or false if animation should start playing by default
 */
 Animation.inherits( Drawable );
 function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play){
@@ -20,7 +20,7 @@ function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play
 	var _sprites = new Array;
     for (var j = 0; j < _nFrames.y; j++){
         for (var i = 0; i < _nFrames.x; i++){
-            _sprites.push( {x: _spriteSize.x * i, y: _spriteSize.y * i} );
+            _sprites.push( {x: _spriteSize.x * i, y: _spriteSize.y * j} );
         };
     };
 	var _timeBetweenFrames = timeBetweenFrames || 40; // Updates each 40 ms (24 fps aprox)

@@ -12,7 +12,7 @@ function GUI(){
 		var li;
 		for(var i = 0; i < selection.length; i++){
 			li = document.createElement('li');
-			li.innerHTML = selection[i].name;
+			li.innerHTML = selection[i].getName();
 			ul.appendChild(li);
 		}
 	}

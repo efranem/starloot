@@ -14,6 +14,7 @@ var scout1 = new Scout(500, 50, 'scout1');
 var scout2 = new Scout(800, 60, 'scout2');
 var scout3 = new Scout(500, 230, 'scout3');
 var scout4 = new Scout(800, 350, 'scout4');
+var scout5 = new Scout(700, 200, 'scout5');
 var terrainProps = new Array;
 
 terrainProps.push(new Building(BuildingTypes.RECON_HQ,6, 8, 'reconbuild1', 0));
@@ -47,6 +48,7 @@ function init(){
     board.addMovable(scout2);
 	board.addMovable(scout3);
 	board.addMovable(scout4);
+	board.addMovable(scout5);
     board.addTerrainProps(terrainProps);
 	//board.addMovable(animTest);
 	
@@ -66,7 +68,8 @@ function init(){
 					.addNode(scout1)
 					.addNode(scout2)
 					.addNode(scout3)
-					.addNode(scout4);
+					.addNode(scout4)
+					.addNode(scout5);
 	
 	gui.initEvents(root.addGroup("guiEvents"));
 	

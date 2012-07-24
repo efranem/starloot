@@ -1,9 +1,9 @@
 /**
  * @author alkaitz
- * file - Name to id  of image file to draw
- * x - Origin x coord
- * y - Origin y coord
- * size - [x: , y:] Size in pixels in each direction to draw
+ * @param file - Name to id  of image file to draw
+ * @param x - Origin x coord
+ * @param y - Origin y coord
+ * @param size - [x: , y:] Size in pixels in each direction to draw
 */
 function Drawable(file, x, y, size){
 	/**
