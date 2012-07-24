@@ -63,6 +63,10 @@ function Building(type, x, y, name, orientation){
 		break;
 	}
 	
+	this.getPosition = function(){
+		return {x: this.x, y: this.y};
+	};
+	
 	this.getBoundingBox = function(r) {
 		// create bounding box only if it isn't created or if radius has changed
 		if (this.boundingBox == undefined || this.r!=r) {
