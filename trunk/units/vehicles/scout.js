@@ -1,7 +1,7 @@
 /**
- x - Central x coord
- y - Central y coord
- name - Element name
+ * x - Central x coord
+ * y - Central y coord
+ * name - Element name
 */
 function Scout(x, y, name){
 	this.x = x;
@@ -19,11 +19,11 @@ function Scout(x, y, name){
     this.animations = new Array;
     for (var idx = 1; idx <= 32; idx++){
         var name = "recon_01_" + zfill(idx, 2);
-        this.animations.push(new Animation(name, this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y, sizeOfSprite, 1, 0, true, false));
+        this.animations.push(new Animation(name, this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y, sizeOfSprite, {x: 1, y: 1}, 0, true, false));
     };
 		
 	this.isSelected = false;
-    this.animSelected = new Animation('selector', this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y + 15, sizeOfSprite, 1, 0, false, false);
+    this.animSelected = new Animation('selector', this.x - offsetDrawingZone.x, this.y - offsetDrawingZone.y + 15, sizeOfSprite, {x: 1, y: 1}, 0, false, false);
 
 	this.update = function(){
 		if (this.path != undefined && this.path.length > 0 && this.target == undefined) {

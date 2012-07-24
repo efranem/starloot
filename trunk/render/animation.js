@@ -1,12 +1,13 @@
 /**
- file - Name to image file to draw
- x - Origin x coord
- y - Origin y coord 
- size - [x:, y:] Number of pixels in each dimension of full sprite
- numFrames - Number of frames 
- timeBetweenFrames - time between each couple of frames in ms
- visible - true if the animation is shown by default
- play - true or false if animation should start playing by default
+ * @author alkaitz
+ * file - Name to image file to draw
+ * x - Origin x coord
+ * y - Origin y coord 
+ * size - [x:, y:] Number of pixels in each dimension of full sprite
+ * numFrames - [x:, y:] Number of frames in each dimension
+ * timeBetweenFrames - time between each couple of frames in ms
+ * visible - true if the animation is shown by default
+ * play - true or false if animation should start playing by default
 */
 Animation.inherits( Drawable );
 function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play){
@@ -14,11 +15,13 @@ function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play
 		Own properties
 	*/
 	var _currentFrame = 0;
-	var _spriteSize = {x: size.x / numFrames, y: size.y};
+	var _spriteSize = {x: size.x / numFrames.x, y: size.y / numFrames.y};
 	var _nFrames = numFrames;
 	var _sprites = new Array;
-    for (var i = 0; i < _nFrames; i++){
-        _sprites.push( {x: _spriteSize.x * i, y: _spriteSize.y * 0} );
+    for (var j = 0; j < _nFrames.y; j++){
+        for (var i = 0; i < _nFrames.x; i++){
+            _sprites.push( {x: _spriteSize.x * i, y: _spriteSize.y * i} );
+        };
     };
 	var _timeBetweenFrames = timeBetweenFrames || 40; // Updates each 40 ms (24 fps aprox)
 	var _timePending = timeBetweenFrames;
@@ -70,7 +73,7 @@ function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play
 		Get the number of frames of the animation
 	*/
     this.getNumFrames = function(){
-        return ( _nFrames.numX * _nFrames.numY );
+        return ( _nFrames.x * _nFrames.y );
     };
     
     /**
@@ -107,7 +110,7 @@ function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play
 					counter++;
 				};				
 				_currentFrame += counter;
-				_currentFrame %= _nFrames;
+				_currentFrame %= this.getNumFrames();
 			};
         };
     };
