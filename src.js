@@ -2,14 +2,6 @@ document.body.onload = function(){
 	init();	
 }
 
-var canvas = document.getElementById("canvas");
-var menuCanvas = document.getElementById("mapCanvas");
-menuCanvas.width=128;
-menuCanvas.height=128;
-var ctx;
-var menuCtx;
-var guiCtx;
-var pos = 0;
 var scout1 = new Scout(500, 50, 'scout1');
 var scout2 = new Scout(800, 60, 'scout2');
 var scout3 = new Scout(500, 230, 'scout3');
@@ -32,11 +24,6 @@ var distance = function(a, b){
 var tree = new kdTree(terrainProps,distance,["x","y"]);
 
 function init(){
-	var canvas = document.getElementById("canvas");
-	ctx = canvas.getContext("2d");
-	menuCtx = menuCanvas.getContext("2d");
-	//guiCtx = guiCanvas.getContext("2d");
-	
 	camera.transformX = 0;
 	camera.transformY = 0;
 	

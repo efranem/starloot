@@ -1,5 +1,6 @@
 function Minimap(){
-    this.x = 0;
+	var menuCanvas = document.getElementById("mapCanvas");
+	this.x = 0;
     this.y = 0;
 	this.maxSizeX = 128;
     this.sizeX = 0;
@@ -41,9 +42,10 @@ function Minimap(){
         // Let's paint every other component...
         for (var obj in board.movable){
             var object = board.movable[ obj ];
+            var position = object.getPosition();
             ctx.fillStyle="red";
             ctx.beginPath();
-            var coord = this.toMinimapCoord({x: object.x, y: object.y});
+            var coord = this.toMinimapCoord({x: position.x, y: position.y});
             ctx.arc(coord.x,coord.y,2,0,Math.PI*2,true);
             ctx.closePath();
             ctx.fill();

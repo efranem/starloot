@@ -42,7 +42,7 @@ Game.loop = (function() {
         }
 
         if (loops)
-            renderer.renderFrame(ctx, menuCtx); // Render tick if there's been any logic tick
+            renderer.renderFrame(); // Render tick if there's been any logic tick
     };
 })();
 
