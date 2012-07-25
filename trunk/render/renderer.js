@@ -1,4 +1,12 @@
 function Renderer(){
+	var canvas = document.getElementById("canvas");
+	var menuCanvas = document.getElementById("mapCanvas");
+	menuCanvas.width=128;
+	menuCanvas.height=128;
+	var ctx = canvas.getContext("2d");;
+	var menuCtx = menuCanvas.getContext("2d");
+	var guiCtx;
+	
     this.timeRendering = 0;
     this.debugMode = true;
     
@@ -23,7 +31,7 @@ function Renderer(){
     	};
     };
 
-    this.renderFrame = function(ctx, menuCtx){
+    this.renderFrame = function(){
         // Start timing
         var time1 = new Date().getTime();
         

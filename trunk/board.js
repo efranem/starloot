@@ -1,4 +1,4 @@
-function PaintTile(row, col) {
+function PaintTile(ctx, row, col) {
 	// Now paint something on a specific tile
 	if ((row+col) % 2 == 0) {
 		var tile = new Image;
@@ -10,6 +10,16 @@ function PaintTile(row, col) {
 }
 
 function compare(obj1, obj2) {
+	var pos1 = obj1.getPosition();
+	var pos2 = obj2.getPosition();
+	if (pos1.y == pos2.y)
+		if (pos1.x == pos2.y)
+			return 0;
+		else 
+			return (pos1.x < pos2.x ? -1 : 1); 
+	else 
+		return (pos1.y < pos2.y ? -1 : 1);
+	
 	return (obj1.getPosition().y == obj2.getPosition().y) ? 0 : (obj1.getPosition().x < obj2.getPosition().x) ? -1 : 1;
 };
 
@@ -81,7 +91,7 @@ function Board(){
 		return false;
     };
     
-	this.paintMap = function(){
+	this.paintMap = function(ctx){
 		var tileWidth = 256;
 		var tileHeight = 128;
 		// Let's see where we have to paint...
@@ -96,7 +106,7 @@ function Board(){
     
     this.paint = function(ctx){
         // Paint tiles
-        this.paintMap();
+        this.paintMap(ctx);
 
 		// Paint according it's position on map...
 		var tempHeap = new MinHeap(null, compare);
@@ -107,7 +117,7 @@ function Board(){
 		};
 		this.elements = tempHeap;		
 		
-		PaintTile(mouse.tile_x,mouse.tile_y);
+		PaintTile(ctx, mouse.tile_x,mouse.tile_y);
 	};
 	
 	/**
