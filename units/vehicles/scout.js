@@ -39,8 +39,8 @@ function Scout(x, y, name){
             // First we turn to get correct direction and if we got the right direction we move
             if (Math.abs(tempAngle - this.angle) < 0.1){ // If the angle is correct we move
                 this.angle = tempAngle;
-                var x = Math.floor(position.x + Math.cos(alpha)*2.0);
-                var y = Math.floor(position.y + Math.sin(alpha)*2.0);
+                var x = position.x + Math.cos(alpha)*2.0;
+                var y = position.y + Math.sin(alpha)*2.0;
                 /*if (!collision(x,y)){*/
                	this.setPosition(x, y);
                     //this.x = x;
