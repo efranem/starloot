@@ -9,7 +9,7 @@ function Drawable(file, x, y, size){
 	/**
 		Own properties
 	*/
-	var _img = document.getElementById(file);
+    var _img = resourceManager.getImage(file);
 	var _origin = {x: x, y: y};
 	var _size = size;
     
