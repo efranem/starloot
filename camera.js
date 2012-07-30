@@ -5,8 +5,8 @@ function Camera(){
 	this.transformY = 0;
 	this.minX = 0;
 	this.minY = 0;
-	this.maxX = 2000;
-	this.maxY = 2000;
+	this.maxX = 10000;
+	this.maxY = 10000;
 	
 	this.applyTransforms = function(ctx){
 		ctx.scale(1, 0.5);
