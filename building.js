@@ -28,7 +28,7 @@ function Building(type, x, y, name, orientation){
 	switch (type) {
 	case BuildingTypes.RECON_HQ:
 		this.box = [[120,120],[222,172],[193,188],[121,167],[73,143]];
-		this.img.src = 'sprites/buildings/recon_hq_01.png';	
+        this.img = resourceManager.getImage('recon_hq');
 		this.sprites = [
 			[256*0,256*0],
 			[256*0,256*1],
@@ -40,21 +40,21 @@ function Building(type, x, y, name, orientation){
 	    break;
 	case BuildingTypes.ANTENNA:
 		this.box = [[55,475],[111,447],[168,475],[111,503]];
-		this.img.src = 'sprites/buildings/antenna_01.png';
+        this.img = resourceManager.getImage('antenna');
 		this.sprites = [[0,0],[0,0],[0,0],[0,0]];
 		this.size = [512,512];
 		this.center = [111,475];
 		break;
 	case BuildingTypes.CRATER:
 		this.box = [[306,35],[399,103],[400,127],[385,148],[295,202],[247,204],[207,190],[163,175],[144,168],[91,131],[124,99],[151,83],[220,40],[267,22]];
-		this.img.src = 'sprites/decoration/crater_4x4.png';
+        this.img = resourceManager.getImage('crater');
 		this.sprites = [[0,0],[0,0],[0,0],[0,0]];
 		this.size = [512,256];
 		this.center = [256,118];
 		break;
 	case BuildingTypes.WALL:
 		this.box = [[81,121],[92,117],[175,160],[162,164]];
-		this.img.src = 'sprites/buildings/wall_01.png';
+        this.img = resourceManager.getImage('wall');
 		this.sprites = [[0,0],[0,0],[0,0],[0,0]];
 		this.size = [256,256];
 		this.center = [128,128];
