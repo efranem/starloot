@@ -76,14 +76,14 @@ function Scout(x, y, name){
 	 */
 	this.onclick = function(evt){
 		var point = camera.localPosition({x: evt.x, y: evt.y});
-		if (this.isSelected && !this.isTouched(point)){
-			var position = this.getPosition();
-            var point = camera.localPosition({x: evt.x, y: evt.y});
-			this.path = findPath([position.x,position.y],[point.x,point.y],terrainProps,40);
-			this.target = undefined;
-			return false; // Not capturing as another element may have a new target as well
-            
-        }
+		if (this.isTouched(point)){
+			this.isSelected = !this.isSelected;
+			if (keyboard.isDown( Keys.CTRL ) == false){
+				selector.clearSelection();
+			}
+			selector.updateSelectedItem(this);
+			return true;
+		};
         return false;
 	};
 	
