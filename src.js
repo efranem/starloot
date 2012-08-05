@@ -44,9 +44,8 @@ function init(){
 
 	// init main groups
 	root.addNode(camera);
-	root.addGroup("selector").addNode(selector);
-    root.addGroup("board").addNode(board);
-    root.getGroup("board").addGroup("buildings")
+	root.addGroup("board");
+	root.getGroup("board").addGroup("buildings")
                         .addNode(terrainProps[0])
                         .addNode(terrainProps[1])
                         .addNode(terrainProps[2])
@@ -57,6 +56,8 @@ function init(){
 					.addNode(scout3)
 					.addNode(scout4)
 					.addNode(scout5);
+	root.getGroup("board").addNode(board);
+	root.addGroup("selector").addNode(selector);
 	
 	gui.initEvents(root.addGroup("guiEvents"));
 	

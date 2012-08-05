@@ -36,3 +36,10 @@ function zfill(num, len) {
     return (Array(len).join("0") + num).slice(-len);
 }
 
+/**
+ * Shuffles elements from current array
+ */
+function shuffle(array) {
+	for (var j, x, i = array.length; i; j = Math.floor( Math.random() * i ), x = array[--i], array[ i ] = array[ j ], array[ j ] = x);
+	return array;
+};

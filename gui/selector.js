@@ -99,17 +99,27 @@ function Selector(){
 	}
 	
 	this.onclick = function(evt){
-		var point = camera.localPosition({x: evt.x, y: evt.y});
-		for (var obj in board.movable){
-			if (board.movable[obj].isTouched(point)){
-				board.movable[obj].isSelected = !board.movable[obj].isSelected;
-				if (keyboard.isDown( Keys.CTRL ) == false){
-					this.clearSelection();
-				}
-				this.updateSelectedItem(board.movable[obj]);
-				break;
-			}
-		}
+		// Let's see the target distribution
+		var num = this.selection.length;
+		var finalTargets = new Array(num);
+		finalTargets[ 0 ] = camera.localPosition({x: evt.x, y: evt.y});
+		// Let's draw a circle and distribute it randomly (one target will be the original one)
+		var starting = Math.random() * (2 * Math.PI); 
+		var radious = num * 25;
+		var each = (2 * Math.PI) / (num - 1);
+		for (var i = 1; i < num; i++){
+			finalTargets[ i ] = {x: Math.floor( finalTargets[ 0 ].x + (radious * Math.cos(starting + (each * (i - 1))))),
+								 y: Math.floor( finalTargets[ 0 ].y + ((radious * Math.sin(starting + (each * (i - 1)))) / 2) )};
+		};
+		// Lets shuffle the destination array to not seem predictable...
+		finalTargets = shuffle( finalTargets );
+		for (var i = 0; i < this.selection.length; i++){
+			var object = this.selection[ i ];
+			var target = finalTargets[ i ];
+			var position = object.getPosition();
+			object.path = findPath([position.x,position.y],[target.x,target.y],terrainProps,40);
+			object.target = undefined;
+		};
 		return false;
 	};
 	
