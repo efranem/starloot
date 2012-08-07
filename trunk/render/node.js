@@ -23,10 +23,18 @@ function Node(name, x, y, numAnimations, numFrames, files){
         _animations.push(new Animation(name, _point.x - _offsetDrawingZone.x, _point.y - _offsetDrawingZone.y, _sizeOfSprite, numFrames, 0, true, false));
     };
     
+	/**
+	 * Name getter
+	 * Type: String
+	 */
     this.getName = function(){
     	return _name;
     };
     
+	/**
+	 * Position getter and setter
+	 * Type: {x, y}
+	 */
     this.setPosition = function(x, y){
     	_point = {x: x, y: y};
     };
@@ -35,6 +43,10 @@ function Node(name, x, y, numAnimations, numFrames, files){
     	return _point;
     };
     
+	/**
+	 * CurrentAnimation getter and setter
+	 * Type: Animation
+	 */
     this.setCurrentAnimation = function(currentFrame){
     	_currentAnimation = currentFrame;
     };
@@ -43,11 +55,19 @@ function Node(name, x, y, numAnimations, numFrames, files){
     	return _animations[ _currentAnimation ];
     };
     
+	/**
+	 * OffsetDrawingZone getter
+	 * Type: {x, y}
+	 */
     this.getOffsetDrawingZone = function(){
     	return _offsetDrawingZone;
     };
     
-    this.getSize = function(){
+    /**
+	 * Size getter
+	 * Type: {x, y}
+	 */
+	this.getSize = function(){
     	return _sizeOfSprite;
     };
 };

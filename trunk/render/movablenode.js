@@ -18,8 +18,13 @@
 	var _target = undefined;
 	var _path = new Array;
 	
+	/**
+	 * Angles getter and setter
+	 * Type: Float
+	 */
 	this.setAngle = function(angle){
 		_angle = angle;
+		// The angle is always between 0 and 2*Pi radians
 		if (_angle < 0)
 			_angle += (2 * Math.PI);
 		_angle %= (2 * Math.PI);
@@ -29,6 +34,10 @@
 		return _angle;
 	};
 	
+	/**
+	 * Path getter and setter
+	 * Type: [ {x0, y0}, {x1, y1} ... {xn, yn} ]
+	 */
 	this.setPath = function(path){
 		_path = path;
 	};
@@ -37,6 +46,10 @@
 		return _path;
 	};
 	
+	/**
+	 * Target getter and setter
+	 * Type: {x, y}
+	 */
 	this.setTarget = function(target){
 		_target = target;
 	};
@@ -45,6 +58,10 @@
 		return _target;
 	};
 	
+	/**
+	 * Velocity getter and setter
+	 * Type: Number
+	 */
 	this.setVelocity = function(v){
 		_velocity = v;
 	};
@@ -65,9 +82,11 @@
 	var target = this.getTarget();
 	var velocity = this.getVelocity();
 	var angle = this.getAngle();
+	// If we are on target and the path is not empty we move to next target
 	if (path != undefined && path.length > 0 && target == undefined) {
 		this.setTarget( path.splice(0,1)[0] );
 	}
+	// If we are close enough to target we make the final movement
 	if (target != undefined && Math.abs(target.x - position.x) < 1.5 && Math.abs(target.y - position.y) < 1.5){
 		this.setTarget( undefined );
 	}
@@ -75,7 +94,6 @@
 		var alpha = Math.atan2(target.y - position.y, target.x - position.x);
 		if (alpha < 0) alpha += 2 * Math.PI;
 		else alpha %= 2 * Math.PI;
-		//console.log("Alpha: "+(scout.angle/(Math.PI/180)).toFixed(2) +" degrees");
 		var tempAngle = (2 * Math.PI) - alpha;		
 		// First we turn to get correct direction and if we got the right direction we move
 		if (Math.abs(tempAngle - angle) < 0.1){ // If the angle is correct we move
@@ -97,7 +115,6 @@
 		var newPosition = this.getPosition();
 		var offset = this.getOffsetDrawingZone();
 		this.getCurrentAnimation().setOrigin(newPosition.x - offset.x, newPosition.y - offset.y );
-		//this.animSelected.setOrigin(newPosition.x - offset.x, newPosition.y - offset.y + 15);
 	}
  };
  

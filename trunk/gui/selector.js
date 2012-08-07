@@ -119,8 +119,6 @@ function Selector(){
 			var position = object.getPosition();
 			object.setPath( findPath([position.x,position.y],[target.x,target.y],terrainProps,40) );
 			object.setTarget( undefined );
-			//object.path = findPath([position.x,position.y],[target.x,target.y],terrainProps,40);
-			//object.target = undefined;
 		};
 		return false;
 	};
