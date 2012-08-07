@@ -117,8 +117,10 @@ function Selector(){
 			var object = this.selection[ i ];
 			var target = finalTargets[ i ];
 			var position = object.getPosition();
-			object.path = findPath([position.x,position.y],[target.x,target.y],terrainProps,40);
-			object.target = undefined;
+			object.setPath( findPath([position.x,position.y],[target.x,target.y],terrainProps,40) );
+			object.setTarget( undefined );
+			//object.path = findPath([position.x,position.y],[target.x,target.y],terrainProps,40);
+			//object.target = undefined;
 		};
 		return false;
 	};
