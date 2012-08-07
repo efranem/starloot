@@ -34,21 +34,18 @@ function Animation(file, x, y, size, numFrames, timeBetweenFrames, visible, play
 	this.inherits( Drawable, file, x, y, _spriteSize );
     
     /**
-		Set current animation frame
+		CurrentFrame getter and setter
 	*/
     this.setCurrentFrame = function(newFrame){
         _currentFrame = newFrame;
     };
     
-    /**
-		Get current animation's frame
-	*/
     this.getCurrentFrame = function(){
         return _currentFrame;
     };
     
     /**
-     	Returns the sprites array coordinates 
+     	Sprites getter
      */
     this.getSprites = function(){
     	return _sprites;
