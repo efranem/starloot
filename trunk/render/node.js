@@ -4,17 +4,18 @@
  * @param x X coordinate of central point of node
  * @param y Y coordinate of central point of node
  * @param numAnimations number of different animations that node will have
- * @param numFrames [x:, y:] Number of frames in each dimension of graphic
+ * @param numFrames {x:, y:} Number of frames in each dimension of graphic
+ * @param sizeOfSprites {x:, y:} Size of each independent sprite
  * @param files prefix of name of animation files 
  */
-function Node(name, x, y, numAnimations, numFrames, files){
+function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
 	/**
 		Own properties
 	*/
 	var _name = name;
 	var _point = {x: x, y: y};
-	var _sizeOfSprite = {x: 128, y: 128};
-    var _offsetDrawingZone = {x: 64, y: 64};
+	var _sizeOfSprite = sizeOfSprites || {x: 128, y: 128}; // Default sprite to 128 pixels
+    var _offsetDrawingZone = {x: Math.floor( _sizeOfSprite.x / 2 ), y: Math.floor( _sizeOfSprite.y / 2 ) };
     var _currentAnimation = 0;
 	var _animations = new Array;
 	var _numAnimations = numAnimations; 

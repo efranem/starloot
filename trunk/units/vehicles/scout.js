@@ -6,7 +6,7 @@ function Scout(x, y, name){
 	/**
 		Node inheritance calling public constructor with parameters
 	*/
-	this.inherits( MovableNode, name, 2, x, y, 32, {x: 1, y: 1}, 'recon_01_' );
+	this.inherits( MovableNode, name, 2, x, y, 32, {x: 1, y: 1}, {x: 128, y: 128}, 'recon_01_' );
 	
 	this.isSelected = false;	
 	this.animSelected = new Animation('selector', 

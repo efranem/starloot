@@ -38,6 +38,8 @@ var ImagesList = {
     'selector'      : 'sprites/ui/selector.png',
     'animtest'      : 'sprites/tests/animtest.png',
     'recon_hq'      : 'sprites/buildings/recon_hq_01.png',
+	'recon_hq_01_01': 'sprites/buildings/recon_hq_01/recon_hq_01_01.png',
+	'recon_hq_01_02': 'sprites/buildings/recon_hq_01/recon_hq_01_02.png',
     'antenna'       : 'sprites/buildings/antenna_01.png',
     'crater'        : 'sprites/decoration/crater_4x4.png',
     'wall'          : 'sprites/buildings/wall_01.png'
