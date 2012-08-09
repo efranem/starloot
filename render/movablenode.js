@@ -5,11 +5,12 @@
  * @param x X coordinate of central point of node
  * @param y Y coordinate of central point of node
  * @param numAnimations number of different animations that node will have
- * @param numFrames [x:, y:] Number of frames in each dimension of graphic
+ * @param numFrames {x:, y:} Number of frames in each dimension of graphic
+ * @param sizeOfSprites {x:, y:} Size of each independent sprite
  * @param files prefix of name of animation files 
  */
- MovableNode.inherits( Node );
- function MovableNode(name, speed, x, y, numAnimations, numFrames, files){
+MovableNode.inherits( Node );
+function MovableNode(name, speed, x, y, numAnimations, numFrames, sizeOfSprites, files){
 	/**
 		Own properties
 	*/
@@ -73,7 +74,7 @@
 	/**
 		Node inheritance calling public constructor with parameters
 	*/
-	this.inherits( Node, name, x, y, numAnimations, numFrames, files );
+	this.inherits( Node, name, x, y, numAnimations, numFrames, sizeOfSprites, files );
  };
  
  MovableNode.prototype.update = function(){
@@ -118,6 +119,6 @@
 	}
  };
  
- MovableNode.prototype.paint = function(ctx){
+MovableNode.prototype.paint = function(ctx){
 	Node.prototype.paint.call(this, ctx);
 };

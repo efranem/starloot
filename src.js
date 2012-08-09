@@ -13,6 +13,7 @@ terrainProps.push(new Building(BuildingTypes.RECON_HQ,6, 8, 'reconbuild1', 0));
 terrainProps.push(new Building(BuildingTypes.ANTENNA,9, 8, 'antenna1', 0));
 terrainProps.push(new Building(BuildingTypes.CRATER,3, 8, 'crater1', 0));
 terrainProps.push(new Building(BuildingTypes.WALL,3,3, 'wall1', 0));
+var test = new StaticNode('test', 1, 1, 1, 2, {x: 1, y: 1}, {x: 256, y: 256}, 'recon_hq_01_');
 var root = new Group("world");
 
 var stats;
@@ -37,6 +38,7 @@ function init(){
 	board.addMovable(scout4);
 	board.addMovable(scout5);
     board.addTerrainProps(terrainProps);
+	board.addBuilding(test);
 	//board.addMovable(animTest);
 	
     // init event handlers
