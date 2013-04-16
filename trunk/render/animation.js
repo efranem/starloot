@@ -125,3 +125,7 @@ Animation.prototype.paint = function(ctx){
                             sprites[ currentFrame ].y);
 };
 
+Animation.prototype.isPaintedPixel = function(pixel){
+	return Drawable.prototype.isPaintedPixel.call(this,pixel);
+};
+
