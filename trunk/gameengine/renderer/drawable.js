@@ -7,7 +7,7 @@ function Drawable(file, size){
 	/**
 		Own properties
 	*/
-    var _img = resourceManager.getImage(file);
+    var _img = ResourceManager.getInstance().getImage(file);
 	var _size = size || new Size2D(_img.height, _img.width);
     
     /**
