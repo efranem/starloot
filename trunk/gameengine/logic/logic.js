@@ -8,6 +8,8 @@ for (var j = 0; j < 10; j++){
         nodeArray.push( node );
     };
 }
+
+var timer = new Timer( 3000, function(){ console.log('Timer done'); } )
 /////////////
 
 
@@ -21,10 +23,14 @@ function GameLogic(){
         //  DELETE ME
         for (var i = 0; i < nodeArray.length; i++){
             var temp = nodeArray[i];
-            temp.update( 20 );
+            temp.update( elapsedTime );
         };
+
+        timer.update( elapsedTime );
+        //console.log(timer.percentageCovered(), "%");
         /////////////
-        
+
+
         this.logicTime = new Date().getTime() - time1;
     };
     
