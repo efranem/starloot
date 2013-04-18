@@ -92,6 +92,14 @@ function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
     };
 };
 
+function XMLNode(name, x, y, xmlFile){
+	xmlInfo = XMLReader.getInstance().getNodeInfo(xmlFile);
+	if (Object.keys(xmlInfo).length == 0){
+		return {};
+	}
+	return new Node( name, x, y, xmlInfo.numAnimations, xmlInfo.numFrames, xmlInfo.sizeOfSprites, xmlInfo.files);
+};
+
 /**
  *	Paints the current scout on screen
  */
