@@ -34,7 +34,7 @@ Game.loop = (function() {
         loops = 0;
 
         while ((new Date).getTime() > nextLogicTick) {
-            //logic.logicTick((new Date).getTime() - timeBefore); // Logic tick
+            logic.logicTick((new Date).getTime() - timeBefore); // Logic tick
 			timeBefore = (new Date).getTime();
             //stats.update(); // Update statistics...
             nextLogicTick += skipTicks;
