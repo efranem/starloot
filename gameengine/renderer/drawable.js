@@ -45,7 +45,7 @@ function Drawable(file, size){
 Drawable.prototype.paint = function( ctx, origin, offset ){
 	var img 	= this.getImage();
 	var size 	= this.getSize();
-	if (img.loaded)
+    if (img.loaded)
 		ctx.drawImage(img,
 			offset.x,
 			offset.y,
