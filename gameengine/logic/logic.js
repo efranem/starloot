@@ -3,7 +3,7 @@ var nodeArray = new Array;
 
 for (var j = 0; j < 10; j++){
     for (var i = 0; i < 14; i++){
-        var node = new Node('scout' + i + '-' + j, (i * 128) + 64, (j * 128) + 16, 1, new Size2D(8, 4), new Size2D(128, 128), ['reconn']);
+        var node = new XMLNode('scout' + i + '-' + j, (i * 128) + 64, (j * 128) + 16, "reconnInfo");
         node.play();
         nodeArray.push( node );
     };

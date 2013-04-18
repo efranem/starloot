@@ -4,12 +4,13 @@
 ResourceManager = (function(){
     function ResourceManager(){
         var elements = {};
+        var xmlElements = {};
 
         /**
          * Looks for an image in the table
          */
         this.getImage = function( id ){
-            if ( id ){
+            if ( id && id in ImagesList){
                 if (elements[ id ]) {
                     return elements[ id ];
                 }
@@ -21,6 +22,20 @@ ResourceManager = (function(){
                         elements[ id ].loaded = true;
                     };
                     return elements[ id ];
+                };        
+            };
+        };
+
+        this.getXmlResource = function(id){
+             if ( id && id in XmlsList ){
+                if (xmlElements[ id ]) {
+                    return xmlElements[ id ];
+                }else {
+                    xmlhttp = new XMLHttpRequest();
+                    xmlhttp.open("GET",XmlsList[id],false);
+                    xmlhttp.send();
+                    xmlElements[ id ] = xmlhttp.responseXML;
+                    return xmlElements[ id ];
                 };        
             };
         };
