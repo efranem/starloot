@@ -30,6 +30,8 @@ function GameLogic(){
         //console.log(timer.percentageCovered(), "%");
         /////////////
 
+        // Event tick every logictick
+        eventManager.update( elapsedTime );
 
         this.logicTime = new Date().getTime() - time1;
     };
