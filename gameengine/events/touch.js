@@ -5,3 +5,5 @@ function Touch(){
 		window.ontouchmove      = function(evt){mouse.mouseMoved(evt);};
 	};
 };
+
+touch = new Touch();
