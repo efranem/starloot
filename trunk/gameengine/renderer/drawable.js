@@ -42,9 +42,10 @@ function Drawable(file, size){
 /**
 	Paints the current sprite on screen
 */
-Drawable.prototype.paint = function( ctx, origin, offset ){
+Drawable.prototype.paint = function( ctx, origin, offset, scale ){
 	var img 	= this.getImage();
 	var size 	= this.getSize();
+    var factor  = scale || 1.0;
     if (img.loaded)
 		ctx.drawImage(img,
 			offset.x,
@@ -53,6 +54,6 @@ Drawable.prototype.paint = function( ctx, origin, offset ){
 			size.y,
 			origin.x,
 			origin.y,
-			size.x,
-			size.y);
+			size.x * factor,
+			size.y * factor);
 };

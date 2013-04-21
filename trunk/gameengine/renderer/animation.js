@@ -120,12 +120,12 @@ function Animation(file, size, numFrames, timeBetweenFrames, visible, play){
 /**
     Override paint drawable method
 */
-Animation.prototype.paint = function( ctx, position ){
+Animation.prototype.paint = function( ctx, position, scale ){
 	if (this.isVisible()){
         var currentFrame    = this.getCurrentFrame();
         var sprites         = this.getSprites();
         var drawable        = this.getDrawable();
-        drawable.paint( ctx,  position,  sprites[ currentFrame ] );
+        drawable.paint( ctx,  position,  sprites[ currentFrame ], scale );
     };
 };
 
