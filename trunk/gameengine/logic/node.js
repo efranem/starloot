@@ -22,7 +22,39 @@ function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
 	for (var idx = 0; idx < _numAnimations; idx++){
 		_animations.push(new Animation(files[ idx ], {x: _sizeOfSprite.x * numFrames.x, y: _sizeOfSprite.y * numFrames.y}, numFrames, 0, true, false));
     };
-    
+    var _parent = undefined;
+    var _children = new Array;
+
+    this.addNode = function(node){
+    	node.setParent(this);
+    	_children[node.getName] = node;
+    };
+
+    this.removeNode = function(node){
+    	if (typeof(node) == "string"){
+    		_children[node].setParent(undefined);
+    		delete _children[node];
+    	}else{
+    		_children[node.getName()].setParent(undefined);
+    		delete _children[node.getName()];
+    	}
+    };    
+
+    /**
+     * Parent getter
+     * Type: Node
+     */
+    this.getParent = function(){
+    	return _parent;
+    };
+
+    /**
+     * Parent setter
+     * Type: Node
+     */
+    this.setParent = function(parent){
+    	_parent = parent;
+    };
 	/**
 	 * Name getter
 	 * Type: String
@@ -40,7 +72,11 @@ function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
     };
     
     this.getPosition = function(){
-    	return _position;
+    	if (_parent != undefined){
+    		_position.x = _position.x+_parent.getPosition().x;
+    		_position.y = _position.y+_parent.getPosition().y;	
+    	}
+    	return _position
     };
     
 	/**
