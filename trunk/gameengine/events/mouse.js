@@ -21,8 +21,14 @@ function Mouse(){
     var _position = new Coordinate2D(0, 0);
     var _pressedOrigin = new Coordinate2D(0, 0);
     var _button = "none";
+    var _buttonPressed = new Array;
+    var _eventTable = undefined;
 
-    this.init = function(){
+    this.init = function(table){
+        var mouse = Game.mouse;
+        if (table != undefined){
+            _eventTable = table;
+        }
         window.onmouseover      = function(evt){mouse.mouseOver(evt);};
         window.onmouseout       = function(evy){mouse.mouseOut();};
         window.onmousedown      = function(evt){mouse.mouseDown(evt);};
@@ -41,49 +47,102 @@ function Mouse(){
     };
     
     this.mouseDown = function(evt){
-         _position = new Coordinate2D( evt.x, evt.y ); 
+        _position = new Coordinate2D( evt.x, evt.y ); 
         _pressedOrigin = new Coordinate2D( evt.x, evt.y );
         _button = MouseButtons[ evt.button ];
-        console.log( 'Press down', _pressedOrigin, _button);
+        _buttonPressed[_button] = _button;
         evt.preventDefault();
         evt.stopPropagation();
+
+        if (_eventTable != undefined){
+            var eventList = _eventTable['onmousedown'];
+            if (eventList != undefined && eventList.length > 0){
+                for(var evnt in eventList){
+                    eventList[evnt]({'position':_position,'button':_button});
+                }
+            }
+        }
     };
     
     this.mouseUp = function(evt){
          _position = new Coordinate2D( evt.x, evt.y ); 
         var pressedDown = new Coordinate2D( evt.x, evt.y );
         var button = MouseButtons[ evt.button ];
-        console.log( 'Press up', pressedDown, button);
+        _buttonPressed[_button] = undefined;
         _button = "none";
         evt.preventDefault();
         evt.stopPropagation();        
+
+        if (_eventTable != undefined){
+            var eventList = _eventTable['onmouseup'];
+            if (eventList != undefined && eventList.length > 0){
+                for(var evnt in eventList){
+                    eventList[evnt]({'position':_position,'button':_button, 'origin':_pressedOrigin});
+                }
+            }
+        }
     };
     
     this.mouseClick = function(evt){
         _position = new Coordinate2D( evt.x, evt.y ); 
         var pressedDown = new Coordinate2D( evt.x, evt.y );
         var button = MouseButtons[ evt.button ];
-        console.log( 'Click', pressedDown, button);
         _button = "none";
+        
+        if (_eventTable != undefined){
+            var eventList = _eventTable['onclick'];
+            if (eventList != undefined && eventList.length > 0){
+                for(var evnt in eventList){
+                    eventList[evnt]({'position':_position,'button':_button});
+                }
+            }
+        }
     };
     
     this.mouseDoubleClick = function(evt){
         _position = new Coordinate2D( evt.x, evt.y ); 
         var pressedDown = new Coordinate2D( evt.x, evt.y );
         var button = MouseButtons[ evt.button ];
-        console.log( 'Double Click', pressedDown, button);
         _button = "none";
+        if (_eventTable != undefined){
+            var eventList = _eventTable['ondoubleclick'];
+            if (eventList != undefined && eventList.length > 0){
+                for(var evnt in eventList){
+                    eventList[evnt]({'position':_position,'button':_button});
+                }
+            }
+        }
+
     };
     
     this.mouseMoved = function(evt){
         _position = new Coordinate2D( evt.x, evt.y ); 
-        console.log( 'Move', _position);
+
+        if (_eventTable != undefined){
+            var eventList = _eventTable['onmousemove'];
+            if (eventList != undefined && eventList.length > 0){
+                for(var evnt in eventList){
+                    eventList[evnt]({'position':_position,});
+                }
+            }
+        }
     };    
 	
     this.mouseWheel = function(evt){
 		evt.preventDefault();
-        evt.stopPropagation();        
-    };   
-};
+        evt.stopPropagation();
 
-mouse = new Mouse;
+        if (_eventTable != undefined){
+            var eventList = _eventTable['onmousewheel'];
+            if (eventList != undefined && eventList.length > 0){
+                for(var evnt in eventList){
+                    eventList[evnt]({'delta':evt.wheelDelta/120,});
+                }
+            }
+        }        
+    };
+
+    this.isDown = function(button){
+        return _buttonPressed[button] != undefined;
+    }   
+};

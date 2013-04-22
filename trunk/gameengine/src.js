@@ -8,16 +8,16 @@ function init(){
 	document.body.scroll="no";
 
 	// init event handlers
-	eventManager.init();
+	Game.eventManager.init();
 
 	// DELETE ME
 	var test = function() { console.log('Captured KB!');};
-	eventManager.addListener( 'mouse', 'onmousedown', function() { console.log('Captured down!');} );
-	eventManager.addListener( 'keyboard', 'keypressed', test);
-	eventManager.addListener( 'custom', ' ', function() { console.log('Own soft. event!');} );
+	Game.eventManager.addListener( 'mouse', 'onmousedown', function() { console.log('Captured down!');} );
+	Game.eventManager.addListener( 'keyboard', 'keypressed', test);
+	Game.eventManager.addListener( 'custom', ' ', function() { console.log('Own soft. event!');} );
 
-	eventManager.removeListener( 'keyboard', 'keypressed', test );
-	eventManager.removeListener( 'mouse', 'onmousedown', function() { console.log('Captured down!');} );
+	//Game.eventManager.removeListener( 'keyboard', 'keypressed', test );
+	//Game.eventManager.removeListener( 'mouse', 'onmousedown', function() { console.log('Captured down!');} );
 	////////////
 
 	// loop game

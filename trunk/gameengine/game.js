@@ -2,6 +2,12 @@ var Game = {};
 
 Game.fps = 60;
 
+Game.eventManager = new EventManager;
+Game.logic = new GameLogic;
+Game.keyboard = new Keyboard;
+Game.mouse = new Mouse;
+Game.touch = new Touch;
+
 // Limit painting frames with the number of screen refreshes per second 
 Game.initialize = (function() {
     var onEachFrame;
@@ -34,15 +40,16 @@ Game.loop = (function() {
         loops = 0;
 
         while ((new Date).getTime() > nextLogicTick) {
-            logic.logicTick((new Date).getTime() - timeBefore); // Logic tick
+            Game.logic.logicTick((new Date).getTime() - timeBefore); // Logic tick
 			timeBefore = (new Date).getTime();
             //stats.update(); // Update statistics...
             nextLogicTick += skipTicks;
             loops++;
         }
 
-        if (loops)
+        if (loops){
             renderer.renderFrame(); // Render tick if there's been any logic tick
+        }
     };
 })();
 

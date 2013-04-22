@@ -90,39 +90,64 @@ var Keys = {
 };
 
 function Keyboard(){
-	this.keysPressed = new Array;
+	var _keysPressed = new Array;
+    var _eventTable = undefined;
     
-    this.init = function(){
+    this.init = function(table){
+        var keyboard = Game.keyboard;
+        if (table != undefined){
+            _eventTable = table;
+        }
         window.onkeydown    = function(evt){keyboard.keyDown(evt);};
         window.onkeyup      = function(evt){keyboard.keyUp(evt);};
     };
 	
 	this.keyDown = function (evt){
-        this.keysPressed[ evt.keyCode ] = evt.keyCode;
+        _keysPressed[ evt.keyCode ] = evt.keyCode;
 		evt.preventDefault();
         evt.stopPropagation();
+        
+        if (_eventTable != undefined){
+            var eventTableKDown = _eventTable['keypressed'];
+            if (eventTableKDown != undefined && eventTableKDown.length > 0){
+                for(var evnt in eventTableKDown){
+                    eventTableKDown[evnt]();
+                }
+            }
+        }
 	};
 	
 	this.keyUp = function (evt){
-        this.keysPressed[ evt.keyCode ] = undefined;
+        _keysPressed[ evt.keyCode ] = undefined;
 		evt.preventDefault();
         evt.stopPropagation();
+        
+        if (_eventTable != undefined){
+            var eventTableKUp = _eventTable['keyreleased'];
+            if (eventTableKUp != undefined && eventTableKUp.length > 0){
+                for(var evnt in eventTableKUp){
+                    eventTableKUp[evnt]();
+                }
+            }
+        }
 	};
     
     this.isDown = function(key){
-        return this.keysPressed[ key ] != undefined;
+        return _keysPressed[key] != undefined;
     };
+
+    this.getKeysPressed = function(){
+        return _keysPressed;
+    }
 }
 
 Keyboard.prototype.toString = function(){
     var str = "";
-    for (var idx in this.keysPressed){
-        if (this.keysPressed[ idx ])
-            str += this.keysPressed[ idx ] + ', ';
+    for (var idx in this.getKeysPressed()){
+        if (this.getKeysPressed()[ idx ])
+            str += this.getKeysPressed()[ idx ] + ', ';
     }
     if (str.length > 0)
          str = str.substring(0, str.length - 2); // Remove last ", "
     return str;
 };
-
-keyboard = new Keyboard;

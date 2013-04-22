@@ -1,8 +1,4 @@
 function EventManager(){
-	var _keyboard = new Keyboard();
-	var _mouse = new Mouse();
-	var _touch = new Touch();
-
 	var _eventsTable = {};
 	
 	this.init = function(){
@@ -11,9 +7,9 @@ function EventManager(){
 		_eventsTable['touch'] = {};
 		_eventsTable['timers'] = {};
 		_eventsTable['custom'] = {};
-		keyboard.init();
-		mouse.init();
-		touch.init();
+		Game.keyboard.init(_eventsTable['keyboard']);
+		Game.mouse.init(_eventsTable['mouse']);
+		Game.touch.init(_eventsTable['touch']);
 	};
 
 	this.update = function( elapsedTime ){
@@ -47,5 +43,3 @@ function EventManager(){
 			return false;
 	};
 };
-
-eventManager = new EventManager;
