@@ -125,6 +125,11 @@ function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
 	 */
     this.update = function( timeElapsed ){
     	_animations[ _currentAnimation ].updateCurrentFrame( timeElapsed );
+        if (_children != undefined && _children.length > 0){
+            for(var child in _children){
+                _children[child].update(timeElapsed);
+            }
+        }
     };
 };
 

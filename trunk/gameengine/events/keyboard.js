@@ -94,7 +94,7 @@ function Keyboard(){
     var _eventTable = undefined;
     
     this.init = function(table){
-        var keyboard = Game.keyboard;
+        var keyboard = this;
         if (table != undefined){
             _eventTable = table;
         }
