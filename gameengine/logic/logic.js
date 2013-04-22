@@ -31,11 +31,9 @@ function GameLogic(){
         /////////////
 
         // Event tick every logictick
-        eventManager.update( elapsedTime );
+        Game.eventManager.update( elapsedTime );
 
         this.logicTime = new Date().getTime() - time1;
     };
     
-}; 
-
-logic = new GameLogic;
+};
