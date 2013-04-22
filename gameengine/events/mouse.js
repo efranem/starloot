@@ -25,7 +25,7 @@ function Mouse(){
     var _eventTable = undefined;
 
     this.init = function(table){
-        var mouse = Game.mouse;
+        var mouse = this;
         if (table != undefined){
             _eventTable = table;
         }

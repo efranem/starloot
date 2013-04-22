@@ -4,9 +4,6 @@ Game.fps = 60;
 
 Game.eventManager = new EventManager;
 Game.logic = new GameLogic;
-Game.keyboard = new Keyboard;
-Game.mouse = new Mouse;
-Game.touch = new Touch;
 
 // Limit painting frames with the number of screen refreshes per second 
 Game.initialize = (function() {

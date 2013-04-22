@@ -12,7 +12,7 @@ function init(){
 
 	// DELETE ME
 	var test = function() { console.log('Captured KB!');};
-	Game.eventManager.addListener( 'mouse', 'onmousedown', function() { console.log('Captured down!');} );
+	Game.eventManager.addListener( 'mouse', 'onmousedown', function(ev) { console.log('Captured down! ['+ev.position.x+','+ev.position.y+']');} );
 	Game.eventManager.addListener( 'keyboard', 'keypressed', test);
 	Game.eventManager.addListener( 'custom', ' ', function() { console.log('Own soft. event!');} );
 
