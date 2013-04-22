@@ -45,6 +45,20 @@ function Mouse(){
     
     this.mouseOut = function(){ // Should not get out the canvas (or we do not worry about it)
     };
+
+    /*
+     * Private function that calls event callbacks
+     */
+    var callEvents = function( evt, params ){
+        if (_eventTable != undefined){
+            var eventList = _eventTable[evt];
+            if (eventList != undefined && eventList.length > 0){
+                for(var evnt in eventList){
+                    eventList[evnt](params);
+                }
+            }
+        }
+    };
     
     this.mouseDown = function(evt){
         _position = new Coordinate2D( evt.x, evt.y ); 
@@ -53,15 +67,7 @@ function Mouse(){
         _buttonPressed[_button] = _button;
         evt.preventDefault();
         evt.stopPropagation();
-
-        if (_eventTable != undefined){
-            var eventList = _eventTable['onmousedown'];
-            if (eventList != undefined && eventList.length > 0){
-                for(var evnt in eventList){
-                    eventList[evnt]({'position':_position,'button':_button});
-                }
-            }
-        }
+        callEvents('onmousedown', {'position':_position,'button':_button});
     };
     
     this.mouseUp = function(evt){
@@ -71,16 +77,8 @@ function Mouse(){
         _buttonPressed[_button] = undefined;
         _button = "none";
         evt.preventDefault();
-        evt.stopPropagation();        
-
-        if (_eventTable != undefined){
-            var eventList = _eventTable['onmouseup'];
-            if (eventList != undefined && eventList.length > 0){
-                for(var evnt in eventList){
-                    eventList[evnt]({'position':_position,'button':_button, 'origin':_pressedOrigin});
-                }
-            }
-        }
+        evt.stopPropagation();
+        callEvents('onmouseup', {'position':_position,'button':_button, 'origin':_pressedOrigin});
     };
     
     this.mouseClick = function(evt){
@@ -88,15 +86,7 @@ function Mouse(){
         var pressedDown = new Coordinate2D( evt.x, evt.y );
         var button = MouseButtons[ evt.button ];
         _button = "none";
-        
-        if (_eventTable != undefined){
-            var eventList = _eventTable['onclick'];
-            if (eventList != undefined && eventList.length > 0){
-                for(var evnt in eventList){
-                    eventList[evnt]({'position':_position,'button':_button});
-                }
-            }
-        }
+        callEvents('onclick', {'position':_position,'button':_button});
     };
     
     this.mouseDoubleClick = function(evt){
@@ -104,42 +94,18 @@ function Mouse(){
         var pressedDown = new Coordinate2D( evt.x, evt.y );
         var button = MouseButtons[ evt.button ];
         _button = "none";
-        if (_eventTable != undefined){
-            var eventList = _eventTable['ondoubleclick'];
-            if (eventList != undefined && eventList.length > 0){
-                for(var evnt in eventList){
-                    eventList[evnt]({'position':_position,'button':_button});
-                }
-            }
-        }
-
+        callEvents('ondoubleclick', {'position':_position,'button':_button});
     };
     
     this.mouseMoved = function(evt){
         _position = new Coordinate2D( evt.x, evt.y ); 
-
-        if (_eventTable != undefined){
-            var eventList = _eventTable['onmousemove'];
-            if (eventList != undefined && eventList.length > 0){
-                for(var evnt in eventList){
-                    eventList[evnt]({'position':_position,});
-                }
-            }
-        }
+        callEvents('onmousemove', {'position':_position,});
     };    
 	
     this.mouseWheel = function(evt){
 		evt.preventDefault();
         evt.stopPropagation();
-
-        if (_eventTable != undefined){
-            var eventList = _eventTable['onmousewheel'];
-            if (eventList != undefined && eventList.length > 0){
-                for(var evnt in eventList){
-                    eventList[evnt]({'delta':evt.wheelDelta/120,});
-                }
-            }
-        }        
+        callEvents('onmousewheel', {'delta':evt.wheelDelta/120,});
     };
 
     this.isDown = function(button){

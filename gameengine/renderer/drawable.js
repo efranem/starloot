@@ -52,8 +52,8 @@ Drawable.prototype.paint = function( ctx, origin, offset, scale ){
 			offset.y,
 			size.x,
 			size.y,
-			origin.x,
-			origin.y,
+			origin.x * factor,
+			origin.y * factor,
 			size.x * factor,
 			size.y * factor);
 };

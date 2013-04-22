@@ -137,12 +137,12 @@ function XMLNode(name, x, y, xmlFile){
 };
 
 /**
- *	Paints the current scout on screen
+ *	Paints the current node on screen
  */
-Node.prototype.paint = function( ctx ){
+Node.prototype.paint = function( ctx, scale ){
 	var currentAnimation = this.getCurrentAnimation();
 	var nodePosition = this.getPosition();
 	var offset = this.getOffsetDrawingZone();
 	var origin = { x: nodePosition.x - offset.x, y: nodePosition.y - offset.y };
-	currentAnimation.paint(ctx, origin);
+	currentAnimation.paint(ctx, origin, scale);
 }
