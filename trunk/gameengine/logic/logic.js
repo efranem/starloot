@@ -1,15 +1,15 @@
 //  DELETE ME
-var nodeArray = new Array;
+var entityArray = new Array;
 
 for (var j = 0; j < 10; j++){
     for (var i = 0; i < 14; i++){
         var node = new XMLNode('scout' + i + '-' + j, (i * 128) + 64, (j * 128) + 16, "reconnInfo");
         node.play();
-        nodeArray.push( node );
+        var entity = new Entity();
+        entity.addNode( node );
+        entityArray.push( entity );
     };
 }
-
-var timer = new Timer( 3000, function(){ console.log('Timer done'); } )
 /////////////
 
 
@@ -21,12 +21,10 @@ function GameLogic(){
         var time1 = new Date().getTime();
 
         //  DELETE ME
-        for (var i = 0; i < nodeArray.length; i++){
-            var temp = nodeArray[i];
-            temp.update( elapsedTime );
+        for (var i = 0; i < entityArray.length; i++){
+            entityArray[i].update( elapsedTime );
         };
 
-        timer.update( elapsedTime );
         //console.log(timer.percentageCovered(), "%");
         /////////////
 

@@ -3,6 +3,22 @@ function Renderer(){
 	
     this.timeRendering = 0;
 
+    // DELETE ME
+    // Temp scale
+    var _scale = 1.0;
+    this.setScale = function(value){
+        console.log(value);
+        if ( value.delta == 1 ){ // positive wheel
+            _scale += 0.05;
+        } 
+        else if ( value.delta == -1 ){ // Negative wheel
+            _scale -= 0.05;
+            if (_scale <= 0.0) _scale = 0.05;
+        }
+        console.log(_scale);
+    };
+    //////////////////////////////////////////////
+
     this.renderFrame = function(){
         // Start timing
         var time1 = new Date().getTime();
@@ -12,9 +28,8 @@ function Renderer(){
         canvas.height = window.innerHeight;
 
         //  DELETE ME
-        for (var i = 0; i < nodeArray.length; i++){
-        	var temp = nodeArray[i];
-        	temp.paint( ctx );
+        for (var i = 0; i < entityArray.length; i++){
+        	entityArray[i].paint( ctx, _scale );
         };
         /////////////
               
