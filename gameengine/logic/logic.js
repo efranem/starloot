@@ -1,17 +1,3 @@
-//  DELETE ME
-var entityArray = [];
-
-for (var j = 0; j < 10; j++){
-    for (var i = 0; i < 14; i++){
-        var node = new XMLNode('scout' + i + '-' + j, (i * 128) + 64, (j * 128) + 16, "reconnInfo");
-        node.play();
-        var entity = new Entity();
-        entity.addNode( node );
-        entityArray.push( entity );
-    };
-}
-/////////////
-
 
 function GameLogic(){
     this.logicTime = 0;
