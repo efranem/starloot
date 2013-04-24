@@ -1,5 +1,5 @@
 //  DELETE ME
-var entityArray = new Array;
+var entityArray = [];
 
 for (var j = 0; j < 10; j++){
     for (var i = 0; i < 14; i++){

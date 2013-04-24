@@ -8,7 +8,7 @@ function EventManager(){
 		_eventsTable['keyboard'] = {};
 		_eventsTable['mouse'] = {};
 		_eventsTable['touch'] = {};
-		_eventsTable['timers'] = new Array;
+		_eventsTable['timers'] = [];
 		_eventsTable['custom'] = {};
 		_keyboard.init(_eventsTable['keyboard']);
 		_mouse.init(_eventsTable['mouse']);
@@ -37,7 +37,7 @@ function EventManager(){
 		if (device && evt && _eventsTable[device]){
 			var m_device = _eventsTable[device];
 			if ( m_device[ evt ] == undefined ){
-				m_device[ evt ] = new Array;
+				m_device[ evt ] = [];
 			}
 			m_device[evt].push( callback );
 			return true;

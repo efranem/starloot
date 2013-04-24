@@ -90,7 +90,7 @@ var Keys = {
 };
 
 function Keyboard(){
-	var _keysPressed = new Array;
+	var _keysPressed = [];
     var _eventTable = undefined;
     
     this.init = function(table){

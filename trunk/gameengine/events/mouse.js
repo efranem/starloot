@@ -21,7 +21,7 @@ function Mouse(){
     var _position = new Coordinate2D(0, 0);
     var _pressedOrigin = new Coordinate2D(0, 0);
     var _button = "none";
-    var _buttonPressed = new Array;
+    var _buttonPressed = [];
     var _eventTable = undefined;
 
     this.init = function(table){
