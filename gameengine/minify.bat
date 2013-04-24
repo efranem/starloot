@@ -1,2 +1,2 @@
-java -jar yuicompressor-2.4.8pre.jar game.js -o min.js --charset utf-8 --line-break 220
+java -jar YuiWrapper.jar --order config,XMLReader,keyboard,mouse,touch,timer,eventmanager,resources,resourcemanager,coordinate,drawable,animation,renderer,node,entity,logic,game -o min.js --charset utf-8 --line-break 220
 
