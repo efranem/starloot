@@ -34,6 +34,14 @@ Renderer = (function(){
         };
         //////////////////////////////////////////////
 
+        var clone = function (obj) {
+            if (null == obj || "object" != typeof obj) return obj;
+            var copy = obj.constructor();
+            for (var attr in obj) {
+                if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+            }
+            return copy;
+        }
         this.renderFrame = function(){
             // Start timing
             var time1 = new Date().getTime();
@@ -43,7 +51,7 @@ Renderer = (function(){
             canvas.height = window.innerHeight;
 
             var tempHeap = new MinHeap(null,Game.nodeComparison);
-            var tempGlobalNodes = globalNodesMap.slice();
+            var tempGlobalNodes = clone(globalNodesMap);
             var node;
             var name;
             while((node = nodesHeap.pop()) != undefined){
@@ -58,7 +66,7 @@ Renderer = (function(){
             }
 
             // We add the new nodes to be added
-            for(node in tempGlobalNodes){
+            for(var node in tempGlobalNodes){
                 node = tempGlobalNodes[node];
                 tempHeap.push(node);
             }
