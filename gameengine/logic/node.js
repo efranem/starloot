@@ -17,24 +17,32 @@ function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
 	var _sizeOfSprite = sizeOfSprites || {x: 128, y: 128}; // Default sprite to 128 pixels
     var _offsetDrawingZone = new Coordinate2D( Math.floor( _sizeOfSprite.x / 2 ),Math.floor( _sizeOfSprite.y / 2 ) )
     var _currentAnimation = 0;
-	var _animations = new Array;
+	var _animations = [];
 	var _numAnimations = numAnimations; 
 	for (var idx = 0; idx < _numAnimations; idx++){
 		_animations.push(new Animation(files[ idx ], {x: _sizeOfSprite.x * numFrames.x, y: _sizeOfSprite.y * numFrames.y}, numFrames, 0, true, false));
     };
     var _parent = undefined;
-    var _children = new Array;
+    var _children = [];
 
     this.addNode = function(node){
-    	node.setParent(this);
-    	_children[node.getName] = node;
+        if (node != undefined){
+        	node.setParent(this);
+        	_children[node.getName()] = node;
+        }
     };
 
+    /**
+     * Function that will remove a child node from this structure.
+     * Type: Node or String
+     */
     this.removeNode = function(node){
     	if (typeof(node) == "string"){
-    		_children[node].setParent(undefined);
-    		delete _children[node];
-    	}else{
+            if (_children[node] != undefined){
+        		_children[node].setParent(undefined);
+        		delete _children[node];
+            }
+    	}else if (_children[node.getName()] != undefined){
     		_children[node.getName()].setParent(undefined);
     		delete _children[node.getName()];
     	}

@@ -14,7 +14,7 @@ function Animation(file, size, numFrames, timeBetweenFrames, visible, play){
 	var _currentFrame = 0;
     var _nFrames = numFrames || new Size2D(1,1);
 	var _spriteSize = {x: size.x / _nFrames.x, y: size.y / _nFrames.y};
-	var _sprites = new Array;
+	var _sprites = [];
     for (var j = 0; j < _nFrames.y; j++){
         for (var i = 0; i < _nFrames.x; i++){
             _sprites.push( {x: _spriteSize.x * i, y: _spriteSize.y * j} );
