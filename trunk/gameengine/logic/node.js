@@ -1,19 +1,20 @@
 /**
  * @author alkaitz
  * @param name Name of current node
- * @param x X position coordinate of the node
+ * @param coords X position coordinate of the node
  * @param y Y position coordinate of the node
  * @param numAnimations number of different animations that node will have
  * @param numFrames {x:, y:} Number of frames in each dimension of graphic
  * @param sizeOfSprites {x:, y:} Size of each independent sprite
  * @param files lanimations list 
  */
-function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
+function Node(name, coords, numAnimations, numFrames, sizeOfSprites, files){
 	/**
 		Own properties
 	*/
 	var _name = name;
-	var _position = new Coordinate2D(x, y) || new Coordinate2D(0, 0);
+    var _3dPos = coords != undefined && coords.constructor.name == 'Coordinate3D' ? true : false;
+	var _position = coords || new Coordinate2D(0, 0);
 	var _sizeOfSprite = sizeOfSprites || {x: 128, y: 128}; // Default sprite to 128 pixels
     var _offsetDrawingZone = new Coordinate2D( Math.floor( _sizeOfSprite.x / 2 ),Math.floor( _sizeOfSprite.y / 2 ) )
     var _currentAnimation = 0;
@@ -82,7 +83,10 @@ function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
     this.getPosition = function(){
     	if (_parent != undefined){
     		_position.x = _position.x+_parent.getPosition().x;
-    		_position.y = _position.y+_parent.getPosition().y;	
+    		_position.y = _position.y+_parent.getPosition().y;
+            if (_3dPos){
+                _position.z = _position.z+_parent.getPosition().z;
+            }	
     	}
     	return _position
     };
@@ -141,12 +145,12 @@ function Node(name, x, y, numAnimations, numFrames, sizeOfSprites, files){
     };
 };
 
-function XMLNode(name, x, y, xmlFile){
+function XMLNode(name, coords, xmlFile){
 	xmlInfo = XMLReader.getInstance().getNodeInfo(xmlFile);
 	if (Object.keys(xmlInfo).length == 0){
 		return {};
 	}
-	return new Node( name, x, y, xmlInfo.numAnimations, xmlInfo.numFrames, xmlInfo.sizeOfSprites, xmlInfo.files);
+	return new Node( name, coords, xmlInfo.numAnimations, xmlInfo.numFrames, xmlInfo.sizeOfSprites, xmlInfo.files);
 };
 
 /**

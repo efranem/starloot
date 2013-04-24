@@ -16,7 +16,7 @@ function init(){
 	Game.eventManager.addListener( 'keyboard', 'keypressed', test);
 	Game.eventManager.addListener( 'custom', ' ', function() { console.log('Own soft. event!');} );
 
-	Game.eventManager.addListener( 'mouse', 'onmousewheel', renderer.setScale );
+	Game.eventManager.addListener( 'mouse', 'onmousewheel', Renderer.getInstance().setScale );
 
 	var timer = Game.eventManager.addTimer( 3000, function(){ console.log('3 secs timer done'); } );
 	
