@@ -1,0 +1,9 @@
+Just some links for now...
+
+# Polygon approach #
+For highly accurate path finding
+
+https://code.google.com/p/straightedge/
+
+# Tile approach #
+http://old.cokeandcode.com/pathfinding
